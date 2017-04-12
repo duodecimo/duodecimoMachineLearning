@@ -13,34 +13,39 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Random;
-
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import org.apache.commons.math3.linear.Array2DRowRealMatrix;
 import org.apache.commons.math3.linear.RealMatrix;
-import static java.lang.Math.abs;
-import static java.lang.Math.abs;
 
-public class NearestNeighbourgh {
-        //  Xtr (of size 50,000 x 32 x 32 x 3) holds all the images in the training set,
-        // and a corresponding 1-dimensional array Ytr (of length 50,000) holds the training labels
-        // (from 0 to 9)
-        // Xtr = TOT_EXAMPLES x TOT_PIXELS
-        // Xte and Yte do the same for the testing set.
-        RealMatrix Xtr, Ytr, Xte, Yte;
-        FileInputStream inputStream;
-        private final int TOT_EXAMPLES = 50000;
-        //private final int TOT_EXAMPLES = 50000/100;
-        private final int TOT_TESTS = 10000;
-        //private final int TOT_TESTS = 10000/10;
-        private final int TOT_PIXELS = 1024;
-        private final int TOT_BYTES = 3072;
-        private final int CIFAR_LINE = (1 + 3072);
-        private JFrame jFrame;
+/**
+ *
+ * @author duo
+ */
+public class Cifar10Utils {
+    public static final int TOT_EXAMPLES = 50000;
+    //static final int TOT_EXAMPLES = 50000/100;
+    public static final int TOT_TESTS = 10000;
+    //static final int TOT_TESTS = 10000/10;
+    public static final int TOT_PIXELS = 1024;
+    public static final int TOT_BYTES = 3072;
+    public static final int CIFAR_LINE = (1 + 3072);
+    FileInputStream inputStream;
 
-    public NearestNeighbourgh() throws IOException {
+    //  Xtr (of size 50,000 x 32 x 32 x 3) holds all the images in the training set,
+    // and a corresponding 1-dimensional array Ytr (of length 50,000) holds the training labels
+    // (from 0 to 9)
+    // Xtr = TOT_EXAMPLES x TOT_PIXELS
+    // Xte and Yte do the same for the testing set.
+    private final RealMatrix Xtr;
+    private final RealMatrix Ytr;
+    private final RealMatrix Xte;
+    private final RealMatrix Yte;
+    private JFrame jFrame;
+
+    public Cifar10Utils() throws IOException {
         Xtr = new Array2DRowRealMatrix(TOT_EXAMPLES, TOT_BYTES);
         Ytr = new Array2DRowRealMatrix(TOT_EXAMPLES, 1);
         Xte = new Array2DRowRealMatrix(TOT_TESTS, TOT_BYTES);
@@ -59,8 +64,6 @@ public class NearestNeighbourgh {
         rowOffset = 0;
         readData("./data/test_batch.bin", Xte, Yte, TOT_TESTS, rowOffset);
         shuffleMatrix();
-        nearestNeighbourEvaluation();
-        System.exit(0);
     }
 
     private void shuffleMatrix() throws IOException {
@@ -143,48 +146,6 @@ public class NearestNeighbourgh {
         }
     }
 
-    final void nearestNeighbourEvaluation() {
-        // perform nearest neighbour
-        double distance;
-        double minDistance;
-        double minLabel=-1D;
-        double accuracy = 0D;
-        double[] sumTr;
-        double[] sumTe;
-        double[] util;
-        // for each image in tests
-        for(int test = 0; test < TOT_TESTS; test++) {
-            sumTe = Xte.getRow(test);
-            minDistance=Double.MAX_VALUE;
-            // calculate distance from each training
-            for(int train=0; train < TOT_EXAMPLES; train++) {
-                sumTr = Xtr.getRow(train);
-                distance = 0D;
-                for(int i=0; i<TOT_BYTES; i++) {
-                    distance+=((double) abs(sumTe[i]-sumTr[i]));
-                }
-                if (distance < minDistance) {
-                    minDistance = distance;
-                    util = Ytr.getRow(train);
-                    minLabel = util[0];
-                }
-            }
-            util = Yte.getRow(test);
-            if(minLabel == util[0]) accuracy++;
-            System.out.println("test: " +test +
-                    " distancia minima: " + minDistance +
-                    " label teste: " + util[0] +
-                    " label minimo: " + minLabel +
-                    "  hittings up to now: " + accuracy);
-        }
-        System.out.println("Accuracy = " + (accuracy * 100 /(TOT_TESTS)) + "%");
-    }
-
-
-    public static void main(String[] args) throws IOException {
-        NearestNeighbourgh nn = new NearestNeighbourgh();
-    }
-
     public JFrame getjFrame() {
         if (jFrame == null) {
             jFrame = new JFrame("Mostrando imagem");
@@ -209,9 +170,9 @@ public class NearestNeighbourgh {
         for (int row = 0; row < 32; row++) {
             for (int col = 0; col < 32; col++) {
                 Color color = new Color(
-                        b[1 + 1024 * 0 + row * 32 + col] & 0xFF,
-                        b[1 + 1024 * 1 + row * 32 + col] & 0xFF,
-                        b[1 + 1024 * 2 + row * 32 + col] & 0xFF);
+                        b[1 + TOT_PIXELS * 0 + row * 32 + col] & 0xFF,
+                        b[1 + TOT_PIXELS * 1 + row * 32 + col] & 0xFF,
+                        b[1 + TOT_PIXELS * 2 + row * 32 + col] & 0xFF);
                 image.setRGB(col, row, color.getRGB());
             }
         }
@@ -239,9 +200,9 @@ public class NearestNeighbourgh {
         for (int row = 0; row < 32; row++) {
             for (int col = 0; col < 32; col++) {
                 Color color = new Color(
-                        ((byte) b[1024 * 0 + row * 32 + col]) & 0xFF,
-                        ((byte) b[1024 * 1 + row * 32 + col]) & 0xFF,
-                        ((byte) b[1024 * 2 + row * 32 + col]) & 0xFF);
+                        ((byte) b[TOT_PIXELS * 0 + row * 32 + col]) & 0xFF,
+                        ((byte) b[TOT_PIXELS * 1 + row * 32 + col]) & 0xFF,
+                        ((byte) b[TOT_PIXELS * 2 + row * 32 + col]) & 0xFF);
                 image.setRGB(col, row, color.getRGB());
             }
         }
@@ -252,5 +213,21 @@ public class NearestNeighbourgh {
         if (!result) {
             System.err.println("failed");
         }
+    }
+
+    public RealMatrix getXtr() {
+        return Xtr;
+    }
+
+    public RealMatrix getYtr() {
+        return Ytr;
+    }
+
+    public RealMatrix getXte() {
+        return Xte;
+    }
+
+    public RealMatrix getYte() {
+        return Yte;
     }
 }
