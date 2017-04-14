@@ -7,11 +7,16 @@ package cifar10;
 
 import java.awt.Color;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.image.BufferedImage;
+import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.Charset;
 import java.util.Random;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -25,9 +30,19 @@ import org.apache.commons.math3.linear.RealMatrix;
  * @author duo
  */
 public class Cifar10Utils {
-    public static final int TOT_EXAMPLES = 50000;
+
+    // the tax should be from >0.0 to 1.0
+    // a tax of 1.0 will retrive 100 % (all) of the images in each file
+    // a tax of 0.1 will retrieve 10%
+    // tests results should be considered only with 100% of retrieval.
+    // reasons to lower the tax can be:
+    // 1) test code changings
+    // 2) run on machines lacking of memory to do a complete test
+    // etc.
+    public static final float TAX_OF_IMAGES_FROM_FILES = 0.1f;
+    public static final int TOT_EXAMPLES = (int) (50000 * TAX_OF_IMAGES_FROM_FILES);
     //static final int TOT_EXAMPLES = 50000/100;
-    public static final int TOT_TESTS = 10000;
+    public static final int TOT_TESTS = (int) (10000 * TAX_OF_IMAGES_FROM_FILES);
     //static final int TOT_TESTS = 10000/10;
     public static final int TOT_PIXELS = 1024;
     public static final int TOT_BYTES = 3072;
@@ -43,23 +58,42 @@ public class Cifar10Utils {
     private final RealMatrix Ytr;
     private final RealMatrix Xte;
     private final RealMatrix Yte;
+    private final String[] names;
     private JFrame jFrame;
 
     public Cifar10Utils() throws IOException {
+        System.out.println("Cifar10Utils: trying to read " + TOT_EXAMPLES + " images from example files");
+        System.out.println("Cifar10Utils: trying to read " + TOT_TESTS + " images from test file");
         Xtr = new Array2DRowRealMatrix(TOT_EXAMPLES, TOT_BYTES);
         Ytr = new Array2DRowRealMatrix(TOT_EXAMPLES, 1);
         Xte = new Array2DRowRealMatrix(TOT_TESTS, TOT_BYTES);
         Yte = new Array2DRowRealMatrix(TOT_TESTS, 1);
+        // read the labels
+        names = new String[10];
+        for(int i = 0; i<10; i++) {
+            names[i] = "";
+        }
+        String line;
+        int index = 0;
+        try (
+                InputStream fis = new FileInputStream("./data/batches.meta.txt");
+                InputStreamReader isr = new InputStreamReader(fis, Charset.forName("UTF-8"));
+                BufferedReader br = new BufferedReader(isr);) {
+            while ((line = br.readLine()) != null && index<9) {
+                names[index++] = line;
+                System.out.println("name[" + index + "] = " + line);
+            }
+        }
         int rowOffset = 0;
-        readData("./data/data_batch_1.bin", Xtr, Ytr, TOT_EXAMPLES/5, rowOffset);
-        rowOffset += TOT_EXAMPLES/5;
-        readData("./data/data_batch_2.bin", Xtr, Ytr, TOT_EXAMPLES/5, rowOffset);
-        rowOffset += TOT_EXAMPLES/5;
-        readData("./data/data_batch_3.bin", Xtr, Ytr, TOT_EXAMPLES/5, rowOffset);
-        rowOffset += TOT_EXAMPLES/5;
-        readData("./data/data_batch_4.bin", Xtr, Ytr, TOT_EXAMPLES/5, rowOffset);
-        rowOffset += TOT_EXAMPLES/5;
-        readData("./data/data_batch_5.bin", Xtr, Ytr, TOT_EXAMPLES/5, rowOffset);
+        readData("./data/data_batch_1.bin", Xtr, Ytr, TOT_EXAMPLES / 5, rowOffset);
+        rowOffset += TOT_EXAMPLES / 5;
+        readData("./data/data_batch_2.bin", Xtr, Ytr, TOT_EXAMPLES / 5, rowOffset);
+        rowOffset += TOT_EXAMPLES / 5;
+        readData("./data/data_batch_3.bin", Xtr, Ytr, TOT_EXAMPLES / 5, rowOffset);
+        rowOffset += TOT_EXAMPLES / 5;
+        readData("./data/data_batch_4.bin", Xtr, Ytr, TOT_EXAMPLES / 5, rowOffset);
+        rowOffset += TOT_EXAMPLES / 5;
+        readData("./data/data_batch_5.bin", Xtr, Ytr, TOT_EXAMPLES / 5, rowOffset);
         // load test
         rowOffset = 0;
         readData("./data/test_batch.bin", Xte, Yte, TOT_TESTS, rowOffset);
@@ -71,10 +105,10 @@ public class Cifar10Utils {
         int index1, index2;
         double[] tmpX, tmpY;
         // shuffle examples
-        for(int i = 0; i < TOT_EXAMPLES/50; i++) {
+        for (int i = 0; i < TOT_EXAMPLES / 50; i++) {
             // select 2 random rows
-            index1= random.nextInt(TOT_EXAMPLES);
-            index2= random.nextInt(TOT_EXAMPLES);
+            index1 = random.nextInt(TOT_EXAMPLES);
+            index2 = random.nextInt(TOT_EXAMPLES);
             // swap rows
             tmpX = Xtr.getRow(index1);
             tmpY = Ytr.getRow(index1);
@@ -84,15 +118,17 @@ public class Cifar10Utils {
             Ytr.setRow(index2, tmpY);
         }
         // show some trains lines
-        for(int k = 0; k<10*18; k++) {
-            displayImage(Xtr.getRow(k));
-        }
-        
+        //double[] util = new double[1]; 
+        //for (int k = 0; k < 10 * 18; k++) {
+        //    util = Ytr.getRow(k);
+        //    displayImage(Xtr.getRow(k), util[0]);
+        //}
+
         // shuffle tests
-        for(int i = 0; i < TOT_TESTS/10; i++) {
+        for (int i = 0; i < TOT_TESTS / 10; i++) {
             // select 2 random rows
-            index1= random.nextInt(TOT_TESTS);
-            index2= random.nextInt(TOT_TESTS);
+            index1 = random.nextInt(TOT_TESTS);
+            index2 = random.nextInt(TOT_TESTS);
             // swap rows
             tmpX = Xte.getRow(index1);
             tmpY = Yte.getRow(index1);
@@ -102,10 +138,11 @@ public class Cifar10Utils {
             Yte.setRow(index2, tmpY);
         }
         // show some tests lines
-        for(int k = 0; k<5*18; k++) {
-            displayImage(Xte.getRow(k));
-        }
+        //for (int k = 0; k < 5 * 18; k++) {
+        //    displayImage(Xte.getRow(k),  util[0]);
+        //}
     }
+
     final void readLabels() throws FileNotFoundException, IOException {
         System.out.println("Lendo 100 * " + CIFAR_LINE + " para obter labels");
         byte[] b = new byte[100 * CIFAR_LINE];
@@ -114,13 +151,13 @@ public class Cifar10Utils {
         int lidos;
         lidos = inputStream.read(b);
         System.out.println("Lidos: " + lidos);
-        for(int row = 0; row < 100; row++) {
-            System.out.println("Label (c/c)" + (row+1) + ": " + (b[row*CIFAR_LINE] & 0xFF));
-            System.out.println("Label (s/c)" + (row+1) + ": " + (b[row*CIFAR_LINE]));
+        for (int row = 0; row < 100; row++) {
+            System.out.println("Label (c/c)" + (row + 1) + ": " + (b[row * CIFAR_LINE] & 0xFF));
+            System.out.println("Label (s/c)" + (row + 1) + ": " + (b[row * CIFAR_LINE]));
         }
     }
 
-    final void readData(String fileName, RealMatrix X, RealMatrix Y, 
+    final void readData(String fileName, RealMatrix X, RealMatrix Y,
             int nImages, int initRow) throws FileNotFoundException, IOException {
         byte[] b = new byte[nImages * CIFAR_LINE];
         double[] label = new double[1];
@@ -131,18 +168,18 @@ public class Cifar10Utils {
                 + fileName + " lidos: " + lidos
                 + " (" + nImages + " * " + (lidos / nImages) + ")");
         System.out.println("deve ler: " + nImages * CIFAR_LINE);
-        for(int row = 0; row < nImages; row++) {
-            label[0] = b[row*CIFAR_LINE] & 0xFF;
+        for (int row = 0; row < nImages; row++) {
+            label[0] = b[row * CIFAR_LINE] & 0xFF;
             Y.setRow(row + initRow, label);
-            for(int col = 1; col < CIFAR_LINE; col++) {
-                X.setEntry(row+initRow, col-1, b[row*CIFAR_LINE + col] & 0xFF);
+            for (int col = 1; col < CIFAR_LINE; col++) {
+                X.setEntry(row + initRow, col - 1, b[row * CIFAR_LINE + col] & 0xFF);
             }
             System.out.println("row: " + (row + initRow) + " label: " + label[0]);
             /*
             if(row%20==0) {
                 displayImage(b);
             }
-            */
+             */
         }
     }
 
@@ -152,18 +189,20 @@ public class Cifar10Utils {
             jFrame.setLayout(new FlowLayout());
             jFrame.setBounds(100, 100, 680, 630);
         }
-       return jFrame;
+        return jFrame;
     }
 
     /**
      * Displays one image
-     * @param b
-     * here the values comes from the file, so its size is 3073 bytes
-     * note that we should add 1 to create the RGB color (we add 1 when we
-     * must discount the label in buffers of length 3073).
-     * @throws IOException 
+     *
+     * @param b here the values comes from the file, so its size is 3073 bytes
+     * note that we should add 1 to create the RGB color (we add 1 when we must
+     * discount the label in buffers of length 3073).
+     * @param index
+     * @throws IOException
      */
-    public void displayImage(byte[] b) throws IOException {
+
+    public void displayImage(byte[] b, double index) throws IOException {
         // just display an image
         System.out.println("Displaying image from b[] lenght: " + b.length);
         BufferedImage image = new BufferedImage(32, 32, BufferedImage.TYPE_INT_RGB);
@@ -177,7 +216,13 @@ public class Cifar10Utils {
             }
         }
         jFrame = getjFrame();
-        jFrame.getContentPane().add(new JLabel(new ImageIcon(image)));
+        JLabel label = new JLabel(new ImageIcon(image));
+        label.setText(names[(int) index]);
+        label.setHorizontalTextPosition(JLabel.CENTER);
+        label.setVerticalTextPosition(JLabel.BOTTOM);
+        label.setFont(new Font(label.getFont().getName(), Font.PLAIN, 6));
+        jFrame.getContentPane().add(label);
+        //jFrame.getContentPane().add(new JLabel(new ImageIcon(image)));
         jFrame.setVisible(true);
         boolean result = ImageIO.write(image, "jpeg", new FileOutputStream("./out.jpg"));
         if (!result) {
@@ -187,13 +232,14 @@ public class Cifar10Utils {
 
     /**
      * Displays one image
-     * @param b
-     * here the values comes from the matrix, so its size is 3072 bytes
+     *
+     * @param b here the values comes from the matrix, so its size is 3072 bytes
      * note that we should not add 1 to create the RGB color (we add 1 when we
      * must discount the label in buffers of length 3073).
-     * @throws IOException 
+     * @param index
+     * @throws IOException
      */
-    public void displayImage(double[] b) throws IOException {
+    public void displayImage(double[] b, double index) throws IOException {
         // just display an image
         System.out.println("Displaying image from b[] lenght: " + b.length);
         BufferedImage image = new BufferedImage(32, 32, BufferedImage.TYPE_INT_RGB);
@@ -207,7 +253,12 @@ public class Cifar10Utils {
             }
         }
         jFrame = getjFrame();
-        jFrame.getContentPane().add(new JLabel(new ImageIcon(image)));
+        JLabel label = new JLabel(new ImageIcon(image));
+        label.setText(names[(int) index]);
+        label.setHorizontalTextPosition(JLabel.CENTER);
+        label.setVerticalTextPosition(JLabel.BOTTOM);
+        label.setFont(new Font(label.getFont().getName(), Font.PLAIN, 6));
+        jFrame.getContentPane().add(label);
         jFrame.setVisible(true);
         boolean result = ImageIO.write(image, "jpeg", new FileOutputStream("./out.jpg"));
         if (!result) {
