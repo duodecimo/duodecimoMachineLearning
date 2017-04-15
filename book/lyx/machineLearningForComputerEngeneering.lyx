@@ -70,17 +70,11 @@
 \begin_body
 
 \begin_layout Title
-MACHINE LEARNING FOR COMPUTER ENGENEERING
+MACHINE LEARNING FOR COMPUTER ENGINEERING
 \end_layout
 
 \begin_layout Author
 Laurentino Duodécimo Rosado Fernandes
-\begin_inset CommandInset toc
-LatexCommand tableofcontents
-
-\end_inset
-
-
 \end_layout
 
 \begin_layout Chapter
@@ -88,27 +82,40 @@ Introduction
 \end_layout
 
 \begin_layout Standard
-Machine learning, also called automatic learning, according to Arthur Samuel
- in 1959, 
-\begin_inset Quotes eld
-\end_inset
+This books intends to be a resource to be used for studying and researching
+ of machine learning in computation, particularly in computer engineering.
+ It is directed into developing and explaining computer code, and mathematics
+ operations necessary for those who wish to enhance their abilities on this
+ field.
+ The code part here is not directed to be used in projects out of the box,
+ but rather to produce a trail map to understand and to master the development
+ from the basis.
+ The motivation comes from my work as an assistant professor for the Computer
+ Engineering graduation at Universidade Severino Sombra (USS), located in
+ Vassouras, Rio de Janeiro.
+ The code will be build on JAVA, the language mostly adopted on the before
+ mentioned course.
+\end_layout
 
-gives computers the ability to learn without being explicitly programmed
+\begin_layout Section
+Some concepts about machine learning
+\end_layout
+
+\begin_layout Quote
+Machine learning, also called automatic learning, according to Arthur Samuel
+ in 1959, gives computers the ability to learn without being explicitly
+ programmed
 \begin_inset CommandInset citation
 LatexCommand cite
 key "key-1"
 
 \end_inset
 
-
-\begin_inset Quotes erd
-\end_inset
-
 .
 \end_layout
 
-\begin_layout Standard
-Andrew NG seems to rather saying: without being 
+\begin_layout Quote
+Andrew NG seems to rather saying: ...without being 
 \emph on
 apparently
 \emph default
@@ -201,8 +208,41 @@ Computer scientists have try to take several approaches to perform object
  We will see that a recognition algorithm does it works by automatically
  selecting some characteristics, but, as they evolve, we have no idea what
  characteristics it is selecting.
- Usually, a huge amount, and also, a huge blend of them, not necessarily
- something as evident as wheels, corners and wind shields.
+ (Usually, a huge amount, and also, a huge blend of them, not necessarily
+ something as evident as wheels, corners and wind shields).
+\end_layout
+
+\begin_layout Section
+About object parts
+\end_layout
+
+\begin_layout Verse
+\paragraph_spacing single
+
+\shape smallcaps
+\size scriptsize
+- 
+\begin_inset Quotes eld
+\end_inset
+
+We hear about sharks attacking humans by mistaken them for seals.
+ So, you are using your black diving suit, and a sharks classifies you as
+ a, no offense, seal?
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Verse
+We mentioned before that machine learning code can perform their task without
+ previous definition of the characteristics, or parts of the object will
+ be accounted for recognizance and classification.
+ But it is obvious that we recognize objects, like cars and dogs, by their
+ characteristics.
+ What is not obvious is what are the better characteristics that will enhance
+ our chances of success.
+ 
 \end_layout
 
 \begin_layout Bibliography
@@ -213,8 +253,8 @@ key "key-1"
 
 \end_inset
 
-Machine Learning, https://en.wikipedia.org/wiki/Machine_learning, visited
- in April 15, 2017
+Wikipedia, Machine Learning, https://en.wikipedia.org/wiki/Machine_learning,
+ visited in April 15, 2017
 \end_layout
 
 \begin_layout Bibliography
