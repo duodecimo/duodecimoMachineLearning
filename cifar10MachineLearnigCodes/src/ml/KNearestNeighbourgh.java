@@ -68,6 +68,12 @@ public class KNearestNeighbourgh {
             minDistance= new double[k]; //Double.MAX_VALUE;
             minTrain= new double[k]; //Double.MAX_VALUE;
             minLabel = new double[k];
+            // initialization
+            for(int i=0; i<k; i++) {
+                minDistance[i] = Double.MAX_VALUE;
+                minTrain[i] = Double.MAX_VALUE;
+                minLabel[i] = Double.MAX_VALUE;
+            }
             // calculate distance from each training
             for(int train=0; train < Cifar10Utils.TOT_EXAMPLES; train++) {
                 sumTr = Xtr.getRow(train);
