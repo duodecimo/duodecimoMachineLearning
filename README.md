@@ -9,3 +9,5 @@ optimized, rather, it is made to be easy to understand.
 The CIFAR-10 (https://www.cs.toronto.edu/~kriz/cifar.html) will be used for trainning and tests of neural networks.
 
 I will start by implementing the nn (nearest neighbourg) approach.
+
+I recomend start reading the wiki, but, please, consider this is a work on progress, and as for now, at the very starting point.
