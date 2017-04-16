@@ -86,7 +86,9 @@ This books intends to be a resource to be used for studying and researching
  of machine learning in computation, particularly in computer engineering.
  It is directed into developing and explaining computer code, and mathematics
  operations necessary for those who wish to enhance their abilities on this
- field.
+ field.It is oriented as well for image recognizing and classification, although
+ it studies algorithms that can be generically useful on other machine learning
+ recognition or classification.
  The code part here is not directed to be used in projects out of the box,
  but rather to produce a trail map to understand and to master the development
  from the basis.
