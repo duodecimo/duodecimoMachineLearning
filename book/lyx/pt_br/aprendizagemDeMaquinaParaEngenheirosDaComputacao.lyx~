@@ -1,0 +1,299 @@
+#LyX 2.1 created this file. For more info see http://www.lyx.org/
+\lyxformat 474
+\begin_document
+\begin_header
+\textclass book
+\use_default_options true
+\maintain_unincluded_children false
+\language brazilian
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_math auto
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command bibtex
+\index_command default
+\paperfontsize default
+\spacing onehalf
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+APRENDIZAGEM DE MÁQUINA PARA A ENGENHARIA DA COMPUTAÇÃO
+\end_layout
+
+\begin_layout Author
+Laurentino Duodécimo Rosado Fernandes
+\end_layout
+
+\begin_layout Chapter
+Introdução
+\end_layout
+
+\begin_layout Standard
+Este livro pretende ser um recurso para ser utilizado no estudo e pesquisa
+ de aprendizagem de máquina em computação, particularmente na engenharia
+ da computação.
+ É voltado para o desenvolvimento e a explicação de código de computador,
+ e as operações matemáticas necessárias para aqueles que desejam desenvolver
+ suas habilidades no campo.
+ A parte do código aqui não é voltada para uso imediato em projetos, mas
+ ao invés disto é voltada para produzir um mapa de trilha para entender
+ e dominar o desenvolvimento à partir da base.
+ A motivação vem de meu trabalho como professor assistente para o curso
+ de graduação em Engenharia da Computação na Universidade Severino Sombra
+ (USS) em Vassouras, Rio de Janeiro.
+ O código será construído em JAVA, a linguagem com maior adoção no referido
+ curso.
+\end_layout
+
+\begin_layout Section
+Alguns conceitos sobre aprendizagem de máquina
+\end_layout
+
+\begin_layout Quote
+Aprendizagem de máquina, também chamada de aprendizagem automática, de acordo
+ com Arthur Samuel em 1959, dota computadores com a habilidade de aprender
+ sem ser explicitamente programados 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "key-1"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Quote
+Andrew NG parece preferir dizer: ...sem serem 
+\emph on
+aparentemente
+\emph default
+ explicitamente programados 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "key-2,key-3"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Tome por exemplo uma criança pequena.
+ Alguém aponta um objeto para ela e diz algo como: - 
+\begin_inset Quotes eld
+\end_inset
+
+Olhe, um cachorro
+\begin_inset Quotes erd
+\end_inset
+
+, e então, - 
+\begin_inset Quotes eld
+\end_inset
+
+Alí, um carro!
+\begin_inset Quotes erd
+\end_inset
+
+, e assim por diante.
+ Algum tempo depois, a criança começa a mencionar os objetos quando os avista.
+ A criança aprendeu os nomes dos objetos e é capaz de classificá-los com
+ com um certo acerto.
+\end_layout
+
+\begin_layout Standard
+Alguns aspectos do processo de aprendizagem devem ser observados:
+\end_layout
+
+\begin_layout Itemize
+Apenas mostramos o objeto e o rotulamos.
+\end_layout
+
+\begin_layout Itemize
+A criança consegue reconhecer até certo ponto objetos diferentes da mesma
+ classe (diferentes marcas e modelos de carros, com cores, forma e tamanhos
+ diferentes, vários tipos de cachorro, com raças bem diferentes).
+\end_layout
+
+\begin_layout Itemize
+Nenhuma das particularidades, ou características do objeto precisam ser
+ ensinadas (um carro tem rodas, um cachorro olhos e boca, ...).
+\end_layout
+
+\begin_layout Standard
+Códigos de computador são conjuntos de instruções.
+ As instruções são estritas, são operações aplicadas em dados numéricos,
+ tipo, - 
+\begin_inset Quotes eld
+\end_inset
+
+some isso e armazene ali
+\begin_inset Quotes erd
+\end_inset
+
+, - 
+\begin_inset Quotes eld
+\end_inset
+
+compare isto e decida o que fazer com base no resultado
+\begin_inset Quotes erd
+\end_inset
+
+, - "repita estas operações até que ...", e assim por diante.
+ É uma tarefa fácil ensinar a uma criança a reconhecer um carro, é só apontar
+ e dizer o nome.
+ Mas pode não ser tão fácil ensinar um computador a fazer o mesmo formulando
+ instruções específicas em uma linguagem de computador.
+ Tudo isso será discutido em maior profundidade mais adiante no texto.
+ Pode-se tentar expressar propriedades dos componentes de um carro que permitam
+ realizar um reconhecimento correto, como por exemplo, deve ter rodas, deve
+ ter este formato ...
+ apenas pensar sobre esta tarefa mostra como ela é difícil.
+ Talvez possamos dizer que sabemos como reconhecer um carro, mas não sabemos
+ como fazemos isso.
+ Algumas teorias de ponta sobre o funcionamento de nossos cérebros propões
+ que existem nelas áreas especializadas em processar coisas, e muitas destas
+ áreas estão fora da parte que chamamos consciente.
+ Daí podemos fazê-lo (recebendo em nossa parte consciente do cérebro resultados
+ de processamento realizado na parte inconsciente de nossos cérebros), mas,
+ não sabemos como fazemos.
+\end_layout
+
+\begin_layout Standard
+Cientistas de computação têm tentado várias abordagens para realizar reconhecime
+nto de objetos, no campo mais genérico da inteligência artificial.
+ Tem havido algum sucesso na segmentação de características, mas com pouco
+ efeito em generalização.
+ Aí é onde o aprendizado automático tem, recentemente, recebido atenção
+ especial, e tem apresentado alguns resultados promissores.
+ Vamos ver que um algoritmo de reconhecimento não trabalha selecionando
+ previamente determinadas características, mas sim, a medida que seus processos
+ evoluem, fica mais difícil ter uma idéia de quais características estão
+ sendo utilizadas.
+ (Normalmente, uma grande quantidade, e também, uma grande mistura delas,
+ não necessariamentealgo evidente com rodas, cantos e para-brisas).
+\end_layout
+
+\begin_layout Section
+Sobre partes de objetos
+\end_layout
+
+\begin_layout Verse
+\paragraph_spacing single
+
+\shape smallcaps
+\size scriptsize
+- 
+\begin_inset Quotes eld
+\end_inset
+
+A gente ouve dizer sobre tubarões atacando pessoas por achar que elas são
+ focas.
+ Caramba, você está usando seu traje de mergulho prêto, e um tubarão classifica
+ você, sem ofensas, como uma foca?
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Verse
+Mencionamos anteriormente que código de aprendizagem de máquina pode realizar
+ sua tarefa sem prévia definição de características, ou partes do objeto
+ que serão consideradas para o reconhecimento e classificação.
+ Mas é óbvio que reconhecemos objetos, como carros e cachorros, por suas
+ características ou propriedades.
+ O que não é óbvio é saber quais as melhores características que aumentarão
+ nossas chances de sucesso.
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+label "1"
+key "key-1"
+
+\end_inset
+
+Wikipedia, Machine Learning, https://en.wikipedia.org/wiki/Machine_learning,
+ visited in April 15, 2017
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+label "2"
+key "key-2"
+
+\end_inset
+
+Coursera, https://pt.coursera.org/learn/machine-learning, visited in April
+ 14, 2017
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+label "3"
+key "key-3"
+
+\end_inset
+
+Andrew NG, http://www.andrewng.org/, visited in April 14, 2017
+\end_layout
+
+\end_body
+\end_document
