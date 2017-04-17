@@ -12,12 +12,24 @@ import static java.lang.Math.abs;
 import static java.lang.Math.abs;
 import static java.lang.Math.abs;
 import static java.lang.Math.abs;
+import static java.lang.Math.abs;
+import static java.lang.Math.abs;
+import static java.lang.Math.abs;
+import static java.lang.Math.abs;
+import static java.lang.Math.abs;
+import static java.lang.Math.abs;
+import static java.lang.Math.abs;
+import static java.lang.Math.abs;
+import static java.lang.Math.abs;
+import static java.lang.Math.abs;
+import static java.lang.Math.abs;
+import static java.lang.Math.abs;
 
 public class KNearestNeighbourgh {
         //  Xtr (of size 50,000 x 32 x 32 x 3) holds all the images in the training set,
         // and a corresponding 1-dimensional array Ytr (of length 50,000) holds the training labels
         // (from 0 to 9)
-        // Xtr = TOT_EXAMPLES x TOT_PIXELS
+        // Xtr = TOT_TRAINNINGS x TOT_PIXELS
         // Xte and Yte do the same for the testing set.
         RealMatrix Xtr, Ytr, Xte, Yte;
         Cifar10Utils cifar10Utils;
@@ -75,7 +87,7 @@ public class KNearestNeighbourgh {
                 minLabel[i] = Double.MAX_VALUE;
             }
             // calculate distance from each training
-            for(int train=0; train < Cifar10Utils.TOT_EXAMPLES; train++) {
+            for(int train=0; train < Cifar10Utils.TOT_TRAINNINGS; train++) {
                 sumTr = Xtr.getRow(train);
                 distance = 0D;
                 for(int i=0; i<Cifar10Utils.TOT_BYTES; i++) {
