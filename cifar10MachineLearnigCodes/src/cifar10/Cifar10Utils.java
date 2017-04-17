@@ -249,9 +249,10 @@ public class Cifar10Utils {
                 InputStream fis = new FileInputStream("./data/batches.meta.txt");
                 InputStreamReader isr = new InputStreamReader(fis, Charset.forName("UTF-8"));
                 BufferedReader br = new BufferedReader(isr);) {
-            while ((line = br.readLine()) != null && index<9) {
-                namesRetrieval[index++] = line;
+            while ((line = br.readLine()) != null && index<10) {
+                namesRetrieval[index] = line;
                 System.out.println("name[" + index + "] = " + line);
+                index++;
             }
         }
         return namesRetrieval;
