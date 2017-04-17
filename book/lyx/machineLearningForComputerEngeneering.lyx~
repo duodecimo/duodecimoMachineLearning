@@ -86,7 +86,9 @@ This books intends to be a resource to be used for studying and researching
  of machine learning in computation, particularly in computer engineering.
  It is directed into developing and explaining computer code, and mathematics
  operations necessary for those who wish to enhance their abilities on this
- field.
+ field.It is oriented as well for image recognizing and classification, although
+ it studies algorithms that can be generically useful on other machine learning
+ recognition or classification.
  The code part here is not directed to be used in projects out of the box,
  but rather to produce a trail map to understand and to master the development
  from the basis.
@@ -236,13 +238,64 @@ We hear about sharks attacking humans by mistaken them for seals.
 
 \begin_layout Verse
 We mentioned before that machine learning code can perform their task without
- previous definition of the characteristics, or parts of the object will
- be accounted for recognizance and classification.
+ previous definition of the characteristics, or parts of the object, or
+ else features that will be accounted for recognizance and classification.
  But it is obvious that we recognize objects, like cars and dogs, by their
  characteristics.
  What is not obvious is what are the better characteristics that will enhance
  our chances of success.
  
+\end_layout
+
+\begin_layout Section
+About images
+\end_layout
+
+\begin_layout Verse
+Several objects may be associated with it's image.
+ Naturally an image is an effect of how humans and animals perceive light
+ reflection using their visual system.
+ Sooner humans found out that images could be represented using drawings
+ and sculptures.
+ There was the development of photography and movie.
+ And then, we arrive at modern digitalized images that are stored and transfered
+ trough out modern computers and networks.
+\end_layout
+
+\begin_layout Verse
+Images are features, and are composed of a huge set of features that can
+ help to characterize, recognize and classify an object.
+ Take the cifar-10 set of images.
+ There are pictures of animals and other things, like this car:
+\end_layout
+
+\begin_layout Verse
+\begin_inset Graphics
+	filename /home/duo/NetBeansProjects/gitHub/duodecimoMachineLearning/cifar10MachineLearnigCodes/out.jpg
+
+\end_inset
+
+ This red car data is composed by a 
+\begin_inset Formula $32$
+\end_inset
+
+
+\begin_inset Formula $x$
+\end_inset
+
+ 
+\begin_inset Formula $32$
+\end_inset
+
+ array of pixels, 
+\begin_inset Formula $\begin{pmatrix}p_{1}^{1} & p_{2}^{1} & \cdots & p_{32}^{1}\\
+p_{1}^{2} & p_{2}^{2} & \cdots & p_{32}^{2}\\
+\vdots & \vdots & \cdots & \vdots\\
+p_{1}^{32} & p_{2}^{32} & \cdots & p_{32}^{32}
+\end{pmatrix}$
+\end_inset
+
+ Each pixel is composed by 3 integer values, in the range of 
 \end_layout
 
 \begin_layout Bibliography

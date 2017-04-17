@@ -88,6 +88,9 @@ Este livro pretende ser um recurso para ser utilizado no estudo e pesquisa
  É voltado para o desenvolvimento e a explicação de código de computador,
  e as operações matemáticas necessárias para aqueles que desejam desenvolver
  suas habilidades no campo.
+ É voltado também para reconhecimento e classificação de imagens, apesar
+ de estudar algoritmos que podem ser genericamente utilizados em outras
+ abordagens de aprendizagem de máquina.
  A parte do código aqui não é voltada para uso imediato em projetos, mas
  ao invés disto é voltada para produzir um mapa de trilha para entender
  e dominar o desenvolvimento à partir da base.

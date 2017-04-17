@@ -269,7 +269,6 @@ Images are features, and are composed of a huge set of features that can
  There are pictures of animals and other things, like this car:
 \end_layout
 
-\begin_deeper
 \begin_layout Verse
 \begin_inset Graphics
 	filename /home/duo/NetBeansProjects/gitHub/duodecimoMachineLearning/cifar10MachineLearnigCodes/out.jpg
@@ -289,30 +288,16 @@ Images are features, and are composed of a huge set of features that can
 \end_inset
 
  array of pixels, 
-\begin_inset Formula $\begin{pmatrix}p_{1}^{1} & p_{2}^{1} & \cdots & p_{32}^{1}\\
-p_{1}^{2} & p_{2}^{2} & \cdots & p_{32}^{2}\\
-\vdots & \vdots & \cdots & \vdots\\
-p_{1}^{32} & p_{2}^{32} & \cdots & p_{32}^{32}
+\begin_inset Formula $\begin{pmatrix}p_{1}^{1} & p_{2}^{1} & ... & p_{32}^{1}\\
+p_{1}^{1}\\
+\\
+p_{1}^{1}
 \end{pmatrix}$
 \end_inset
 
- .
- Each pixel 
-\begin_inset Formula $p_{c}^{l}$
-\end_inset
-
- is composed by 3 integer values, in the range of 
-\begin_inset Formula $0$
-\end_inset
-
- to 
-\begin_inset Formula $255$
-\end_inset
-
- , representing the intensity of each of three colors, red, green and blue.
+ Each pixel is composed by 3 integer values, in the range of 
 \end_layout
 
-\end_deeper
 \begin_layout Bibliography
 \begin_inset CommandInset bibitem
 LatexCommand bibitem

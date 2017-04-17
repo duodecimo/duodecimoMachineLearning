@@ -89,8 +89,9 @@ Este livro pretende ser um recurso para ser utilizado no estudo e pesquisa
  e as operações matemáticas necessárias para aqueles que desejam desenvolver
  suas habilidades no campo.
  É voltado também para reconhecimento e classificação de imagens, apesar
- de estudar algoritmos que podem ser genéricamente utilizados em qualquer
-  A parte do código aqui não é voltada para uso imediato em projetos, mas
+ de estudar algoritmos que podem ser genericamente utilizados em outras
+ abordagens de aprendizagem de máquina.
+ A parte do código aqui não é voltada para uso imediato em projetos, mas
  ao invés disto é voltada para produzir um mapa de trilha para entender
  e dominar o desenvolvimento à partir da base.
  A motivação vem de meu trabalho como professor assistente para o curso
@@ -262,6 +263,130 @@ Mencionamos anteriormente que código de aprendizagem de máquina pode realizar
  nossas chances de sucesso.
 \end_layout
 
+\begin_layout Section
+Sobre imagens
+\end_layout
+
+\begin_layout Verse
+Vários objetos podem ser associados com suas imagens.
+ Naturalmente uma imagem é um efeito de como os animais percebem a refexão
+ da luz utilizando o sistema visual.
+ Desde cedo humanos descobriram que imagens podem ser representadas utilizando
+ desenhos e esculturas.
+ Hou o desenvolvimento da fotografia e do cinema.
+ Então, chegamos às imagens digitalizadas modernas, que são armazenadas
+ e transferidas através de nossos computadores e redes.
+\end_layout
+
+\begin_layout Verse
+Imagens são propriedades, e são por sua vez compostas por grandes conjuntos
+ de propriedades que podem ajudar a caracterizar, reconhecer e classificar
+ um objeto.
+ Tome por exemplo o conjunto cifar-10 de imagens.
+ Possui imagens de animais e outras coisas, como este carro:
+\end_layout
+
+\begin_layout Verse
+
+\lang english
+\begin_inset Graphics
+	filename /home/duo/NetBeansProjects/gitHub/duodecimoMachineLearning/cifar10MachineLearnigCodes/out.jpg
+
+\end_inset
+
+
+\lang brazilian
+ Os dados deste carro são compostos por uma matriz de 
+\begin_inset Formula $32$
+\end_inset
+
+
+\begin_inset Formula $x$
+\end_inset
+
+
+\begin_inset Formula $32$
+\end_inset
+
+ pixel, 
+\lang english
+
+\begin_inset Formula $\begin{pmatrix}p_{1}^{1} & p_{2}^{1} & \cdots & p_{32}^{1}\\
+p_{1}^{2} & p_{2}^{2} & \cdots & p_{32}^{2}\\
+\vdots & \vdots & \cdots & \vdots\\
+p_{1}^{32} & p_{2}^{32} & \cdots & p_{32}^{32}
+\end{pmatrix}$
+\end_inset
+
+
+\lang brazilian
+ .
+ Cada pixel 
+\lang english
+
+\begin_inset Formula $p_{c}^{l}$
+\end_inset
+
+
+\lang brazilian
+ é composto de 3 valores inteiros, no intervalo entre 
+\begin_inset Formula $0$
+\end_inset
+
+ e 
+\begin_inset Formula $255$
+\end_inset
+
+, reresentando a intensidade 
+\end_layout
+
+\begin_deeper
+\begin_layout Verse
+
+\lang english
+\begin_inset Graphics
+	filename /home/duo/NetBeansProjects/gitHub/duodecimoMachineLearning/cifar10MachineLearnigCodes/out.jpg
+
+\end_inset
+
+ Os dados deste carro são compostos de uma matriz de pixels This red car
+ data is composed by a 
+\begin_inset Formula $32$
+\end_inset
+
+
+\begin_inset Formula $x$
+\end_inset
+
+ 
+\begin_inset Formula $32$
+\end_inset
+
+ array of pixels, 
+\begin_inset Formula $\begin{pmatrix}p_{1}^{1} & p_{2}^{1} & \cdots & p_{32}^{1}\\
+p_{1}^{2} & p_{2}^{2} & \cdots & p_{32}^{2}\\
+\vdots & \vdots & \cdots & \vdots\\
+p_{1}^{32} & p_{2}^{32} & \cdots & p_{32}^{32}
+\end{pmatrix}$
+\end_inset
+
+ .
+ Each pixel 
+\begin_inset Formula $p_{c}^{l}$
+\end_inset
+
+ is composed by 3 integer values, in the range of 
+\begin_inset Formula $0$
+\end_inset
+
+ to 
+\begin_inset Formula $255$
+\end_inset
+
+ , representing the intensity of each of three colors, red, green and blue.
+\end_layout
+
+\end_deeper
 \begin_layout Bibliography
 \begin_inset CommandInset bibitem
 LatexCommand bibitem
