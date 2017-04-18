@@ -9,20 +9,23 @@ import cifar10.Cifar10Utils;
 import java.io.IOException;
 import org.apache.commons.math3.linear.RealMatrix;
 import static java.lang.Math.abs;
-import static java.lang.Math.abs;
-import static java.lang.Math.abs;
-import static java.lang.Math.abs;
 
+/**
+ * The class NearestNeighbourgh uses the nearest neighbourgh algorithm to classify
+ * images from CIFAR-10 dataset.
+ * 
+ * @author duo
+ */
 public class NearestNeighbourgh {
-        //  Xtr (of size 50,000 x 32 x 32 x 3) holds all the images in the training set,
-        // and a corresponding 1-dimensional array Ytr (of length 50,000) holds the training labels
-        // (from 0 to 9)
-        // Xtr = TOT_TRAINNINGS x TOT_PIXELS
-        // Xte and Yte do the same for the testing set.
         RealMatrix Xtr, Ytr, Xte, Yte;
         Cifar10Utils cifar10Utils;
 
     public NearestNeighbourgh() throws IOException {
+        /**
+         * The class cifar10.Cifar10Utils from this package is well documented
+         * and it is strongly recomended the reading of its comments explainning
+         * how it works, what it does and why before going further.
+        */
         cifar10Utils = new Cifar10Utils();
         Xtr = cifar10Utils.getXtr();
         Xte = cifar10Utils.getXte();
