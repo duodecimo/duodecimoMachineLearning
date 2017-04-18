@@ -14,6 +14,18 @@ import static java.lang.Math.abs;
  * The class NearestNeighbourgh uses the nearest neighbourgh algorithm to classify
  * images from CIFAR-10 dataset.
  * 
+ * The nearest neighbourgh (nn) algorithm will check a testing image against a set of
+ * trainning images, to find out witch of the trainning images is the closest to
+ * the testing, and then classify the testing with the  same class of this closest
+ * trainning image.
+ * 
+ * Each Cifar-10 images has 32x32x3 bytes, = 3072 bytes.
+ * We will calculate the distance betwwen the testing image and the trainnig image.
+ * That will be the sum, for i going from 0 to 3071 of mod(Te[i] - Tr[i]). 
+ * The result will be a numeric value.
+ * The nn algorithm will classify the testing image as belonging to the same class
+ * of the closest trainning image.
+ * 
  * @author duo
  */
 public class NearestNeighbourgh {
@@ -49,8 +61,12 @@ public class NearestNeighbourgh {
         int maxDisplays = 90;
         // for each image in tests
         for(int test = 0; test < Cifar10Utils.TOT_TESTS; test++) {
+            // retrieve a row of test, exactly the 32x32x3 (3072) bytes of a image.
             sumTe = Xte.getRow(test);
+            // initialize minDistance with the maximum possible value. A inital low
+            // value, that can be lower than all distances, may lead to a wrong result.
             minDistance=Double.MAX_VALUE;
+            // to hild the row number where there is the less distance.
             minTrain=Double.MAX_VALUE;
             // calculate distance from each training
             for(int train=0; train < Cifar10Utils.TOT_TRAINNINGS; train++) {
