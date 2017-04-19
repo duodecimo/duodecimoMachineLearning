@@ -10,22 +10,45 @@ import java.io.IOException;
 import org.apache.commons.math3.linear.RealMatrix;
 import static java.lang.Math.abs;
 import static java.lang.Math.abs;
-import static java.lang.Math.abs;
-import static java.lang.Math.abs;
-import static java.lang.Math.abs;
-import static java.lang.Math.abs;
-import static java.lang.Math.abs;
-import static java.lang.Math.abs;
-import static java.lang.Math.abs;
-import static java.lang.Math.abs;
-import static java.lang.Math.abs;
-import static java.lang.Math.abs;
-import static java.lang.Math.abs;
-import static java.lang.Math.abs;
-import static java.lang.Math.abs;
-import static java.lang.Math.abs;
 
-public class KNearestNeighbourgh {
+/**
+ * The class KnearestNeighbourgh uses the nearest neighbourgh algorithm to classify
+ * images from CIFAR-10 dataset.
+ * 
+ * The k-nearest neighbourgh (knn) algorithm will check a testing image against a set of
+ * trainning images, to find out witch of the k trainning images, k representing 
+ * a integer value, (i.e k ={1, 2, 3, ...}, are the closest to the testing, and then
+ * classify the testing with the same class of the trainning image that appeared
+ * amost among this k closests.
+ * 
+ * For example, suppose k = 5. After calculating the distances between a trainning
+ * image Te[i], against all Tr[m] images, you get as the 5 least distances:
+ * distance[0] = 121 (comparing to image Tr[323], labeled label[3]
+ * distance[1] = 247 (comparing to image Tr[479], labeled label[7]
+ * distance[2] = 121 (comparing to image Tr[632], labeled label[2]
+ * distance[3] = 121 (comparing to image Tr[789], labeled label[7]
+ * distance[4] = 121 (comparing to image Tr[931], labeled label[4]
+ * 
+ * If it was the nn neighbourg, that takes the closest distance, the test image 
+ * TE[i] would be classified as from the class label[3]. In fact, if we make k = 1,
+ * we must have the same result for the knn as the nn algorithm.
+ * 
+ * But, as in our example we are consideing k = 5, even if the closest distance found
+ * was 121, the label that most appeared among the five closests is label[7], that
+ * appeared in distance[1] and distance[3]. In this example it appeared twice, while
+ * the other labels appeared once each.
+ * 
+ * Each Cifar-10 images has 32x32x3 bytes, = 3072 bytes.
+ * If we want to calculate distances betwwen a testing image and a trainnig image,
+ * the same as we did in the nn.
+ * That will be the sum, for i going from 0 to 3071 of mod(Te[i] - Tr[i]). 
+ * The result will be a numeric value.
+ * 
+ * @see NearestNeighbourgh()
+ * 
+ * @author duo
+ */
+public class KnearestNeighbourgh {
         //  Xtr (of size 50,000 x 32 x 32 x 3) holds all the images in the training set,
         // and a corresponding 1-dimensional array Ytr (of length 50,000) holds the training labels
         // (from 0 to 9)
@@ -34,7 +57,7 @@ public class KNearestNeighbourgh {
         RealMatrix Xtr, Ytr, Xte, Yte;
         Cifar10Utils cifar10Utils;
 
-    public KNearestNeighbourgh(int k) throws IOException {
+    public KnearestNeighbourgh(int k) throws IOException {
         cifar10Utils = new Cifar10Utils();
         Xtr = cifar10Utils.getXtr();
         Xte = cifar10Utils.getXte();
@@ -146,6 +169,6 @@ public class KNearestNeighbourgh {
     }
 
     public static void main(String[] args) throws IOException {
-        KNearestNeighbourgh nn = new KNearestNeighbourgh(5);
+        KnearestNeighbourgh nn = new KnearestNeighbourgh(5);
     }
 }

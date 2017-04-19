@@ -20,7 +20,7 @@ import static java.lang.Math.abs;
  * trainning image.
  * 
  * Each Cifar-10 images has 32x32x3 bytes, = 3072 bytes.
- * We will calculate the distance betwwen the testing image and the trainnig image.
+ * If we want to calculate distances betwwen a testing image and a trainnig image.
  * That will be the sum, for i going from 0 to 3071 of mod(Te[i] - Tr[i]). 
  * The result will be a numeric value.
  * The nn algorithm will classify the testing image as belonging to the same class
