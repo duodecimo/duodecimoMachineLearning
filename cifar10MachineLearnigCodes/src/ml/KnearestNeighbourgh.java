@@ -17,26 +17,28 @@ import static java.lang.Math.abs;
  * 
  * The k-nearest neighbourgh (knn) algorithm will check a testing image against a set of
  * trainning images, to find out witch of the k trainning images, k representing 
- * a integer value, (i.e k ={1, 2, 3, ...}, are the closest to the testing, and then
+ * a integer value, (i.e k ={1, 2, 3, ...}), are the closest to the testing, and then
  * classify the testing with the same class of the trainning image that appeared
  * amost among this k closests.
  * 
  * For example, suppose k = 5. After calculating the distances between a trainning
- * image Te[i], against all Tr[m] images, you get as the 5 least distances:
- * distance[0] = 121 (comparing to image Tr[323], labeled label[3]
- * distance[1] = 247 (comparing to image Tr[479], labeled label[7]
- * distance[2] = 121 (comparing to image Tr[632], labeled label[2]
- * distance[3] = 121 (comparing to image Tr[789], labeled label[7]
- * distance[4] = 121 (comparing to image Tr[931], labeled label[4]
+ * image Te[i], against all Tr[m] images, you get this 5 closest distances:
  * 
- * If it was the nn neighbourg, that takes the closest distance, the test image 
+ * closestDistances[0] = 121 (comparing to image Tr[323], labeled label[3])
+ * closestDistances[1] = 247 (comparing to image Tr[479], labeled label[7])
+ * closestDistances[2] = 349 (comparing to image Tr[632], labeled label[2])
+ * closestDistances[3] = 451 (comparing to image Tr[789], labeled label[7])
+ * closestDistances[4] = 658 (comparing to image Tr[931], labeled label[4])
+ * 
+ * If it was the nn , that takes the closest distance, the test image 
  * TE[i] would be classified as from the class label[3]. In fact, if we make k = 1,
  * we must have the same result for the knn as the nn algorithm.
  * 
- * But, as in our example we are consideing k = 5, even if the closest distance found
- * was 121, the label that most appeared among the five closests is label[7], that
- * appeared in distance[1] and distance[3]. In this example it appeared twice, while
- * the other labels appeared once each.
+ * But, as in our example we are considering k = 5, even if the closest distance
+ * found was 121, the label that most appeared among the five closests is label[7],
+ * that appeared in distance[1] and distance[3]. In this example it appeared twice, 
+ * while the other labels appeared once each. In case there is a draw, we then pick
+ * the closest label among the drawing ones.
  * 
  * Each Cifar-10 images has 32x32x3 bytes, = 3072 bytes.
  * If we want to calculate distances betwwen a testing image and a trainnig image,
