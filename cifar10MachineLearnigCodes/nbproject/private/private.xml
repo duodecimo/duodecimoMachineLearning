@@ -5,8 +5,8 @@
         <group>
             <file>file:/home/duo/NetBeansProjects/gitHub/duodecimoMachineLearning/cifar10MachineLearnigCodes/src/ml/NearestNeighbourgh.java</file>
             <file>file:/home/duo/NetBeansProjects/gitHub/duodecimoMachineLearning/cifar10MachineLearnigCodes/src/cifar10/Cifar10Utils.java</file>
-            <file>file:/home/duo/NetBeansProjects/gitHub/duodecimoMachineLearning/cifar10MachineLearnigCodes/src/ml/KNearestNeighbourgh.java</file>
             <file>file:/home/duo/NetBeansProjects/gitHub/duodecimoMachineLearning/cifar10MachineLearnigCodes/data/batches.meta.txt</file>
+            <file>file:/home/duo/NetBeansProjects/gitHub/duodecimoMachineLearning/cifar10MachineLearnigCodes/src/ml/KnearestNeighbourgh.java</file>
         </group>
     </open-files>
 </project-private>
