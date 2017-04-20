@@ -20,7 +20,7 @@ import java.util.List;
  * trainning images, to find out witch of the k trainning images, k representing 
  * a integer value, (i.e k ={1, 2, 3, ...}), are the closest to the testing, and then
  * classify the testing with the same class of the trainning image that appeared
- * amost among this k closests.
+ * most among this k closests.
  * 
  * For example, suppose k = 5. After calculating the distances between a trainning
  * image Te[i], against all Tr[m] images, you get this 5 closest distances:
@@ -56,6 +56,8 @@ public class KnearestNeighbourgh {
         Cifar10Utils cifar10Utils;
 
     public KnearestNeighbourgh(int k) throws IOException {
+        if(k>2) System.out.println("Running " + k + "-nearestNeighbourgh");
+        else System.out.println("Running nearestNeighbourgh");
         /**
          * The class cifar10.Cifar10Utils from this package is well documented
          * and it is strongly recomended the reading of its comments explainning
@@ -71,30 +73,25 @@ public class KnearestNeighbourgh {
     }
 
     final void kNearestNeighbourEvaluation(int k) throws IOException {
-        double distance;
-        double distanceSwap;
+        double distance, distanceSwap;
         double[] closestDistances;
         double[] closestTrains;
         double[] closestLabels;
+        int[] closestLabelsTimes;
         double accuracy = 0D;
         double[] sumTr;
         double[] sumTe;
         double[] util;
-        double pickedK;
-        int countingK;
-        int anteriorCountingK;
-        List<double[]> score;
-        int[] labelAppearances;
         boolean hit = false;
         int maxDisplays = 90;
         // for each image in tests
-        if(k>2) System.out.println("Running " + k + "-nearestNeighbourgh");
-        else System.out.println("Running nearestNeighbourgh");
         for(int test = 0; test < Cifar10Utils.TOT_TESTS; test++) {
             sumTe = Xte.getRow(test);
             closestDistances= new double[k];
             closestTrains= new double[k];
             closestLabels = new double[k];
+            int mostOcurredLabelIndex;
+            closestLabelsTimes = new int[10];
             // initialization
             for(int i=0; i<k; i++) {
                 closestDistances[i] = Double.MAX_VALUE;
@@ -122,45 +119,30 @@ public class KnearestNeighbourgh {
                 }
             }
             util = Yte.getRow(test);
-            // pick the label that occured most
-            // lets build a empty array list to hold the score
-            score = new ArrayList<>();
-            // and use int[] to count the appearances of each score
-            labelAppearances = new int[10];
-            for(int l=0; l<k;l++) labelAppearances[l] = 0;
-            double[] scoreValue = new double[2];
-            for(int i = 0; i<k; i++) {
-                scoreValue[0] = closestLabels[i];
-                scoreValue[1] = closestTrains[i];
-                if(!score.contains(scoreValue)) {
-                    score.add(scoreValue);
-                }
-                labelAppearances[(int)closestLabels[i]]++;
+            // clean closestLabelsTimes
+            for(int l=0; l<10; l++) {
+                closestLabelsTimes[l] = 0;
             }
-            // display scores
-            System.out.println("Score for test " + test);
-            for(double[] value : score) {
-                System.out.println("closest: " + value[0] + " trainning: " + value[1]);
-            }
+            // count how many times labels appeared in k closestDistances
             for(int l=0; l<k; l++) {
-                System.out.println("label " + l + " ocurred " + labelAppearances[l] + " times");
+                closestLabelsTimes[(int) closestLabels[l]] ++;
             }
-            // lets check the label with most appearances
-            pickedK = -1;
-            countingK = -1;
-            for(int l = 0; l<10; l++) {
-                if(labelAppearances[l] > countingK) {
-                    pickedK = l;
-                    countingK = labelAppearances[l];
+            // pick among the k closest distances the label that ocurred most times
+            mostOcurredLabelIndex = 0;
+            for(int l=0; l<9; l++) {
+                if(closestLabelsTimes[l+1] > closestLabelsTimes[l]) {
+                    mostOcurredLabelIndex = l+1;
                 }
             }
-            System.out.println("most occurences: " + pickedK + " with " + countingK);
+            System.out.println("most occurences: " + mostOcurredLabelIndex + " with " + closestLabelsTimes[mostOcurredLabelIndex]);
             //System.exit(0);
             // the test was classified with label pickedK!
-            if(util[0] == labelAppearances[(int) pickedK]) {
+            if(util[0] == mostOcurredLabelIndex) {
                 accuracy++;
             }
             /*
+            // lets display some hits and fails alternating them:
+            // shows a pair of fails alternanting with a pair of hittings
             if(util[0] == labelAppearances[(int) pickedK]) {
                 if (!hit && maxDisplays-->0) {
                     cifar10Utils.displayImage(Xtr.getRow((int) closestTrains[(int) pickedK]), closestLabels[(int) pickedK]);
@@ -175,7 +157,6 @@ public class KnearestNeighbourgh {
                 }
             }
             */
-            // lets display some hits and fails alternating them
             //System.out.println("test: " +test +
             //        " distancia minima: " + closestDistances +
             //        " label teste: " + util[0] +
