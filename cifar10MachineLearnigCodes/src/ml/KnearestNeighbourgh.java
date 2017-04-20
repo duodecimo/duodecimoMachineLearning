@@ -9,8 +9,8 @@ import cifar10.Cifar10Utils;
 import java.io.IOException;
 import org.apache.commons.math3.linear.RealMatrix;
 import static java.lang.Math.abs;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * The class KnearestNeighbourgh uses the nearest neighbourgh algorithm to classify
@@ -52,11 +52,13 @@ import java.util.List;
  * @author duo
  */
 public class KnearestNeighbourgh {
-        RealMatrix Xtr, Ytr, Xte, Yte;
-        Cifar10Utils cifar10Utils;
-
+        private final RealMatrix Xtr, Ytr, Xte, Yte;
+        private final Cifar10Utils cifar10Utils;
+        //protected final Logger log = Logger.getLogger();
+        private static final Logger LOGGER = Logger.getGlobal();
     public KnearestNeighbourgh(int k) throws IOException {
-        System.out.println("Running " + k + "-nearestNeighbourgh");
+        LOGGER.log(Level.INFO, "Running {0}-nearestNeighbourgh", k);
+        LOGGER.setLevel(Level.INFO);
         /**
          * The class cifar10.Cifar10Utils from this package is well documented
          * and it is strongly recomended the reading of its comments explainning
@@ -68,7 +70,6 @@ public class KnearestNeighbourgh {
         Ytr = cifar10Utils.getYtr();
         Yte = cifar10Utils.getYte();
         kNearestNeighbourEvaluation(k);
-        System.exit(0);
     }
 
     final void kNearestNeighbourEvaluation(int k) throws IOException {
@@ -133,9 +134,10 @@ public class KnearestNeighbourgh {
                     mostOcurredLabelIndex = l+1;
                 }
             }
-            System.out.println("test " + test + ": most occurences: " + mostOcurredLabelIndex + " with " + closestLabelsTimes[mostOcurredLabelIndex]);
-            //System.exit(0);
-            // the test was classified with label pickedK!
+            LOGGER.log(Level.FINER, "test {0}: most occurences: {1} with {2}", 
+                    new Object[]{test, + mostOcurredLabelIndex, 
+                        closestLabelsTimes[mostOcurredLabelIndex]});
+            // the test was classified with mostOcurredLabelIndex!
             if(util[0] == mostOcurredLabelIndex) {
                 accuracy++;
             }
@@ -152,10 +154,10 @@ public class KnearestNeighbourgh {
                 }
             }
         }
-        System.out.println("Accuracy = " + (accuracy * 100 /(Cifar10Utils.TOT_TESTS)) + "% with " +
-                Cifar10Utils.TOT_TESTS + " tests against " + Cifar10Utils.TOT_TRAINNINGS + 
-                " trainning for examples."
-        );
+        LOGGER.log(Level.INFO, "Accuracy = {0}% with {1} tests against {2} trainning for examples.", 
+                new Object[]{accuracy * 100 /(Cifar10Utils.TOT_TESTS), Cifar10Utils.TOT_TESTS, 
+                    Cifar10Utils.TOT_TRAINNINGS});
+        LOGGER.info("Close the frame to shutdown the application.");
     }
 
     public static void main(String[] args) throws IOException {

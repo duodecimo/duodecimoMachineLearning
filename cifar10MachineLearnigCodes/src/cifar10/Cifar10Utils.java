@@ -18,10 +18,13 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.WindowConstants;
 import org.apache.commons.math3.linear.Array2DRowRealMatrix;
 import org.apache.commons.math3.linear.RealMatrix;
 
@@ -133,6 +136,7 @@ public class Cifar10Utils {
     private final RealMatrix Xtr, Ytr, Xte, Yte;
     private final String[] names;
     private JFrame jFrame;
+    private static final Logger LOGGER = Logger.getGlobal();
 
     /**
      * the constructor method
@@ -140,8 +144,9 @@ public class Cifar10Utils {
      * @throws IOException 
      */
     public Cifar10Utils() throws IOException {
-        System.out.println("Cifar10Utils: reading " + TOT_TRAINNINGS + " images from example files");
-        System.out.println("Cifar10Utils: read " + TOT_TESTS + " images from test file");
+        LOGGER.setLevel(Level.INFO);
+        LOGGER.log(Level.INFO, "Cifar10Utils: reading {0} images from example files", TOT_TRAINNINGS);
+        LOGGER.log(Level.INFO, "Cifar10Utils: read {0} images from test file", TOT_TESTS);
         /**
          * org.apache.commons.math3.linear.RealMatrix.Xtr,
          * a matrix with TOT_TRAINNINGS rows and TOT_BYTES columns.
@@ -249,10 +254,10 @@ public class Cifar10Utils {
                 InputStream fis = new FileInputStream("./data/batches.meta.txt");
                 InputStreamReader isr = new InputStreamReader(fis, Charset.forName("UTF-8"));
                 BufferedReader br = new BufferedReader(isr);) {
-            System.out.println("List of labels:");
+            LOGGER.log(Level.FINE, "List of labels:");
             while ((line = br.readLine()) != null && index<10) {
                 namesRetrieval[index] = line;
-                System.out.println("label[" + index + "] = " + line);
+                LOGGER.log(Level.FINE, "label[{0}] = {1}", new Object[]{index, line});
                 index++;
             }
         }
@@ -266,22 +271,16 @@ public class Cifar10Utils {
         inputStream = new FileInputStream(fileName);
         int readings;
         readings = inputStream.read(b);
-        System.out.println("file: "
-                + fileName + " readings: " + readings
-                + " (" + nImages + " * " + (readings / nImages) + ")");
-        System.out.println("should read: " + nImages * CIFAR_LINE);
+        LOGGER.log(Level.FINE, "file: {0} readings: {1} ({2} * {3})", 
+                new Object[]{fileName, readings, nImages, readings / nImages});
+        LOGGER.log(Level.FINER, "should read: {0}", nImages * CIFAR_LINE);
         for (int row = 0; row < nImages; row++) {
             label[0] = b[row * CIFAR_LINE] & 0xFF;
             Y.setRow(row + initRow, label);
             for (int col = 1; col < CIFAR_LINE; col++) {
                 X.setEntry(row + initRow, col - 1, b[row * CIFAR_LINE + col] & 0xFF);
             }
-            System.out.println("row: " + (row + initRow) + " label: " + label[0]);
-            /*
-            if(row%20==0) {
-                displayImage(b);
-            }
-             */
+            LOGGER.log(Level.FINER, "row: {0} label: {1}", new Object[]{row + initRow, label[0]});
         }
     }
 
@@ -302,12 +301,6 @@ public class Cifar10Utils {
             Xtr.setRow(index2, tmpX);
             Ytr.setRow(index2, tmpY);
         }
-        // show some trains lines
-        //double[] util = new double[1]; 
-        //for (int k = 0; k < 10 * 18; k++) {
-        //    util = Ytr.getRow(k);
-        //    displayImage(Xtr.getRow(k), util[0]);
-        //}
 
         // shuffle tests
         for (int i = 0; i < TOT_TESTS / 10; i++) {
@@ -336,9 +329,10 @@ public class Cifar10Utils {
      */
     public JFrame getjFrame() {
         if (jFrame == null) {
-            jFrame = new JFrame("Mostrando imagem");
+            jFrame = new JFrame("Image Display");
             jFrame.setLayout(new FlowLayout());
             jFrame.setBounds(100, 100, 680, 630);
+            jFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         }
         return jFrame;
     }
@@ -355,7 +349,6 @@ public class Cifar10Utils {
 
     public void displayImage(byte[] b, double index) throws IOException {
         // just display an image
-        //System.out.println("Displaying image from b[] lenght: " + b.length);
         BufferedImage image = new BufferedImage(32, 32, BufferedImage.TYPE_INT_RGB);
         for (int row = 0; row < 32; row++) {
             for (int col = 0; col < 32; col++) {
@@ -373,11 +366,10 @@ public class Cifar10Utils {
         label.setVerticalTextPosition(JLabel.BOTTOM);
         label.setFont(new Font(label.getFont().getName(), Font.PLAIN, 6));
         jFrame.getContentPane().add(label);
-        //jFrame.getContentPane().add(new JLabel(new ImageIcon(image)));
         jFrame.setVisible(true);
         boolean result = ImageIO.write(image, "jpeg", new FileOutputStream("./out.jpg"));
         if (!result) {
-            System.err.println("failed");
+            LOGGER.log(Level.WARNING, "Fail converting image.");
         }
     }
 
@@ -392,7 +384,6 @@ public class Cifar10Utils {
      */
     public void displayImage(double[] b, double index) throws IOException {
         // just display an image
-        // System.out.println("Displaying image from b[] lenght: " + b.length);
         BufferedImage image = new BufferedImage(32, 32, BufferedImage.TYPE_INT_RGB);
         for (int row = 0; row < 32; row++) {
             for (int col = 0; col < 32; col++) {
@@ -413,7 +404,7 @@ public class Cifar10Utils {
         jFrame.setVisible(true);
         boolean result = ImageIO.write(image, "jpeg", new FileOutputStream("./out.jpg"));
         if (!result) {
-            System.err.println("failed");
+            LOGGER.log(Level.WARNING, "Fail converting image.");
         }
     }
 
