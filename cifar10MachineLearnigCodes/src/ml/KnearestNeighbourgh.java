@@ -56,8 +56,7 @@ public class KnearestNeighbourgh {
         Cifar10Utils cifar10Utils;
 
     public KnearestNeighbourgh(int k) throws IOException {
-        if(k>2) System.out.println("Running " + k + "-nearestNeighbourgh");
-        else System.out.println("Running nearestNeighbourgh");
+        System.out.println("Running " + k + "-nearestNeighbourgh");
         /**
          * The class cifar10.Cifar10Utils from this package is well documented
          * and it is strongly recomended the reading of its comments explainning
@@ -134,39 +133,32 @@ public class KnearestNeighbourgh {
                     mostOcurredLabelIndex = l+1;
                 }
             }
-            System.out.println("most occurences: " + mostOcurredLabelIndex + " with " + closestLabelsTimes[mostOcurredLabelIndex]);
+            System.out.println("test " + test + ": most occurences: " + mostOcurredLabelIndex + " with " + closestLabelsTimes[mostOcurredLabelIndex]);
             //System.exit(0);
             // the test was classified with label pickedK!
             if(util[0] == mostOcurredLabelIndex) {
                 accuracy++;
             }
-            /*
             // lets display some hits and fails alternating them:
-            // shows a pair of fails alternanting with a pair of hittings
-            if(util[0] == labelAppearances[(int) pickedK]) {
+            if(util[0] == mostOcurredLabelIndex) {
                 if (!hit && maxDisplays-->0) {
-                    cifar10Utils.displayImage(Xtr.getRow((int) closestTrains[(int) pickedK]), closestLabels[(int) pickedK]);
-                    cifar10Utils.displayImage(Xte.getRow(test), util[0]);
+                    cifar10Utils.displayImage(Xte.getRow(test), mostOcurredLabelIndex);
                     hit = !hit; // toggle
                 }
             } else {
                 if (hit && maxDisplays-->0) {
-                    cifar10Utils.displayImage(Xtr.getRow((int) closestTrains[(int) pickedK]), closestLabels[(int) pickedK]);
-                    cifar10Utils.displayImage(Xte.getRow(test), util[0]);
+                    cifar10Utils.displayImage(Xte.getRow(test), mostOcurredLabelIndex);
                     hit = !hit; // toggle
                 }
             }
-            */
-            //System.out.println("test: " +test +
-            //        " distancia minima: " + closestDistances +
-            //        " label teste: " + util[0] +
-            //        " label minimo: " + closestLabels +
-            //        "  hittings up to now: " + accuracy);
         }
-        System.out.println("Accuracy = " + (accuracy * 100 /(Cifar10Utils.TOT_TESTS)) + "%");
+        System.out.println("Accuracy = " + (accuracy * 100 /(Cifar10Utils.TOT_TESTS)) + "% with " +
+                Cifar10Utils.TOT_TESTS + " tests against " + Cifar10Utils.TOT_TRAINNINGS + 
+                " trainning for examples."
+        );
     }
 
     public static void main(String[] args) throws IOException {
-        KnearestNeighbourgh nn = new KnearestNeighbourgh(5);
+        KnearestNeighbourgh nn = new KnearestNeighbourgh(1);
     }
 }

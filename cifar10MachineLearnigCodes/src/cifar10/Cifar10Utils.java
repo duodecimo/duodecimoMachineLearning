@@ -140,8 +140,8 @@ public class Cifar10Utils {
      * @throws IOException 
      */
     public Cifar10Utils() throws IOException {
-        System.out.println("Cifar10Utils: trying to read " + TOT_TRAINNINGS + " images from example files");
-        System.out.println("Cifar10Utils: trying to read " + TOT_TESTS + " images from test file");
+        System.out.println("Cifar10Utils: reading " + TOT_TRAINNINGS + " images from example files");
+        System.out.println("Cifar10Utils: read " + TOT_TESTS + " images from test file");
         /**
          * org.apache.commons.math3.linear.RealMatrix.Xtr,
          * a matrix with TOT_TRAINNINGS rows and TOT_BYTES columns.
@@ -233,7 +233,7 @@ public class Cifar10Utils {
         // specially when showing images, we better shuffle them, to decrease the
         // chance of lots of images of same category appearing in the same vicinity.
 
-        shuffleMatrix();
+        //shuffleMatrix();
     }
 
     private String[] readLabelsNames() throws IOException {
@@ -249,9 +249,10 @@ public class Cifar10Utils {
                 InputStream fis = new FileInputStream("./data/batches.meta.txt");
                 InputStreamReader isr = new InputStreamReader(fis, Charset.forName("UTF-8"));
                 BufferedReader br = new BufferedReader(isr);) {
+            System.out.println("List of labels:");
             while ((line = br.readLine()) != null && index<10) {
                 namesRetrieval[index] = line;
-                System.out.println("name[" + index + "] = " + line);
+                System.out.println("label[" + index + "] = " + line);
                 index++;
             }
         }
@@ -263,12 +264,12 @@ public class Cifar10Utils {
         byte[] b = new byte[nImages * CIFAR_LINE];
         double[] label = new double[1];
         inputStream = new FileInputStream(fileName);
-        int lidos;
-        lidos = inputStream.read(b);
-        System.out.println("arquivo: "
-                + fileName + " lidos: " + lidos
-                + " (" + nImages + " * " + (lidos / nImages) + ")");
-        System.out.println("deve ler: " + nImages * CIFAR_LINE);
+        int readings;
+        readings = inputStream.read(b);
+        System.out.println("file: "
+                + fileName + " readings: " + readings
+                + " (" + nImages + " * " + (readings / nImages) + ")");
+        System.out.println("should read: " + nImages * CIFAR_LINE);
         for (int row = 0; row < nImages; row++) {
             label[0] = b[row * CIFAR_LINE] & 0xFF;
             Y.setRow(row + initRow, label);
@@ -354,7 +355,7 @@ public class Cifar10Utils {
 
     public void displayImage(byte[] b, double index) throws IOException {
         // just display an image
-        System.out.println("Displaying image from b[] lenght: " + b.length);
+        //System.out.println("Displaying image from b[] lenght: " + b.length);
         BufferedImage image = new BufferedImage(32, 32, BufferedImage.TYPE_INT_RGB);
         for (int row = 0; row < 32; row++) {
             for (int col = 0; col < 32; col++) {
@@ -391,7 +392,7 @@ public class Cifar10Utils {
      */
     public void displayImage(double[] b, double index) throws IOException {
         // just display an image
-        System.out.println("Displaying image from b[] lenght: " + b.length);
+        // System.out.println("Displaying image from b[] lenght: " + b.length);
         BufferedImage image = new BufferedImage(32, 32, BufferedImage.TYPE_INT_RGB);
         for (int row = 0; row < 32; row++) {
             for (int col = 0; col < 32; col++) {
