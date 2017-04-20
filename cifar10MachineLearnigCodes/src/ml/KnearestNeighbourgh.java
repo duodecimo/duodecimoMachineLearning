@@ -125,8 +125,8 @@ public class KnearestNeighbourgh {
             // pick the label that occured most
             // lets build a empty array list to hold the score
             score = new ArrayList<>();
-            // and use ini[] to count the appearances of each score
-            labelAppearances = new int[k];
+            // and use int[] to count the appearances of each score
+            labelAppearances = new int[10];
             for(int l=0; l<k;l++) labelAppearances[l] = 0;
             double[] scoreValue = new double[2];
             for(int i = 0; i<k; i++) {
@@ -135,33 +135,46 @@ public class KnearestNeighbourgh {
                 if(!score.contains(scoreValue)) {
                     score.add(scoreValue);
                 }
-                labelAppearances[i]++;
+                labelAppearances[(int)closestLabels[i]]++;
+            }
+            // display scores
+            System.out.println("Score for test " + test);
+            for(double[] value : score) {
+                System.out.println("closest: " + value[0] + " trainning: " + value[1]);
+            }
+            for(int l=0; l<k; l++) {
+                System.out.println("label " + l + " ocurred " + labelAppearances[l] + " times");
             }
             // lets check the label with most appearances
             pickedK = -1;
             countingK = -1;
-            for(int l = 0; l<scoreValue.length; l++) {
+            for(int l = 0; l<10; l++) {
                 if(labelAppearances[l] > countingK) {
                     pickedK = l;
                     countingK = labelAppearances[l];
                 }
             }
+            System.out.println("most occurences: " + pickedK + " with " + countingK);
+            //System.exit(0);
             // the test was classified with label pickedK!
-            double[]value =  score.get((int) pickedK);
-            if(closestLabels[(int) value[1]] == util[(int) 0]) {
+            if(util[0] == labelAppearances[(int) pickedK]) {
+                accuracy++;
+            }
+            /*
+            if(util[0] == labelAppearances[(int) pickedK]) {
                 if (!hit && maxDisplays-->0) {
                     cifar10Utils.displayImage(Xtr.getRow((int) closestTrains[(int) pickedK]), closestLabels[(int) pickedK]);
                     cifar10Utils.displayImage(Xte.getRow(test), util[0]);
                     hit = !hit; // toggle
                 }
             } else {
-                accuracy++;
                 if (hit && maxDisplays-->0) {
                     cifar10Utils.displayImage(Xtr.getRow((int) closestTrains[(int) pickedK]), closestLabels[(int) pickedK]);
                     cifar10Utils.displayImage(Xte.getRow(test), util[0]);
                     hit = !hit; // toggle
                 }
             }
+            */
             // lets display some hits and fails alternating them
             //System.out.println("test: " +test +
             //        " distancia minima: " + closestDistances +
