@@ -9,6 +9,8 @@ import cifar10.Cifar10Utils;
 import java.io.IOException;
 import org.apache.commons.math3.linear.RealMatrix;
 import static java.lang.Math.abs;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * The class NearestNeighbourgh uses the nearest neighbourgh algorithm to classify
@@ -31,6 +33,7 @@ import static java.lang.Math.abs;
 public class NearestNeighbourgh {
         RealMatrix Xtr, Ytr, Xte, Yte;
         Cifar10Utils cifar10Utils;
+        private static final Logger LOGGER = Logger.getGlobal();
 
     public NearestNeighbourgh() throws IOException {
         /**
@@ -38,13 +41,14 @@ public class NearestNeighbourgh {
          * and it is strongly recomended the reading of its comments explainning
          * how it works, what it does and why before going further.
         */
+        LOGGER.log(Level.INFO, "Running NearestNeighbourgh");
+        LOGGER.setLevel(Level.INFO);
         cifar10Utils = new Cifar10Utils();
         Xtr = cifar10Utils.getXtr();
         Xte = cifar10Utils.getXte();
         Ytr = cifar10Utils.getYtr();
         Yte = cifar10Utils.getYte();
         nearestNeighbourEvaluation();
-        System.exit(0);
     }
 
     final void nearestNeighbourEvaluation() throws IOException {
@@ -98,13 +102,14 @@ public class NearestNeighbourgh {
                 }
             }
             // lets display some hits and fails alternating them
-            System.out.println("test: " +test +
-                    " distancia minima: " + minDistance +
-                    " label teste: " + util[0] +
-                    " label minimo: " + minLabel +
-                    "  hittings up to now: " + accuracy);
+            LOGGER.log(Level.FINER, "test: {0} closest distance: {1} test label: {2} "
+                    + "closest label: {3}  hittings up to now: {4}", 
+                    new Object[]{test, minDistance, util[0], minLabel, accuracy});
         }
-        System.out.println("Accuracy = " + (accuracy * 100 /(Cifar10Utils.TOT_TESTS)) + "%");
+        LOGGER.log(Level.INFO, "Accuracy = {0}% with {1} tests against {2} trainning for examples.", 
+                new Object[]{accuracy * 100 /(Cifar10Utils.TOT_TESTS), Cifar10Utils.TOT_TESTS, 
+                    Cifar10Utils.TOT_TRAINNINGS});
+        LOGGER.info("Close the frame to shutdown the application.");
     }
 
     public static void main(String[] args) throws IOException {

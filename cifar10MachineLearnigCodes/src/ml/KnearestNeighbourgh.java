@@ -54,7 +54,6 @@ import java.util.logging.Logger;
 public class KnearestNeighbourgh {
         private final RealMatrix Xtr, Ytr, Xte, Yte;
         private final Cifar10Utils cifar10Utils;
-        //protected final Logger log = Logger.getLogger();
         private static final Logger LOGGER = Logger.getGlobal();
     public KnearestNeighbourgh(int k) throws IOException {
         LOGGER.log(Level.INFO, "Running {0}-nearestNeighbourgh", k);
