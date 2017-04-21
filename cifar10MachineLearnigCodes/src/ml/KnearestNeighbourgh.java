@@ -56,7 +56,7 @@ public class KnearestNeighbourgh {
         private final Cifar10Utils cifar10Utils;
         private static final Logger LOGGER = Logger.getGlobal();
     public KnearestNeighbourgh(int k) throws IOException {
-        LOGGER.log(Level.INFO, "Running {0}-nearestNeighbourgh", k);
+        LOGGER.log(Level.INFO, java.util.ResourceBundle.getBundle("ml/Bundle").getString("RUNNING {0}-NEARESTNEIGHBOURGH"), k);
         LOGGER.setLevel(Level.INFO);
         /**
          * The class cifar10.Cifar10Utils from this package is well documented
@@ -133,7 +133,7 @@ public class KnearestNeighbourgh {
                     mostOcurredLabelIndex = l+1;
                 }
             }
-            LOGGER.log(Level.FINER, "test {0}: most occurences: {1} with {2}", 
+            LOGGER.log(Level.FINER, java.util.ResourceBundle.getBundle("ml/Bundle").getString("TEST {0}: MOST OCCURENCES: {1} WITH {2}"), 
                     new Object[]{test, + mostOcurredLabelIndex, 
                         closestLabelsTimes[mostOcurredLabelIndex]});
             // the test was classified with mostOcurredLabelIndex!
@@ -153,10 +153,10 @@ public class KnearestNeighbourgh {
                 }
             }
         }
-        LOGGER.log(Level.INFO, "Accuracy = {0}% with {1} tests against {2} trainning for examples.", 
+        LOGGER.log(Level.INFO, java.util.ResourceBundle.getBundle("ml/Bundle").getString("ACCURACY = {0}% WITH {1} TESTS AGAINST {2} TRAINNING FOR EXAMPLES."), 
                 new Object[]{accuracy * 100 /(Cifar10Utils.TOT_TESTS), Cifar10Utils.TOT_TESTS, 
                     Cifar10Utils.TOT_TRAINNINGS});
-        LOGGER.info("Close the frame to shutdown the application.");
+        LOGGER.info(java.util.ResourceBundle.getBundle("ml/Bundle").getString("CLOSE THE FRAME TO SHUTDOWN THE APPLICATION."));
     }
 
     public static void main(String[] args) throws IOException {

@@ -41,7 +41,7 @@ public class NearestNeighbourgh {
          * and it is strongly recomended the reading of its comments explainning
          * how it works, what it does and why before going further.
         */
-        LOGGER.log(Level.INFO, "Running NearestNeighbourgh");
+        LOGGER.log(Level.INFO, java.util.ResourceBundle.getBundle("ml/Bundle").getString("RUNNING NEARESTNEIGHBOURGH"));
         LOGGER.setLevel(Level.INFO);
         cifar10Utils = new Cifar10Utils();
         Xtr = cifar10Utils.getXtr();
@@ -102,14 +102,14 @@ public class NearestNeighbourgh {
                 }
             }
             // lets display some hits and fails alternating them
-            LOGGER.log(Level.FINER, "test: {0} closest distance: {1} test label: {2} "
-                    + "closest label: {3}  hittings up to now: {4}", 
+            LOGGER.log(Level.FINER, java.util.ResourceBundle.getBundle("ml/Bundle").getString("TEST: {0} CLOSEST DISTANCE: {1} TEST LABEL: {2} ")
+                    + java.util.ResourceBundle.getBundle("ml/Bundle").getString("CLOSEST LABEL: {3}  HITTINGS UP TO NOW: {4}"), 
                     new Object[]{test, minDistance, util[0], minLabel, accuracy});
         }
-        LOGGER.log(Level.INFO, "Accuracy = {0}% with {1} tests against {2} trainning for examples.", 
+        LOGGER.log(Level.INFO, java.util.ResourceBundle.getBundle("ml/Bundle").getString("ACCURACY = {0}% WITH {1} TESTS AGAINST {2} TRAINNING FOR EXAMPLES."), 
                 new Object[]{accuracy * 100 /(Cifar10Utils.TOT_TESTS), Cifar10Utils.TOT_TESTS, 
                     Cifar10Utils.TOT_TRAINNINGS});
-        LOGGER.info("Close the frame to shutdown the application.");
+        LOGGER.info(java.util.ResourceBundle.getBundle("ml/Bundle").getString("CLOSE THE FRAME TO SHUTDOWN THE APPLICATION."));
     }
 
     public static void main(String[] args) throws IOException {
