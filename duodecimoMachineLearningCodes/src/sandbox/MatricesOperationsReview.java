@@ -17,6 +17,18 @@ public class MatricesOperationsReview {
     }
 
     final void operationsSample()  {
+        // dimensionality
+        System.out.println("Some matrices with several dimensionalities.");
+        RealMatrix L1C1 = new Array2DRowRealMatrix(new double[]{1});
+        displayMatrix("lets build a matrix 1 x 1", "Matrix L1C1:",L1C1);
+        RealMatrix L2C1 = new Array2DRowRealMatrix(new double[][]{{1},{2}});
+        displayMatrix("lets build a matrix 2 x 1", "Matrix L2C1:",L2C1);
+        RealMatrix L1C2 = new Array2DRowRealMatrix(new double[][]{{1, 2}});
+        displayMatrix("lets build a matrix 1 x 2", "Matrix L1C2:",L1C2);
+        RealMatrix L2C2 = new Array2DRowRealMatrix(new double[][]{{1,2},{3,4}});
+        displayMatrix("lets build a matrix 2 x 2", "Matrix L1C1:",L2C2);
+        // operations
+        System.out.println("Some matrices operations.");
         RealMatrix A = new Array2DRowRealMatrix(new double[][]{{1,2,3}, {4,5,6}});
         displayMatrix("lets build a matrix", "Matrix A:",A);
         try {
