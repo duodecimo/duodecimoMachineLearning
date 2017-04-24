@@ -1,6 +1,7 @@
 
 package sandbox;
 
+import org.apache.commons.math3.exception.DimensionMismatchException;
 import org.apache.commons.math3.linear.MatrixUtils;
 import org.apache.commons.math3.linear.RealMatrix;
 import org.apache.commons.math3.linear.RealVector;
@@ -9,15 +10,25 @@ import util.matrix.MatrixGrowDimension;
 /**
  * We review in this code some matrices operations and the code to perform them.
  * 
- * There are the basic matrix operations, such as sum, multiplication. We will need 
- * at some point to grow some matrices, so the class MatrizGrowDimension was created
- * in order to help.
+ * There are the basic matrix operations, such as retrieving values, updating values,
+ * basic mathematical operations like sum, multiplication.
+ * We will also need at some point to grow some matrices dimensions, so the class 
+ * MatrizGrowDimension was created in order to help.
+ * 
+ * A good resource in case you  are willing to review matriz basic theory and some 
+ * operations is the Khan Academy online course on Matrices.
+ * Here is the link: https://www.khanacademy.org/math/precalculus/precalc-matrices
  * 
  * Portuguese Version:
  * 
- * Existem algumas operações básicas com matrizes, como soma e multiplicação. Vamos
- * precisar, em algum momento, aumentar dimensões de matrizes, então a classe
+ * Existem algumas operações básicas com matrizes, como ler valores, alterar valores,
+ * operaçoes matemáticas básicas como soma e multiplicação.
+ * Vamos precisar, em algum momento, aumentar dimensões de matrizes, então a classe
  * MatrizGrowDimension foi criada para ajudar.
+ * 
+ * Um recurso interessante caso você deseje rever a teoria de matrizes e algumas
+ * operações é o curso online Matrizes da Academia Khan.
+ * O link em portugês é: https://pt.khanacademy.org/math/precalculus/precalc-matrices
  * 
  * @see util.matrix.MatrixGrowDimension
  * 
@@ -81,14 +92,16 @@ public class MatricesOperationsReview {
                 "L2C5 = MatrixGrowDimension.attachZerosColumn(L2C4)", 
                 "Matrix L2C5:",L2C5);
 
-/*
         // operations
-        System.out.println("Some matrices operations.");
+        System.out.println("Some matrices operations.\n");
+        System.out.println("Matrices multiplication.");
         
-        RealMatrix A = new Array2DRowRealMatrix(new double[][]{{1,2,3}, {4,5,6}});
+        RealMatrix A = MatrixUtils.createRealMatrix(new double[][]{{1,2,3}, {4,5,6}});
         displayRealMatrix("lets build a matrix", "Matrix A:",A);
         try {
-            displayRealMatrix("let's multiply A to A", "Matrix A * A:", A.multiply(A));
+            displayRealMatrix("let's try to multiply A to itself", 
+                    "RealMatrix A = MatrixUtils.createRealMatrix(new double[][]{{1,2,3}, {4,5,6}})",
+                    "Matrix A * A:", A.multiply(A));
         } catch (DimensionMismatchException dimensionMismatchException) {
             System.out.println("We can't multiply A *A, we get a dimension exception: " + 
                     dimensionMismatchException.getMessage());
@@ -99,36 +112,46 @@ public class MatricesOperationsReview {
                     + "only by a (2, m) matrix!");
             System.out.println("\n");
         }
-        displayRealMatrix("lets trasnpose it", "Matrix A':",A.transpose());
+        displayRealMatrix("lets transpose it", "Matrix A':",A.transpose());
         displayRealMatrix("Now we can multiply both","Matrix A * A':",A.multiply(A.transpose()));
         
-        RealMatrix W = new Array2DRowRealMatrix(new double[][]{{0.2, -0.5, 0.1, 2.0},
+        System.out.println("Now we will try an operation that will happen when we "
+                + "want perform Linear Classification.\nf(xi,W,b)=Wxi+b\n"
+                + "We are multiplying a matrix to a vector (gives a vector)\n"
+                + " and then adding to another vector, getting a vector");
+        RealMatrix W = MatrixUtils.createRealMatrix(new double[][]{{0.2, -0.5, 0.1, 2.0},
             {1.5,1.3,2.1,0}, {0,0.25,0.2,-0.3}});
-        System.out.println("Display W:");
-        displayRealMatrix(W);
-        RealVector x = new ArrayRealVector(new double[]{56, 231, 24, 2});
-        System.out.println("Display x:");
-        displayRealVector(x);
-        System.out.println("Display b:");
-        RealVector b = new ArrayRealVector(new double[]{1.1, 3.2, -1.2});
-        displayRealVector(b);
-        RealMatrix R = W.multiply(new Array2DRowRealMatrix(x.toArray()));
-        System.out.println("Display W * x");
-        displayRealMatrix(R);
-        System.out.println("Display W * x + b");
-        displayRealMatrix(R.add(new Array2DRowRealMatrix(b.toArray())));
-        */
+        displayRealMatrix("let's create a matrix W", 
+                "RealMatrix W = MatrixUtils.createRealMatrix(new double[][]{{0.2, -0.5, 0.1, 2.0},\n" +
+"            {1.5,1.3,2.1,0}, {0,0.25,0.2,-0.3}})",
+                "Matrix W:",W);
+        RealVector x = MatrixUtils.createRealVector(new double[]{56, 231, 24, 2});
+        displayRealVector("let's create a vector x", 
+                "RealVector x = MatrixUtils.createRealVector(new double[]{56, 231, 24, 2})", 
+                "Vector x:", x);
+        RealVector b = MatrixUtils.createRealVector(new double[]{1.1, 3.2, -1.2});
+        displayRealVector("let's create a vector b", 
+                "RealVector b = MatrixUtils.createRealVector(new double[]{1.1, 3.2, -1.2})", 
+                "Vector b:", b);
+        RealVector r = W.operate(x);
+        displayRealVector("let's do W * x", 
+                "RealVector R = W.operate(x)", 
+                "Vector r:", r);
+        r = r.add(b);
+        displayRealVector("Finally let's do  W * x + b", 
+                "r = r.add(b)", 
+                "Vector r:", r);
 }
 
     void displayRealMatrix(String title, String javaCode, String metadata, RealMatrix M) {
         System.out.println("task: " + title);
         System.out.println("Code: " + javaCode);
-        MatricesOperationsReview.this.displayRealMatrix(metadata, M);
+        displayRealMatrix(metadata, M);
     }
 
     void displayRealMatrix(String title, String metadata, RealMatrix M) {
         System.out.println(title);
-        MatricesOperationsReview.this.displayRealMatrix(metadata, M);
+        displayRealMatrix(metadata, M);
     }
 
     void displayRealMatrix(String metadata, RealMatrix M) {
@@ -144,6 +167,22 @@ public class MatricesOperationsReview {
             }
         }
         System.out.println("\n");
+    }
+
+    void displayRealVector(String title, String javaCode, String metadata, RealVector v) {
+        System.out.println("task: " + title);
+        System.out.println("Code: " + javaCode);
+        displayRealVector(metadata, v);
+    }
+
+    void displayRealVector(String title, String metadata, RealVector v) {
+        System.out.println(title);
+        displayRealVector(metadata, v);
+    }
+
+    void displayRealVector(String metadata, RealVector v) {
+        System.out.println(metadata + " ( dimension = " + v.getDimension() + ")");
+        displayRealVector(v);
     }
 
     void displayRealVector(RealVector v) {
