@@ -7,7 +7,20 @@ import org.apache.commons.math3.linear.RealVector;
 import util.matrix.MatrixGrowDimension;
 
 /**
- *
+ * We review in this code some matrices operations and the code to perform them.
+ * 
+ * There are the basic matrix operations, such as sum, multiplication. We will need 
+ * at some point to grow some matrices, so the class MatrizGrowDimension was created
+ * in order to help.
+ * 
+ * Portuguese Version:
+ * 
+ * Existem algumas operações básicas com matrizes, como soma e multiplicação. Vamos
+ * precisar, em algum momento, aumentar dimensões de matrizes, então a classe
+ * MatrizGrowDimension foi criada para ajudar.
+ * 
+ * @see util.matrix.MatrixGrowDimension
+ * 
  * @author duo
  */
 public class MatricesOperationsReview {
@@ -18,42 +31,53 @@ public class MatricesOperationsReview {
 
     final void operationsSample()  {
         System.out.println("Creating and operating RealMatrix.");
+
         // dimensionality (dimesnionalidade)
-        System.out.println("Some matrices with several dimensionalities.");
+
+        System.out.println("Create some matrices, with several dimensionalities.");
+
         RealMatrix L1C1 = MatrixUtils.createRealMatrix(new double[][]{{1}});
         displayRealMatrix("lets build a matrix 1 x 1", 
                 "RealMatrix L1C1 = MatrixUtils.createRealMatrix(new double[][]{{1}});", 
                 "Matrix L1C1:",L1C1);
+
         RealMatrix L2C1 = MatrixUtils.createRealMatrix(new double[][]{{1},{2}});
         displayRealMatrix("lets build a matrix 2 x 1", 
                 "RealMatrix L2C1 = MatrixUtils.createRealMatrix(new double[][]{{1},{2}});", 
                 "Matrix L2C1:",L2C1);
+
         RealMatrix L1C2 = MatrixUtils.createRealMatrix(new double[][]{{1, 2}});
         displayRealMatrix("lets build a matrix 1 x 2", 
                 "RealMatrix L1C2 = MatrixUtils.createRealMatrix(new double[][]{{1, 2}})", 
                 "Matrix L1C2:",L1C2);
+
         RealMatrix L2C2 = MatrixUtils.createRealMatrix(new double[][]{{1,2},{3,4}});
         displayRealMatrix("lets build a matrix 2 x 2", 
                 "RealMatrix L2C2 = MatrixUtils.createRealMatrix(new double[][]{{1,2},{3,4}})", 
                 "Matrix L1C1:",L2C2);
+
         RealMatrix L2C4 = MatrixUtils.createRealMatrix(new double[][]{{1,2,3,4},{5,6,7,8}});
-        MatricesOperationsReview.this.displayRealMatrix("lets build a matrix 2 x 4", 
+        displayRealMatrix("lets build a matrix 2 x 4", 
                 "RealMatrix L2C4 = MatrixUtils.createRealMatrix(new double[][]{{1,2,3,4},{5,6,7,8}})", 
                 "Matrix L2C4:",L2C4);
+
         RealMatrix L3C4 = MatrixGrowDimension.attachOnesRow(L2C4);
-        MatricesOperationsReview.this.displayRealMatrix("lets attach an extra row of ones to it", 
+        displayRealMatrix("lets attach an extra row of ones to it", 
                 "RealMatrix L3C4 = MatrixGrowDimension.attachOnesRow(L2C4)", 
                 "Matrix L3C4:",L3C4);
+
         RealMatrix L2C5 = MatrixGrowDimension.attachOnesColumn(L2C4);
-        MatricesOperationsReview.this.displayRealMatrix("lets attach an extra column of ones instead", 
+        displayRealMatrix("lets attach an extra column of ones instead", 
                 "RealMatrix L2C5 = MatrixGrowDimension.attachOnesColumn(L2C4)", 
                 "Matrix L2C5:",L2C5);
+
         L3C4 = MatrixGrowDimension.attachZerosRow(L2C4);
-        MatricesOperationsReview.this.displayRealMatrix("lets attach an extra row of zeros instead", 
+        displayRealMatrix("lets attach an extra row of zeros instead", 
                 "L3C4 = MatrixGrowDimension.attachZerosRow(L2C4)", 
                 "Matrix L3C4:",L3C4);
+
         L2C5 = MatrixGrowDimension.attachZerosColumn(L2C4);
-        MatricesOperationsReview.this.displayRealMatrix("lets attach an extra column of zeros instead", 
+        displayRealMatrix("lets attach an extra column of zeros instead", 
                 "L2C5 = MatrixGrowDimension.attachZerosColumn(L2C4)", 
                 "Matrix L2C5:",L2C5);
 
