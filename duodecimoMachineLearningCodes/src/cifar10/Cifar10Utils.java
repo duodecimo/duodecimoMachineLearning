@@ -675,4 +675,27 @@ public class Cifar10Utils {
     public RealMatrix getYte() {
         return Yte;
     }
+
+    public float getLoadPercentual() {
+        return (50000 * TAX_OF_IMAGES_FROM_FILES * 100 /50000);
+    }
+
+    public int getTotalOfTrainnings() {
+        return TOT_TRAINNINGS;
+    }
+
+    public int getTotalOfTests() {
+        return TOT_TESTS;
+    }
+
+    public int getTotalOfPixels() {
+        return TOT_PIXELS;
+    }
+
+    public int getTotalOfBytes() {
+        return TOT_BYTES;
+    }
+    public String[] getNames() {
+        return names;
+    }
 }

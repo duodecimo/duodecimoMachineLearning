@@ -11,6 +11,7 @@ import org.apache.commons.math3.linear.RealMatrix;
 import static java.lang.Math.abs;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import static java.lang.Math.abs;
 
 /**
  * The class NearestNeighbourgh uses the nearest neighbourgh algorithm to classify

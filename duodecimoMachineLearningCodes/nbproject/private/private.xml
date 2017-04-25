@@ -4,7 +4,10 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/home/duo/NetBeansProjects/gitHub/duodecimoMachineLearning/duodecimoMachineLearningCodes/src/util/matrix/MatrixGrowDimension.java</file>
+            <file>file:/home/duo/NetBeansProjects/gitHub/duodecimoMachineLearning/duodecimoMachineLearningCodes/src/ml/LinearPrediction.java</file>
+            <file>file:/home/duo/NetBeansProjects/gitHub/duodecimoMachineLearning/duodecimoMachineLearningCodes/src/ml/KnearestNeighbourgh.java</file>
             <file>file:/home/duo/NetBeansProjects/gitHub/duodecimoMachineLearning/duodecimoMachineLearningCodes/src/sandbox/MatricesOperationsReview.java</file>
+            <file>file:/home/duo/NetBeansProjects/gitHub/duodecimoMachineLearning/duodecimoMachineLearningCodes/src/util/matrix/Display.java</file>
         </group>
     </open-files>
 </project-private>
