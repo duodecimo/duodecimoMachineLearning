@@ -57,7 +57,7 @@ public class LinearPrediction {
             }
             W=W.scalarMultiply(0.0001d);
             loss=0.0f;
-            for (int j = 0; j < cifar10Utils.getTotalOfTrainnings(); j++) {
+            for (int j = 0; j < 10; j++) {
                 // loop to visit all trainnings
                 // notice below that we need to append a 1 to the end of the image 
                 // vector for the bias trick
@@ -72,6 +72,34 @@ public class LinearPrediction {
             System.out.println(String.format("in attempt %d the loss was %f, best %f %c", i+1, loss, bestloss, '%'));
         }
         // BestW holds the weigths
+            RealVector test;
+            double groundLabel;
+            RealVector scores;
+            double predictLable;
+            int accuracy = 0;
+        for(int i=0; i< 10; i++) {
+            //lets viit all tests
+            test = Xte.getRowVector(i).append(0d);
+            groundLabel = Yte.getEntry(i, 0);
+            scores = BestW.operate(test);
+            predictLable = scores.getMaxValue();
+            if(predictLable == groundLabel) {
+                accuracy++;
+            }
+            System.out.println(String.format("test %d predicted = %f4.1  ground = %f4.1", 
+                    i, predictLable, groundLabel));
+        }
+        System.out.println(String.format("accuracy: %f4.4", (float)(accuracy * 100 /10)));
+/*
+# Assume X_test is [3073 x 10000], Y_test [10000 x 1]
+scores = Wbest.dot(Xte_cols) # 10 x 10000, the class scores for all test examples
+# find the index with max score in each column (the predicted class)
+Yte_predict = np.argmax(scores, axis = 0)
+# and calculate accuracy (fraction of predictions that are correct)
+np.mean(Yte_predict == Yte)
+# returns 0.1555      
+*/
+
     }
 
     public float lossFunctionUnvectorized(RealVector x, int y, RealMatrix W) {
