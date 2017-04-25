@@ -39,7 +39,7 @@ public class LinearPrediction {
         linearPredictionWithRandomSearch();
     }
 
-    public void linearPredictionWithRandomSearch() {
+    public final void linearPredictionWithRandomSearch() {
         RealMatrix BestW = null; // to hold the best random generated weights
         float bestloss = Float.MAX_VALUE, loss;
         for(int i=0; i<150; i++) { // number of guesses
