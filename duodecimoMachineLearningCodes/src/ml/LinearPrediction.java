@@ -42,7 +42,7 @@ public class LinearPrediction {
     public final void linearPredictionWithRandomSearch() {
         RealMatrix BestW = null; // to hold the best random generated weights
         float bestloss = Float.MAX_VALUE, loss;
-        for(int i=0; i<150; i++) { // number of guesses
+        for(int i=0; i<500; i++) { // number of guesses
             DoubleStream doubleStream = new JDKRandomGenerator((int) System.currentTimeMillis()).
                     doubles((cifar10Utils.getTotalOfBytes()+1) * cifar10Utils.getNames().length);
             double[] doubles = doubleStream.toArray();
@@ -52,12 +52,11 @@ public class LinearPrediction {
             int k=0;
             for(int row=0; row<cifar10Utils.getNames().length; row++) {
                 for(int col=0; col<cifar10Utils.getTotalOfBytes()+1;col++) {
-                    W.setEntry(row, col, doubles[k++]);
+                    W.setEntry(row, col, doubles[k++]*0.0001);
                 }
             }
-            W=W.scalarMultiply(0.0001d);
             loss=0.0f;
-            for (int j = 0; j < 10; j++) {
+            for (int j = 0; j < cifar10Utils.getTotalOfTrainnings(); j++) {
                 // loop to visit all trainnings
                 // notice below that we need to append a 1 to the end of the image 
                 // vector for the bias trick
@@ -77,19 +76,24 @@ public class LinearPrediction {
             RealVector scores;
             double predictLable;
             int accuracy = 0;
-        for(int i=0; i< 10; i++) {
-            //lets viit all tests
-            test = Xte.getRowVector(i).append(0d);
-            groundLabel = Yte.getEntry(i, 0);
+            int numberOfTestings = cifar10Utils.getTotalOfTests();
+        for(int k=0; k< numberOfTestings; k++) {
+            //lets visit all tests
+            test = Xte.getRowVector(k).append(1d);
+            groundLabel = Yte.getEntry(k, 0);
+            /*            System.out.println(String.format("BestW(%d, %d).operate(test(%d):",
+            BestW.getRowDimension(), BestW.getColumnDimension(),
+            test.getDimension()));*/
             scores = BestW.operate(test);
-            predictLable = scores.getMaxValue();
+            predictLable = scores.getMaxIndex();
             if(predictLable == groundLabel) {
                 accuracy++;
             }
-            System.out.println(String.format("test %d predicted = %f4.1  ground = %f4.1", 
-                    i, predictLable, groundLabel));
+            System.out.println(String.format("test %d predicted = %f  ground = %f", 
+                    k, predictLable, groundLabel));
         }
-        System.out.println(String.format("accuracy: %f4.4", (float)(accuracy * 100 /10)));
+        System.out.println(String.format("accuracy: %5.2f ", 
+                (float)(accuracy * 100 /numberOfTestings))+"%");
 /*
 # Assume X_test is [3073 x 10000], Y_test [10000 x 1]
 scores = Wbest.dot(Xte_cols) # 10 x 10000, the class scores for all test examples
