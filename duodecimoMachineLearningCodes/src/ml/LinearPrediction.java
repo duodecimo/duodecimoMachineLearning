@@ -25,15 +25,15 @@ public class LinearPrediction {
         private static final Logger LOGGER = Logger.getGlobal();
     public LinearPrediction() throws IOException {
         LOGGER.setLevel(Level.INFO);
-        LOGGER.log(Level.INFO, "Running Linear Prediction".concat(
-                String.format("(using %4.2f %% of dataset)", 
-                        Cifar10Utils.TAX_OF_IMAGES_FROM_FILES*100)));
         /**
          * The class cifar10.Cifar10Utils from this package is well documented
          * and it is strongly recomended the reading of its comments explainning
          * how it works, what it does and why before going further.
         */
         cifar10Utils = new Cifar10Utils();
+        LOGGER.log(Level.INFO, "Running Linear Prediction".concat(
+                String.format("(using %4.2f %% of dataset)", 
+                        cifar10Utils.getLoadPercentual())));
         Xtr = cifar10Utils.getXtr();
         Xte = cifar10Utils.getXte();
         Ytr = cifar10Utils.getYtr();
