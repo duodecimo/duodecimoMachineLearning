@@ -34,7 +34,8 @@ public class LinearPrediction {
         LOGGER.log(Level.INFO, "Running Linear Prediction".concat(
                 String.format("(using %4.2f %% of dataset)", 
                         cifar10Utils.getLoadPercentual())));
-        Xtr = cifar10Utils.getXtr();
+        // lets try to normalize Xtr
+        Xtr = cifar10Utils.getXtr().scalarMultiply(0.0001d);
         Xte = cifar10Utils.getXte();
         Ytr = cifar10Utils.getYtr();
         Yte = cifar10Utils.getYte();
@@ -44,6 +45,8 @@ public class LinearPrediction {
     public final void linearPredictionWithRandomSearch() {
         RealMatrix BestW = null; // to hold the best random generated weights
         float bestloss = Float.MAX_VALUE, loss;
+        boolean checkWeights = true; // lets just display some generated gaussian weights
+        boolean checkTraining = true; // lets just display some trainnings
         for(int i=0; i<500; i++) { // number of guesses
             DoubleStream doubleStream = new JDKRandomGenerator((int) System.currentTimeMillis()).
                     doubles((cifar10Utils.getTotalOfBytes()+1) * cifar10Utils.getNames().length);
@@ -54,8 +57,24 @@ public class LinearPrediction {
             int k=0;
             for(int row=0; row<cifar10Utils.getNames().length; row++) {
                 for(int col=0; col<cifar10Utils.getTotalOfBytes()+1;col++) {
-                    W.setEntry(row, col, doubles[k++]*0.0001);
+                    W.setEntry(row, col, doubles[k++]);
                 }
+            }
+            if(checkWeights) {
+                System.out.println("Checking some weigths");
+                for(int wl=0; wl<10;wl++) { //lines
+                    // inital cols
+                    for(int wc=0;wc<8;wc++) {
+                        System.out.print(String.format("%8.6f ", W.getEntry(wl, wc)));
+                    }
+                    System.out.print(" ... ");
+                    // final cols
+                    for(int wc=W.getColumnDimension()-8;wc<W.getColumnDimension();wc++) {
+                        System.out.print(String.format("%8.6f ", W.getEntry(wl, wc)));
+                    }
+                    System.out.println("");
+                }
+                checkWeights=false;
             }
             loss=0.0f;
             for (int j = 0; j < cifar10Utils.getTotalOfTrainnings(); j++) {
@@ -63,7 +82,43 @@ public class LinearPrediction {
                 // notice below that we need to append a 1 to the end of the image 
                 // vector for the bias trick
                 int index = (int) Ytr.getEntry(j, 0);
-                RealVector x = Xtr.getRowVector(j).append(1.0d);
+                if(checkTraining) {
+                    // wow, appears that all bias = 0,whats wrong with append(1.0d) ?
+                    System.out.println("Checking some trainnings vector size before bias: " +
+                            Xtr.getRowVector(j).getDimension());
+                        for(int wc=0;wc<5;wc++) {
+                            //inicio
+                            System.out.print(String.format("%6.4f ", Xtr.getRowVector(j).getEntry(wc)));
+                        }
+                        System.out.print(" ... ");
+                        for(int wc=Xtr.getRowVector(j).getDimension()-5;wc<Xtr.getRowVector(j).getDimension();wc++) {
+                            //fim
+                            System.out.print(String.format("%6.4f ", Xtr.getRowVector(j).getEntry(wc)));
+                        }
+                        System.out.println("");
+                    checkTraining=true;
+                }
+                RealVector x = Xtr.getRowVector(j);
+                x = x.append(1.0d);
+                // it seems it is not appending 1.0d, but 0.0d, bug?
+                // lets try to rewrite tomake sure
+                x.setEntry(x.getDimension()-1, 1.0d);
+                if(checkTraining) {
+                    // wow, appears that all bias = 0,whats wrong with append(1.0d) ?
+                    System.out.println("Checking some trainnings vector size after bias: " +
+                            x.getDimension());
+                        for(int wc=0;wc<5;wc++) {
+                            //inicio
+                            System.out.print(String.format("%6.4f ", x.getEntry(wc)));
+                        }
+                        System.out.print(" ... ");
+                        for(int wc=x.getDimension()-6;wc<x.getDimension();wc++) {
+                            //fim
+                            System.out.print(String.format("%6.4f ", x.getEntry(wc)));
+                        }
+                        System.out.println("");
+                    checkTraining=false;
+                }
                 loss += lossFunctionUnvectorized(x, (int) index, W);
             }
             if(loss<bestloss) {
