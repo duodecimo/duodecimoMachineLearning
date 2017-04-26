@@ -25,7 +25,9 @@ public class LinearPrediction {
         private static final Logger LOGGER = Logger.getGlobal();
     public LinearPrediction() throws IOException {
         LOGGER.setLevel(Level.INFO);
-        LOGGER.log(Level.INFO, "Running Linear Prediction");
+        LOGGER.log(Level.INFO, "Running Linear Prediction".concat(
+                String.format("(using %4.2f %% of dataset)", 
+                        Cifar10Utils.TAX_OF_IMAGES_FROM_FILES*100)));
         /**
          * The class cifar10.Cifar10Utils from this package is well documented
          * and it is strongly recomended the reading of its comments explainning
@@ -68,7 +70,8 @@ public class LinearPrediction {
                 bestloss = loss;
                 BestW = W.copy();
             }
-            System.out.println(String.format("in attempt %d the loss was %f, best %f %c", i+1, loss, bestloss, '%'));
+            System.out.println(String.format("in attempt %d the loss was %f, "
+                    + "best %f %c", i+1, loss, bestloss, '%'));
         }
         // BestW holds the weigths
             RealVector test;
@@ -92,8 +95,8 @@ public class LinearPrediction {
             System.out.println(String.format("test %d predicted = %f  ground = %f", 
                     k, predictLable, groundLabel));
         }
-        System.out.println(String.format("accuracy: %5.2f ", 
-                (float)(accuracy * 100 /numberOfTestings))+"%");
+        System.out.println(String.format("accuracy: %5.2f %%", 
+                (float)(accuracy * 100 /numberOfTestings)));
 /*
 # Assume X_test is [3073 x 10000], Y_test [10000 x 1]
 scores = Wbest.dot(Xte_cols) # 10 x 10000, the class scores for all test examples
