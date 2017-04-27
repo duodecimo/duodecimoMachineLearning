@@ -79,7 +79,7 @@ public class LinearPrediction {
                 }
                 x = x.append(1.0d);
                 // it seems it is not appending 1.0d, but 0.0d, bug?
-                // lets try to rewrite tomake sure
+                // lets try to rewrite to make sure
                 x.setEntry(x.getDimension()-1, 1.0d);
                 if(checkTraining) {
                     System.out.println("Checking some trainnings vector size after bias: " +
