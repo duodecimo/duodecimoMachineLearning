@@ -8,6 +8,7 @@ package util.matrix;
 import java.util.Arrays;
 import org.apache.commons.math3.linear.MatrixUtils;
 import org.apache.commons.math3.linear.RealMatrix;
+import org.apache.commons.math3.linear.RealVector;
 
 /**
  * Duodecimo Matrix Utils
@@ -166,5 +167,53 @@ public class DuodecimoMatrixUtils {
      */
     public static RealMatrix attachOnesColumn(RealMatrix M) {
         return attachValueColumn(M, 1D);
+    }
+
+    public static void showRealMatrix(RealMatrix M, int maxRows, int maxCols) {
+        if(maxRows == -1) {
+            // show all rows
+            maxRows = M.getRowDimension();
+        }
+        // show first batch
+        for (int l = 0; l < (maxRows < M.getRowDimension() ?  maxRows/2 : maxRows); l++) {
+            showRealMatrixLine(M.getRowVector(l), maxCols);
+        }
+        // if not all, reticenses
+        if(maxRows < M.getRowDimension()) {
+            System.out.println("     .\n     .\n     .");
+        }
+        // if not all, show second batch
+        if(maxRows < M.getRowDimension()) {
+            maxRows -= maxRows / 2;
+            for (int l = M.getRowDimension() - maxRows; l < M.getRowDimension(); l++) {
+                showRealMatrixLine(M.getRowVector(l), maxCols);
+            }
+        }
+        // end show
+        System.out.println("");
+    }
+    
+    private static void showRealMatrixLine(RealVector realVector, int maxCols) {
+        if(maxCols == -1) {
+            // show all rows
+            maxCols = realVector.getDimension();
+        }
+        // show first batch
+        for (int c = 0; c < (maxCols < realVector. getDimension() ? maxCols/2 : maxCols); c++) {
+            System.out.print(String.format(" %8.4f", realVector.getEntry(c)));
+        }
+        // if not all, reticenses
+        if(maxCols < realVector. getDimension()) {
+            System.out.print(" ... ");
+        }
+        // if not all, show second batch
+        if(maxCols < realVector. getDimension()) {
+            maxCols -= maxCols/2;
+            for (int c = realVector.getDimension() - maxCols; c < realVector.getDimension(); c++) {
+                System.out.print(String.format(" %8.4f", realVector.getEntry(c)));
+            }
+        }
+        // end line
+        System.out.println("");
     }
 }
