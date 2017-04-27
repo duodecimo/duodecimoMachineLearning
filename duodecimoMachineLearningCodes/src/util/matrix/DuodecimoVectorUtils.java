@@ -56,10 +56,13 @@ public class DuodecimoVectorUtils {
         double xMax = realVector.getMaxValue();
         double xMin = realVector.getMinValue();
         for(int i = 0; i < realVector.getDimension(); i++) {
-            realVector.setEntry(i,
-                    ((range[1] - range[0]) *
-                    (realVector.getEntry(i) - xMin) / (xMax - xMin)) + range[0]);
+            realVector.setEntry(i, doubleNormalizeAndScaleToRange(realVector.getEntry(i), range, xMax, xMin));
         }
         return realVector;
+    }
+
+    public static final double doubleNormalizeAndScaleToRange(double d, double[] range, double xMax, double xMin) {
+        d = ((range[1] - range[0]) * (d - xMin) / (xMax - xMin)) + range[0];
+        return d;
     }
 }

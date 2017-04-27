@@ -30,7 +30,7 @@ public class LinearPrediction {
          * and it is strongly recomended the reading of its comments explainning
          * how it works, what it does and why before going further.
         */
-        cifar10Utils = new Cifar10Utils();
+        cifar10Utils = new Cifar10Utils(true);
         LOGGER.log(Level.INFO, "Running Linear Prediction".concat(
                 String.format("(using %4.2f %% of dataset)", 
                         cifar10Utils.getLoadPercentual())));

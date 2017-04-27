@@ -8,7 +8,6 @@ package ml;
 import cifar10.Cifar10Utils;
 import java.io.IOException;
 import org.apache.commons.math3.linear.RealMatrix;
-import static java.lang.Math.abs;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import static java.lang.Math.abs;
@@ -44,7 +43,7 @@ public class NearestNeighbourgh {
         */
         LOGGER.log(Level.INFO, java.util.ResourceBundle.getBundle("ml/Bundle").getString("RUNNING NEARESTNEIGHBOURGH"));
         LOGGER.setLevel(Level.INFO);
-        cifar10Utils = new Cifar10Utils();
+        cifar10Utils = new Cifar10Utils(false);
         Xtr = cifar10Utils.getXtr();
         Xte = cifar10Utils.getXte();
         Ytr = cifar10Utils.getYtr();

@@ -28,6 +28,7 @@ import javax.swing.JLabel;
 import javax.swing.WindowConstants;
 import org.apache.commons.math3.linear.Array2DRowRealMatrix;
 import org.apache.commons.math3.linear.RealMatrix;
+import util.matrix.DuodecimoVectorUtils;
 
 /**
  *
@@ -256,6 +257,7 @@ public class Cifar10Utils {
     private JFrame jFrame;
     private static final Logger LOGGER = Logger.getGlobal();
     private static final ResourceBundle BUNDLE = ResourceBundle.getBundle("ml/Bundle");
+    private boolean normalized;
 
     /**
      * the constructor method
@@ -268,7 +270,8 @@ public class Cifar10Utils {
      * 
      * @throws IOException 
      */
-    public Cifar10Utils() throws IOException {
+    public Cifar10Utils(boolean normalized) throws IOException {
+        this.normalized = normalized;
         LOGGER.setLevel(Level.INFO);
         LOGGER.log(Level.INFO, BUNDLE.getString("CIFAR10UTILS: READING {0} IMAGES FROM EXAMPLE FILES"), TOT_TRAINNINGS);
         LOGGER.log(Level.INFO, BUNDLE.getString("CIFAR10UTILS: READ {0} IMAGES FROM TEST FILE"), TOT_TESTS);
@@ -421,21 +424,21 @@ public class Cifar10Utils {
         int rowOffset = 0;
 
         // retrieve the trainning data from files (leia os treinos dos arquivos de dados)
-        readCifar10FileData(BUNDLE.getString("./DATA/DATA_BATCH_1.BIN"), Xtr, Ytr, TOT_TRAINNINGS / 5, rowOffset);
+        readCifar10FileData(BUNDLE.getString("./DATA/DATA_BATCH_1.BIN"), Xtr, Ytr, TOT_TRAINNINGS / 5, rowOffset, normalized);
         rowOffset += TOT_TRAINNINGS / 5;
-        readCifar10FileData(BUNDLE.getString("./DATA/DATA_BATCH_2.BIN"), Xtr, Ytr, TOT_TRAINNINGS / 5, rowOffset);
+        readCifar10FileData(BUNDLE.getString("./DATA/DATA_BATCH_2.BIN"), Xtr, Ytr, TOT_TRAINNINGS / 5, rowOffset, normalized);
         rowOffset += TOT_TRAINNINGS / 5;
-        readCifar10FileData(BUNDLE.getString("./DATA/DATA_BATCH_3.BIN"), Xtr, Ytr, TOT_TRAINNINGS / 5, rowOffset);
+        readCifar10FileData(BUNDLE.getString("./DATA/DATA_BATCH_3.BIN"), Xtr, Ytr, TOT_TRAINNINGS / 5, rowOffset, normalized);
         rowOffset += TOT_TRAINNINGS / 5;
-        readCifar10FileData(BUNDLE.getString("./DATA/DATA_BATCH_4.BIN"), Xtr, Ytr, TOT_TRAINNINGS / 5, rowOffset);
+        readCifar10FileData(BUNDLE.getString("./DATA/DATA_BATCH_4.BIN"), Xtr, Ytr, TOT_TRAINNINGS / 5, rowOffset, normalized);
         rowOffset += TOT_TRAINNINGS / 5;
-        readCifar10FileData(BUNDLE.getString("./DATA/DATA_BATCH_5.BIN"), Xtr, Ytr, TOT_TRAINNINGS / 5, rowOffset);
+        readCifar10FileData(BUNDLE.getString("./DATA/DATA_BATCH_5.BIN"), Xtr, Ytr, TOT_TRAINNINGS / 5, rowOffset, normalized);
 
         // reset (zere)
         rowOffset = 0;
 
         // retrieve the test data from file (leia os dados de teste do arquivo)
-        readCifar10FileData(BUNDLE.getString("./DATA/TEST_BATCH.BIN"), Xte, Yte, TOT_TESTS, rowOffset);
+        readCifar10FileData(BUNDLE.getString("./DATA/TEST_BATCH.BIN"), Xte, Yte, TOT_TESTS, rowOffset, normalized);
 
         // Specially when using reduced set, for the sake of variaty, when doing 
         // some observations, and even specially when showing images, we may try to
@@ -475,6 +478,11 @@ public class Cifar10Utils {
 
     final void readCifar10FileData(String fileName, RealMatrix X, RealMatrix Y,
             int nImages, int initRow) throws FileNotFoundException, IOException {
+        readCifar10FileData(fileName, X, Y, nImages, initRow, false);
+    }
+
+    final void readCifar10FileData(String fileName, RealMatrix X, RealMatrix Y,
+            int nImages, int initRow, boolean normalized) throws FileNotFoundException, IOException {
         byte[] b = new byte[nImages * CIFAR_LINE];
         double[] label = new double[1];
         inputStream = new FileInputStream(fileName);
@@ -487,7 +495,13 @@ public class Cifar10Utils {
             label[0] = b[row * CIFAR_LINE] & 0xFF;
             Y.setRow(row + initRow, label);
             for (int col = 1; col < CIFAR_LINE; col++) {
-                X.setEntry(row + initRow, col - 1, b[row * CIFAR_LINE + col] & 0xFF);
+                if(!normalized) {
+                    X.setEntry(row + initRow, col - 1, b[row * CIFAR_LINE + col] & 0xFF);
+                } else {
+                    X.setEntry(row + initRow, col - 1, 
+                            DuodecimoVectorUtils.doubleNormalizeAndScaleToRange(b[row * CIFAR_LINE + col] & 0xFF, 
+                                    new double[]{-1.0, 1.0}, 255.0, 0.0));
+                }
             }
             LOGGER.log(Level.FINER, BUNDLE.getString("ROW: {0} LABEL: {1}"), new Object[]{row + initRow, label[0]});
         }
