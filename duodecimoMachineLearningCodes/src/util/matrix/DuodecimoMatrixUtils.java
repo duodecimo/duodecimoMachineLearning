@@ -169,6 +169,19 @@ public class DuodecimoMatrixUtils {
         return attachValueColumn(M, 1D);
     }
 
+    public static void showRealMatrix(RealMatrix M) {
+        showRealMatrix(M, -1, -1);
+    }
+
+    public static void showRealMatrix(String header, RealMatrix M) {
+        showRealMatrix(header, M, -1, -1);
+    }
+
+    public static void showRealMatrix(String header, RealMatrix M, int maxRows, int maxCols) {
+        System.out.println(header);
+        showRealMatrix(M, maxRows, maxCols);
+    }
+
     public static void showRealMatrix(RealMatrix M, int maxRows, int maxCols) {
         if(maxRows == -1) {
             // show all rows

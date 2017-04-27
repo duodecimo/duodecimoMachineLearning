@@ -52,10 +52,8 @@ public class MatricesOperationsReview {
             {61.0, 62.0, 63.0, 64.0, 65.0, 66.0, 67.0, 68.0, 69.0, 70.0}
         });
         // show entire matrix
-        System.out.println("Toda matriz");
-        DuodecimoMatrixUtils.showRealMatrix(realMatrix, -1, -1);
-        System.out.println("matriz truncada em (3,7)");
-        DuodecimoMatrixUtils.showRealMatrix(realMatrix, 3, 7);
+        DuodecimoMatrixUtils.showRealMatrix("Toda matriz", realMatrix);
+        DuodecimoMatrixUtils.showRealMatrix("matriz truncada em (3,7)", realMatrix, 3, 7);
     }
 
     final void operationsSample() {
