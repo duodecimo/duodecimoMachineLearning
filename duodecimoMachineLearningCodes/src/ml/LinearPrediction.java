@@ -14,6 +14,7 @@ import org.apache.commons.math3.linear.MatrixUtils;
 import org.apache.commons.math3.linear.RealMatrix;
 import org.apache.commons.math3.linear.RealVector;
 import org.apache.commons.math3.random.JDKRandomGenerator;
+import util.matrix.DuodecimoMatrixUtils;
 
 /**
  *
@@ -60,19 +61,7 @@ public class LinearPrediction {
                 }
             }
             if(checkWeights) {
-                System.out.println("Checking some weigths");
-                for(int wl=0; wl<10;wl++) { //lines
-                    // inital cols
-                    for(int wc=0;wc<8;wc++) {
-                        System.out.print(String.format("%8.6f ", W.getEntry(wl, wc)));
-                    }
-                    System.out.print(" ... ");
-                    // final cols
-                    for(int wc=W.getColumnDimension()-8;wc<W.getColumnDimension();wc++) {
-                        System.out.print(String.format("%8.6f ", W.getEntry(wl, wc)));
-                    }
-                    System.out.println("");
-                }
+                DuodecimoMatrixUtils.showRealMatrix("Checking some weigths", W, -1, 10);
                 checkWeights=false;
             }
             loss=0.0f;
@@ -81,41 +70,21 @@ public class LinearPrediction {
                 // notice below that we need to append a 1 to the end of the image 
                 // vector for the bias trick
                 int index = (int) Ytr.getEntry(j, 0);
+                RealVector x = Xtr.getRowVector(j);
                 if(checkTraining) {
-                    // wow, appears that all bias = 0,whats wrong with append(1.0d) ?
                     System.out.println("Checking some trainnings vector size before bias: " +
-                            Xtr.getRowVector(j).getDimension());
-                        for(int wc=0;wc<5;wc++) {
-                            //inicio
-                            System.out.print(String.format("%6.4f ", Xtr.getRowVector(j).getEntry(wc)));
-                        }
-                        System.out.print(" ... ");
-                        for(int wc=Xtr.getRowVector(j).getDimension()-5;wc<Xtr.getRowVector(j).getDimension();wc++) {
-                            //fim
-                            System.out.print(String.format("%6.4f ", Xtr.getRowVector(j).getEntry(wc)));
-                        }
-                        System.out.println("");
+                            x.getDimension());
+                    DuodecimoMatrixUtils.showRealMatrixLine(x, 10);
                     checkTraining=true;
                 }
-                RealVector x = Xtr.getRowVector(j);
                 x = x.append(1.0d);
                 // it seems it is not appending 1.0d, but 0.0d, bug?
                 // lets try to rewrite tomake sure
                 x.setEntry(x.getDimension()-1, 1.0d);
                 if(checkTraining) {
-                    // wow, appears that all bias = 0,whats wrong with append(1.0d) ?
                     System.out.println("Checking some trainnings vector size after bias: " +
                             x.getDimension());
-                        for(int wc=0;wc<5;wc++) {
-                            //inicio
-                            System.out.print(String.format("%6.4f ", x.getEntry(wc)));
-                        }
-                        System.out.print(" ... ");
-                        for(int wc=x.getDimension()-6;wc<x.getDimension();wc++) {
-                            //fim
-                            System.out.print(String.format("%6.4f ", x.getEntry(wc)));
-                        }
-                        System.out.println("");
+                    DuodecimoMatrixUtils.showRealMatrixLine(x, 10);
                     checkTraining=false;
                 }
                 loss += lossFunctionUnvectorized(x, (int) index, W);

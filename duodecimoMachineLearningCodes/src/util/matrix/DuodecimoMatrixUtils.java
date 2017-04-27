@@ -206,7 +206,7 @@ public class DuodecimoMatrixUtils {
         System.out.println("");
     }
     
-    private static void showRealMatrixLine(RealVector realVector, int maxCols) {
+    public static void showRealMatrixLine(RealVector realVector, int maxCols) {
         if(maxCols == -1) {
             // show all rows
             maxCols = realVector.getDimension();
