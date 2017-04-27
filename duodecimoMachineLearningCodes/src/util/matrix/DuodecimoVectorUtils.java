@@ -28,11 +28,21 @@ import org.apache.commons.math3.linear.RealVector;
  */
 public class DuodecimoVectorUtils {
     /**
-     * Given a vector x and a range new double[]{<double>, <double>},
+     * Given a vector x and a range a to b,
      * uses the formula "xi = (b-a) * (xi - xmin) / (xmax - xmin) + a" to
      * replace all vectors entries and returns the normalized and scaled vector.
      * 
-     * @param range
+     * Portuguese Version
+     * 
+     * Dado um vetor x e um intevalo a para b,
+     * usa a fórmula "xi = (b-a) * (xi - xmin) / (xmax - xmin) + a" para
+     * atualizar todas as entradas do vetor e retorna o vetor normalizado e escalado.
+     * 
+     * @param realVector a vector (um vetor)
+     * @param range a range, in the form new double[]{double, double}, i.e.,
+     * new double(){-1.0, 1.0}. (um intervalo, na forma
+     * new double[]{double, double}, por exemplo,
+     * new double(){-1.0, 1.0}.)
      * @return a scaled and normalized RealVector
      * @throws Exception if it receives a invalid range.
      */
