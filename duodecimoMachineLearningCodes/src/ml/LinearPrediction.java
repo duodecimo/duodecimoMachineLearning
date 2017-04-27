@@ -34,8 +34,7 @@ public class LinearPrediction {
         LOGGER.log(Level.INFO, "Running Linear Prediction".concat(
                 String.format("(using %4.2f %% of dataset)", 
                         cifar10Utils.getLoadPercentual())));
-        // lets try to normalize Xtr
-        Xtr = cifar10Utils.getXtr().scalarMultiply(0.0001d);
+        Xtr = cifar10Utils.getXtr();
         Xte = cifar10Utils.getXte();
         Ytr = cifar10Utils.getYtr();
         Yte = cifar10Utils.getYte();
@@ -174,7 +173,7 @@ np.mean(Yte_predict == Yte)
             if(i == correctClassScore) {
                 continue;
             }
-            loss += Double.max(0, scores.getEntry(i) - correctClassScore + delta) * 0.0002d;
+            loss += Double.max(0, scores.getEntry(i) - correctClassScore + delta);
         }
         return loss;
     } 
