@@ -10,21 +10,25 @@ import org.apache.commons.math3.linear.MatrixUtils;
 import org.apache.commons.math3.linear.RealMatrix;
 
 /**
- * Grow Matrix Dimension
+ * Duodecimo Matrix Utils
  * 
- * As for now it seems there is no conveninece methods for growing matrices 
+ * Usefull methods
+ * 
+ * As for now it seems there is no conveninece methods for, i.e. growing matrices 
  * dimensions in commons-math3-3.6.1 library from Apache Foundation, and I need 
  * some, I decided to write them.
  * 
  * Portuguese Version
  * 
- * Como até o momento parece não haver métodos de conveniência para aumentar as
- * dimensões de matrizes na biblioteca commons-math3-3.6.1 da Apache Foundation,
- * e eu preciso de alguns, decidí escrevê-los.
+ * Métodos Úteis
+ * 
+ * Como até o momento parece não haver métodos de conveniência para, por exemplo,
+ * aumentar as dimensões de matrizes na biblioteca commons-math3-3.6.1 da 
+ * Apache Foundation, e eu preciso de alguns, decidí escrevê-los.
  * 
  * @author duo
  */
-public class MatrixGrowDimension {
+public class DuodecimoMatrixUtils {
 
     /**
      * Takes an original matrix as input and returns a new matrix with all data 
