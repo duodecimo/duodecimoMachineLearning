@@ -16,6 +16,7 @@
  */
 package sandbox;
 
+import java.util.logging.Logger;
 import org.apache.commons.math3.linear.ArrayRealVector;
 import org.apache.commons.math3.linear.RealVector;
 import util.matrix.Display;
@@ -26,6 +27,8 @@ import util.matrix.DuodecimoVectorUtils;
  * @author duo
  */
 public class VectorsOperationsReview {
+
+    private static final Logger LOGGER = Logger.getGlobal();
 
     public VectorsOperationsReview() throws Exception {
         // vector normalization

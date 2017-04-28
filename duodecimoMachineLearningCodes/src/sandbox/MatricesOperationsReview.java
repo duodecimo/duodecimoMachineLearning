@@ -16,6 +16,7 @@
  */
 package sandbox;
 
+import java.util.logging.Logger;
 import org.apache.commons.math3.exception.DimensionMismatchException;
 import org.apache.commons.math3.linear.ArrayRealVector;
 import org.apache.commons.math3.linear.MatrixUtils;
@@ -52,6 +53,8 @@ import util.matrix.DuodecimoVectorUtils;
  * @author duo
  */
 public class MatricesOperationsReview {
+
+    private static final Logger LOGGER = Logger.getGlobal();
 
     public MatricesOperationsReview() {
         //operationsSample();

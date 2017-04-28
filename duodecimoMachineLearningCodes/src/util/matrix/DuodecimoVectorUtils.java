@@ -16,6 +16,7 @@
  */
 package util.matrix;
 
+import java.util.logging.Logger;
 import org.apache.commons.math3.linear.RealVector;
 
 /**
@@ -38,6 +39,8 @@ import org.apache.commons.math3.linear.RealVector;
  * @author duo
  */
 public class DuodecimoVectorUtils {
+    private static final Logger LOGGER = Logger.getGlobal();
+
     /**
      * Given a vector x and a range a to b,
      * uses the formula "xi = (b-a) * (xi - xmin) / (xmax - xmin) + a" to

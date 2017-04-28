@@ -17,6 +17,7 @@
 package util.matrix;
 
 import java.util.Arrays;
+import java.util.logging.Logger;
 import org.apache.commons.math3.linear.MatrixUtils;
 import org.apache.commons.math3.linear.RealMatrix;
 import org.apache.commons.math3.linear.RealVector;
@@ -41,6 +42,8 @@ import org.apache.commons.math3.linear.RealVector;
  * @author duo
  */
 public class DuodecimoMatrixUtils {
+
+    private static final Logger LOGGER = Logger.getGlobal();
 
     /**
      * Takes an original matrix as input and returns a new matrix with all data 
