@@ -97,8 +97,9 @@ public class MatricesOperationsReview {
             {1.0, 2.0, 3.0}
         );
         */ 
-        System.out.println("Create a vector to hold the bias:");
-        DuodecimoMatrixUtils.showRealMatrixLine(b, -1);
+
+        DuodecimoVectorUtils.showRealVector("Create a vector to hold the bias:", b);
+
         System.out.println("Calculate f(xi, W, b) = Wx1+b 9for the first image on X)");
 
         RealMatrix X1 = X.getSubMatrix(0, 0, 0, 3).transpose();
@@ -107,8 +108,7 @@ public class MatricesOperationsReview {
         RealMatrix WX1 = W.multiply(X1);
         DuodecimoMatrixUtils.showRealMatrix("Wx1:", WX1);
         
-        System.out.println("WX1 + b: ");
-        DuodecimoMatrixUtils.showRealMatrixLine(WX1.getColumnVector(0).add(b), -1);
+        DuodecimoVectorUtils.showRealVector("WX1 + b: ", WX1.getColumnVector(0).add(b));
     }
 
     final void showTest() {

@@ -76,4 +76,42 @@ public class DuodecimoVectorUtils {
         d = ((range[1] - range[0]) * (d - xMin) / (xMax - xMin)) + range[0];
         return d;
     }
+
+    public static void showRealVector(String header, RealVector realVector) {
+        System.out.println(header);
+        showRealVector(realVector, -1);
+    }
+
+    public static void showRealVector(String header, RealVector realVector, int maxElements) {
+        System.out.println(header);
+        showRealVector(realVector, maxElements);
+    }
+
+    public static void showRealVector(RealVector realVector) {
+        showRealVector(realVector, -1);
+    }
+
+    public static void showRealVector(RealVector realVector, int maxElements) {
+        if(maxElements == -1) {
+            // show all elements
+            maxElements = realVector.getDimension();
+        }
+        // show first batch
+        for (int c = 0; c < (maxElements < realVector. getDimension() ? maxElements/2 : maxElements); c++) {
+            System.out.println(String.format(" %8.4f", realVector.getEntry(c)));
+        }
+        // if not all, reticenses
+        if(maxElements < realVector. getDimension()) {
+            System.out.println("     .\n     .\n     .");
+        }
+        // if not all, show second batch
+        if(maxElements < realVector. getDimension()) {
+            maxElements -= maxElements/2;
+            for (int c = realVector.getDimension() - maxElements; c < realVector.getDimension(); c++) {
+                System.out.println(String.format(" %8.4f", realVector.getEntry(c)));
+            }
+        }
+        // end line
+        System.out.println("");
+    }
 }
