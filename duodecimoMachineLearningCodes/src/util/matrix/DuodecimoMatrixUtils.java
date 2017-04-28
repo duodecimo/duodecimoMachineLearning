@@ -183,64 +183,77 @@ public class DuodecimoMatrixUtils {
         return attachValueColumn(M, 1D);
     }
 
-    public static void showRealMatrix(RealMatrix M) {
-        showRealMatrix(M, -1, -1);
+    public static String showRealMatrix(RealMatrix M) {
+        String output;
+        output = "\n";
+        output = output.concat(showRealMatrix(M, -1, -1));
+        return (output.concat("\n"));
     }
 
-    public static void showRealMatrix(String header, RealMatrix M) {
-        showRealMatrix(header, M, -1, -1);
+    public static String showRealMatrix(String header, RealMatrix M) {
+        String output;
+        output = "\n";
+        output = output.concat(showRealMatrix(header, M, -1, -1));
+        return (output.concat("\n"));
     }
 
-    public static void showRealMatrix(String header, RealMatrix M, int maxRows, int maxCols) {
-        System.out.println(header);
-        showRealMatrix(M, maxRows, maxCols);
+    public static String showRealMatrix(String header, RealMatrix M, int maxRows, int maxCols) {
+        String output;
+        output = "\n";
+        output = output.concat(header);
+        output = output.concat(showRealMatrix(M, maxRows, maxCols));
+        return (output.concat("\n"));
     }
 
-    public static void showRealMatrix(RealMatrix M, int maxRows, int maxCols) {
+    public static String showRealMatrix(RealMatrix M, int maxRows, int maxCols) {
+        String output;
+        output = "\n";
         if(maxRows == -1) {
             // show all rows
             maxRows = M.getRowDimension();
         }
         // show first batch
         for (int l = 0; l < (maxRows < M.getRowDimension() ?  maxRows/2 : maxRows); l++) {
-            showRealMatrixLine(M.getRowVector(l), maxCols);
+            output = output.concat(showRealMatrixLine(M.getRowVector(l), maxCols));
         }
         // if not all, reticenses
         if(maxRows < M.getRowDimension()) {
-            System.out.println("     .\n     .\n     .");
+            output = output.concat("     .\n     .\n     .");
         }
         // if not all, show second batch
         if(maxRows < M.getRowDimension()) {
             maxRows -= maxRows / 2;
             for (int l = M.getRowDimension() - maxRows; l < M.getRowDimension(); l++) {
-                showRealMatrixLine(M.getRowVector(l), maxCols);
+                output = output.concat(showRealMatrixLine(M.getRowVector(l), maxCols));
             }
         }
         // end show
-        System.out.println("");
+        return(output.concat("\n"));
     }
     
-    public static void showRealMatrixLine(RealVector realVector, int maxCols) {
+    public static String showRealMatrixLine(RealVector realVector, int maxCols) {
+        String output;
+        output = "\n";
         if(maxCols == -1) {
             // show all rows
             maxCols = realVector.getDimension();
         }
         // show first batch
         for (int c = 0; c < (maxCols < realVector. getDimension() ? maxCols/2 : maxCols); c++) {
-            System.out.print(String.format(" %8.4f", realVector.getEntry(c)));
+            output = output.concat(String.format(" %8.4f", realVector.getEntry(c)));
         }
         // if not all, reticenses
         if(maxCols < realVector. getDimension()) {
-            System.out.print(" ... ");
+            output = output.concat(" ... ");
         }
         // if not all, show second batch
         if(maxCols < realVector. getDimension()) {
             maxCols -= maxCols/2;
             for (int c = realVector.getDimension() - maxCols; c < realVector.getDimension(); c++) {
-                System.out.print(String.format(" %8.4f", realVector.getEntry(c)));
+                output = output.concat(String.format(" %8.4f", realVector.getEntry(c)));
             }
         }
         // end line
-        System.out.println("");
+        return(output.concat("\n"));
     }
 }

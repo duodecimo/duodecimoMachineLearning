@@ -268,7 +268,7 @@ public class Cifar10Utils {
     private JFrame jFrame;
     private static final Logger LOGGER = Logger.getGlobal();
     private static final ResourceBundle BUNDLE = ResourceBundle.getBundle("ml/Bundle");
-    private boolean normalized;
+    private final boolean normalized;
 
     /**
      * the constructor method

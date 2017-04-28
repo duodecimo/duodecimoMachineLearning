@@ -16,6 +16,7 @@
  */
 package sandbox;
 
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.apache.commons.math3.exception.DimensionMismatchException;
 import org.apache.commons.math3.linear.ArrayRealVector;
@@ -63,7 +64,8 @@ public class MatricesOperationsReview {
     }
 
     final void operationsForLinearClassification() {
-        System.out.println("Given the linear mapping function, f(xi, W, b) = Wxi+b\n"
+        LOGGER.setLevel(Level.INFO);
+        LOGGER.info("Given the linear mapping function, f(xi, W, b) = Wxi+b\n"
                 + "we can use matrix and vectors to perform the calculation.");
         // create a matrix, W, holds the weights
         RealMatrix W = MatrixUtils.createRealMatrix(new double[][]{
@@ -78,7 +80,7 @@ public class MatricesOperationsReview {
             {9.0d, 10.0d, 11.0d, 12.0d}
         });
         */
-        DuodecimoMatrixUtils.showRealMatrix("Create W:", W);
+        LOGGER.info(DuodecimoMatrixUtils.showRealMatrix("Create W:", W));
         // create a matrix, X, hold images, each line an image
         RealMatrix X = MatrixUtils.createRealMatrix(new double[][]{
         {56, 231, 24, 2},
@@ -90,7 +92,7 @@ public class MatricesOperationsReview {
             {5.0, 6.0, 7.0, 8.0},
         });
         */
-        DuodecimoMatrixUtils.showRealMatrix("Create X:", X);
+        LOGGER.info(DuodecimoMatrixUtils.showRealMatrix("Create X:", X));
         // create a vector, holds the bias
         RealVector b = new ArrayRealVector(new double[]
         {1.1, 3.2, -1.2}
@@ -101,17 +103,17 @@ public class MatricesOperationsReview {
         );
         */ 
 
-        DuodecimoVectorUtils.showRealVector("Create a vector to hold the bias:", b);
+        LOGGER.info(DuodecimoVectorUtils.showRealVector("Create a vector to hold the bias:", b));
 
-        System.out.println("Calculate f(xi, W, b) = Wx1+b 9for the first image on X)");
+        LOGGER.info("Calculate f(xi, W, b) = Wx1+b 9for the first image on X)");
 
         RealMatrix X1 = X.getSubMatrix(0, 0, 0, 3).transpose();
-        DuodecimoMatrixUtils.showRealMatrix("X1:", X1);
+        LOGGER.info(DuodecimoMatrixUtils.showRealMatrix("X1:", X1));
         
         RealMatrix WX1 = W.multiply(X1);
-        DuodecimoMatrixUtils.showRealMatrix("Wx1:", WX1);
+        LOGGER.info(DuodecimoMatrixUtils.showRealMatrix("Wx1:", WX1));
         
-        DuodecimoVectorUtils.showRealVector("WX1 + b: ", WX1.getColumnVector(0).add(b));
+        LOGGER.info(DuodecimoVectorUtils.showRealVector("WX1 + b: ", WX1.getColumnVector(0).add(b)));
     }
 
     final void showTest() {
@@ -126,17 +128,17 @@ public class MatricesOperationsReview {
             {61.0, 62.0, 63.0, 64.0, 65.0, 66.0, 67.0, 68.0, 69.0, 70.0}
         });
         // show entire matrix
-        DuodecimoMatrixUtils.showRealMatrix("Toda matriz", realMatrix);
-        DuodecimoMatrixUtils.showRealMatrix("matriz truncada em (3,7)", realMatrix, 3, 7);
+        LOGGER.info(DuodecimoMatrixUtils.showRealMatrix("Toda matriz", realMatrix));
+        LOGGER.info(DuodecimoMatrixUtils.showRealMatrix("matriz truncada em (3,7)", realMatrix, 3, 7));
     }
 
     final void operationsSample() {
-        System.out.println(java.util.ResourceBundle.getBundle("sandbox/Bundle").getString("CREATING AND OPERATING REALMATRIX."));
-        System.out.println("");
+        LOGGER.info(java.util.ResourceBundle.getBundle("sandbox/Bundle").getString("CREATING AND OPERATING REALMATRIX."));
+        LOGGER.info("");
 
         // dimensionality (dimesnionalidade)
-        System.out.println(java.util.ResourceBundle.getBundle("sandbox/Bundle").getString("CREATE SOME MATRICES, WITH SEVERAL DIMENSIONALITIES."));
-        System.out.println("");
+        LOGGER.info(java.util.ResourceBundle.getBundle("sandbox/Bundle").getString("CREATE SOME MATRICES, WITH SEVERAL DIMENSIONALITIES."));
+        LOGGER.info("");
 
         RealMatrix L1C1 = MatrixUtils.createRealMatrix(new double[][]{{1}});
         displayRealMatrix(java.util.ResourceBundle.getBundle("sandbox/Bundle").getString("LETS BUILD A MATRIX 1 X 1"),
@@ -184,8 +186,8 @@ public class MatricesOperationsReview {
                 java.util.ResourceBundle.getBundle("sandbox/Bundle").getString("MATRIX L2C5:"), L2C5);
 
         // operations
-        System.out.println(java.util.ResourceBundle.getBundle("sandbox/Bundle").getString("SOME MATRICES OPERATIONS.\\NEWLINE"));
-        System.out.println(java.util.ResourceBundle.getBundle("sandbox/Bundle").getString("MATRICES MULTIPLICATION."));
+        LOGGER.info(java.util.ResourceBundle.getBundle("sandbox/Bundle").getString("SOME MATRICES OPERATIONS.\\NEWLINE"));
+        LOGGER.info(java.util.ResourceBundle.getBundle("sandbox/Bundle").getString("MATRICES MULTIPLICATION."));
 
         RealMatrix A = MatrixUtils.createRealMatrix(new double[][]{{1, 2, 3}, {4, 5, 6}});
         displayRealMatrix(java.util.ResourceBundle.getBundle("sandbox/Bundle").getString("LETS BUILD A MATRIX"), java.util.ResourceBundle.getBundle("sandbox/Bundle").getString("MATRIX A:"), A);
@@ -194,19 +196,19 @@ public class MatricesOperationsReview {
                     java.util.ResourceBundle.getBundle("sandbox/Bundle").getString("REALMATRIX A = MATRIXUTILS.CREATEREALMATRIX(NEW DOUBLE[][]{{1,2,3}, {4,5,6}})"),
                     java.util.ResourceBundle.getBundle("sandbox/Bundle").getString("MATRIX A * A:"), A.multiply(A));
         } catch (DimensionMismatchException dimensionMismatchException) {
-            System.out.println(java.util.ResourceBundle.getBundle("sandbox/Bundle").getString("WE CAN'T MULTIPLY A *A, WE GET A DIMENSION EXCEPTION: ")
+            LOGGER.info(java.util.ResourceBundle.getBundle("sandbox/Bundle").getString("WE CAN'T MULTIPLY A *A, WE GET A DIMENSION EXCEPTION: ")
                     + dimensionMismatchException.getMessage());
-            System.out.println(java.util.ResourceBundle.getBundle("sandbox/Bundle").getString("THE RULE IS: LEFT MATRIX NUMBER OF COLUMNS ")
+            LOGGER.info(java.util.ResourceBundle.getBundle("sandbox/Bundle").getString("THE RULE IS: LEFT MATRIX NUMBER OF COLUMNS ")
                     + java.util.ResourceBundle.getBundle("sandbox/Bundle").getString("MUST MATCH RIGHT MATRIX NUMBER OF LINES!"));
-            System.out.println(java.util.ResourceBundle.getBundle("sandbox/Bundle").getString("A X A GIVES (2,3) * (2,3), DOES NOT MATCH!"));
-            System.out.println(java.util.ResourceBundle.getBundle("sandbox/Bundle").getString("FOR EXAMPLE, WE CAN MULTIPLY A (N, 2) MATRIX ")
+            LOGGER.info(java.util.ResourceBundle.getBundle("sandbox/Bundle").getString("A X A GIVES (2,3) * (2,3), DOES NOT MATCH!"));
+            LOGGER.info(java.util.ResourceBundle.getBundle("sandbox/Bundle").getString("FOR EXAMPLE, WE CAN MULTIPLY A (N, 2) MATRIX ")
                     + java.util.ResourceBundle.getBundle("sandbox/Bundle").getString("ONLY BY A (2, M) MATRIX!"));
-            System.out.println(java.util.ResourceBundle.getBundle("sandbox/Bundle").getString("\\NEWLINE"));
+            LOGGER.info(java.util.ResourceBundle.getBundle("sandbox/Bundle").getString("\\NEWLINE"));
         }
         displayRealMatrix(java.util.ResourceBundle.getBundle("sandbox/Bundle").getString("LETS TRANSPOSE IT"), java.util.ResourceBundle.getBundle("sandbox/Bundle").getString("MATRIX A':"), A.transpose());
         displayRealMatrix(java.util.ResourceBundle.getBundle("sandbox/Bundle").getString("NOW WE CAN MULTIPLY BOTH"), java.util.ResourceBundle.getBundle("sandbox/Bundle").getString("MATRIX A * A':"), A.multiply(A.transpose()));
 
-        System.out.println(java.util.ResourceBundle.getBundle("sandbox/Bundle").getString("NOW WE WILL TRY AN OPERATION THAT WILL HAPPEN WHEN WE ").concat(
+        LOGGER.info(java.util.ResourceBundle.getBundle("sandbox/Bundle").getString("NOW WE WILL TRY AN OPERATION THAT WILL HAPPEN WHEN WE ").concat(
                 java.util.ResourceBundle.getBundle("sandbox/Bundle").getString("WANT PERFORM LINEAR CLASSIFICATION.\\NEWLINE F(XI,W,B)=WXI+B\\NEWLINE")).concat(
                 java.util.ResourceBundle.getBundle("sandbox/Bundle").getString("WE ARE MULTIPLYING A MATRIX TO A VECTOR (GIVES A VECTOR)\\NEWLINE").concat(
                 java.util.ResourceBundle.getBundle("sandbox/Bundle").getString(" AND THEN ADDING TO ANOTHER VECTOR, GETTING A VECTOR"))));
@@ -235,52 +237,52 @@ public class MatricesOperationsReview {
     }
 
     void displayRealMatrix(String title, String javaCode, String metadata, RealMatrix M) {
-        System.out.println(java.text.MessageFormat.format(java.util.ResourceBundle.getBundle("sandbox/Bundle").getString("TASK: {0}"), new Object[]{title}));
-        System.out.println(java.text.MessageFormat.format(java.util.ResourceBundle.getBundle("sandbox/Bundle").getString("CODE: {0}"), new Object[]{javaCode}));
+        LOGGER.info(java.text.MessageFormat.format(java.util.ResourceBundle.getBundle("sandbox/Bundle").getString("TASK: {0}"), new Object[]{title}));
+        LOGGER.info(java.text.MessageFormat.format(java.util.ResourceBundle.getBundle("sandbox/Bundle").getString("CODE: {0}"), new Object[]{javaCode}));
         displayRealMatrix(metadata, M);
     }
 
     void displayRealMatrix(String title, String metadata, RealMatrix M) {
-        System.out.println(title);
+        LOGGER.info(title);
         displayRealMatrix(metadata, M);
     }
 
     void displayRealMatrix(String metadata, RealMatrix M) {
-        System.out.println(metadata + java.text.MessageFormat.format(java.util.ResourceBundle.getBundle("sandbox/Bundle").getString(" ({0} X {1})"), new Object[]{M.getRowDimension(), M.getColumnDimension()}));
+        LOGGER.info(metadata + java.text.MessageFormat.format(java.util.ResourceBundle.getBundle("sandbox/Bundle").getString(" ({0} X {1})"), new Object[]{M.getRowDimension(), M.getColumnDimension()}));
         displayRealMatrix(M);
     }
 
     void displayRealMatrix(RealMatrix M) {
         for (int l = 0; l < M.getRowDimension(); l++) {
-            System.out.println("");
+            LOGGER.info("");
             for (int c = 0; c < M.getColumnDimension(); c++) {
                 System.out.print(String.format(java.util.ResourceBundle.getBundle("sandbox/Bundle").getString(" %8.2F"), M.getEntry(l, c)));
             }
         }
-        System.out.println(java.util.ResourceBundle.getBundle("sandbox/Bundle").getString("\\NEWLINE"));
+        LOGGER.info(java.util.ResourceBundle.getBundle("sandbox/Bundle").getString("\\NEWLINE"));
     }
 
     void displayRealVector(String title, String javaCode, String metadata, RealVector v) {
-        System.out.println(java.text.MessageFormat.format(java.util.ResourceBundle.getBundle("sandbox/Bundle").getString("TASK: {0}"), new Object[]{title}));
-        System.out.println(java.text.MessageFormat.format(java.util.ResourceBundle.getBundle("sandbox/Bundle").getString("CODE: {0}"), new Object[]{javaCode}));
+        LOGGER.info(java.text.MessageFormat.format(java.util.ResourceBundle.getBundle("sandbox/Bundle").getString("TASK: {0}"), new Object[]{title}));
+        LOGGER.info(java.text.MessageFormat.format(java.util.ResourceBundle.getBundle("sandbox/Bundle").getString("CODE: {0}"), new Object[]{javaCode}));
         displayRealVector(metadata, v);
     }
 
     void displayRealVector(String title, String metadata, RealVector v) {
-        System.out.println(title);
+        LOGGER.info(title);
         displayRealVector(metadata, v);
     }
 
     void displayRealVector(String metadata, RealVector v) {
-        System.out.println(metadata + java.text.MessageFormat.format(java.util.ResourceBundle.getBundle("sandbox/Bundle").getString(" ( DIMENSION = {0})"), new Object[]{v.getDimension()}));
+        LOGGER.info(metadata + java.text.MessageFormat.format(java.util.ResourceBundle.getBundle("sandbox/Bundle").getString(" ( DIMENSION = {0})"), new Object[]{v.getDimension()}));
         displayRealVector(v);
     }
 
     void displayRealVector(RealVector v) {
         for (int l = 0; l < v.getDimension(); l++) {
-            System.out.println(String.format(java.util.ResourceBundle.getBundle("sandbox/Bundle").getString(" %8.2F"), v.getEntry(l)));
+            LOGGER.info(String.format(java.util.ResourceBundle.getBundle("sandbox/Bundle").getString(" %8.2F"), v.getEntry(l)));
         }
-        System.out.println(java.util.ResourceBundle.getBundle("sandbox/Bundle").getString("\\NEWLINE"));
+        LOGGER.info(java.util.ResourceBundle.getBundle("sandbox/Bundle").getString("\\NEWLINE"));
     }
 
     public static void main(String[] args) {
