@@ -17,10 +17,12 @@
 package sandbox;
 
 import org.apache.commons.math3.exception.DimensionMismatchException;
+import org.apache.commons.math3.linear.ArrayRealVector;
 import org.apache.commons.math3.linear.MatrixUtils;
 import org.apache.commons.math3.linear.RealMatrix;
 import org.apache.commons.math3.linear.RealVector;
 import util.matrix.DuodecimoMatrixUtils;
+import util.matrix.DuodecimoVectorUtils;
 
 /**
  * We review in this code some matrices operations and the code to perform them.
@@ -53,7 +55,35 @@ public class MatricesOperationsReview {
 
     public MatricesOperationsReview() {
         //operationsSample();
-        showTest();
+        //showTest();
+        operationsForLinearClassification();
+    }
+
+    final void operationsForLinearClassification() {
+        System.out.println("Given the linear mapping function, f(xi, W, b) = Wxi+b\n"
+                + "we can use matrix and vectors to perform the calculation.");
+        // create a matrix, W, holds the weights
+        RealMatrix W = MatrixUtils.createRealMatrix(new double[][]{
+            {0.2, -0.5, -0.1, 2.0},
+            {1.5, 1.3, 2.1, 0.0},
+            {0.0, 0.25, 0.2, -0.3}
+        });
+        DuodecimoMatrixUtils.showRealMatrix("Create W:", W);
+        // create a matrix, X, hold images, each line an image
+        RealMatrix X = MatrixUtils.createRealMatrix(new double[][]{
+            {56, 231, 24, 2},
+            {10, 10, 10, 10}
+        });
+        DuodecimoMatrixUtils.showRealMatrix("Create X:", X);
+        // create a vector, holds the bias
+        RealVector b = new ArrayRealVector(new double[]
+            {1.1, 3.2, -1.2}
+        );
+        System.out.println("Create a vector to hold the bias:");
+        DuodecimoMatrixUtils.showRealMatrixLine(b, -1);
+        System.out.println("Calculate f(xi, W, b) = Wx1+b 9for the first image on X)");
+        DuodecimoMatrixUtils.showRealMatrixLine(W.operate(X.getColumnVector(0)), -1);
+        
     }
 
     final void showTest() {
