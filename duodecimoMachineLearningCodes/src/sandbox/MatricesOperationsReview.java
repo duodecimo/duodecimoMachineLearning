@@ -64,26 +64,51 @@ public class MatricesOperationsReview {
                 + "we can use matrix and vectors to perform the calculation.");
         // create a matrix, W, holds the weights
         RealMatrix W = MatrixUtils.createRealMatrix(new double[][]{
-            {0.2, -0.5, -0.1, 2.0},
-            {1.5, 1.3, 2.1, 0.0},
-            {0.0, 0.25, 0.2, -0.3}
+        {0.2, -0.5, -0.1, 2.0},
+        {1.5, 1.3, 2.1, 0.0},
+        {0.0, 0.25, 0.2, -0.3}
         });
+        /*
+        RealMatrix W = MatrixUtils.createRealMatrix(new double[][]{
+            {1.0d, 2.0d, 3.0d, 4.0d},
+            {5.0d, 6.0d, 7.0d, 8.0d},
+            {9.0d, 10.0d, 11.0d, 12.0d}
+        });
+        */
         DuodecimoMatrixUtils.showRealMatrix("Create W:", W);
         // create a matrix, X, hold images, each line an image
         RealMatrix X = MatrixUtils.createRealMatrix(new double[][]{
-            {56, 231, 24, 2},
-            {10, 10, 10, 10}
+        {56, 231, 24, 2},
+        {10, 10, 10, 10}
         });
+        /*
+        RealMatrix X = MatrixUtils.createRealMatrix(new double[][]{
+            {1.0, 2.0, 3.0, 4.0},
+            {5.0, 6.0, 7.0, 8.0},
+        });
+        */
         DuodecimoMatrixUtils.showRealMatrix("Create X:", X);
         // create a vector, holds the bias
         RealVector b = new ArrayRealVector(new double[]
-            {1.1, 3.2, -1.2}
+        {1.1, 3.2, -1.2}
         );
+        /*
+        RealVector b = new ArrayRealVector(new double[]
+            {1.0, 2.0, 3.0}
+        );
+        */ 
         System.out.println("Create a vector to hold the bias:");
         DuodecimoMatrixUtils.showRealMatrixLine(b, -1);
         System.out.println("Calculate f(xi, W, b) = Wx1+b 9for the first image on X)");
-        DuodecimoMatrixUtils.showRealMatrixLine(W.operate(X.getColumnVector(0)), -1);
+
+        RealMatrix X1 = X.getSubMatrix(0, 0, 0, 3).transpose();
+        DuodecimoMatrixUtils.showRealMatrix("X1:", X1);
         
+        RealMatrix WX1 = W.multiply(X1);
+        DuodecimoMatrixUtils.showRealMatrix("Wx1:", WX1);
+        
+        System.out.println("WX1 + b: ");
+        DuodecimoMatrixUtils.showRealMatrixLine(WX1.getColumnVector(0).add(b), -1);
     }
 
     final void showTest() {
