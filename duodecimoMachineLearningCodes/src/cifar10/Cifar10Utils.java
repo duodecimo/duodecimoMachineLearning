@@ -691,7 +691,7 @@ public class Cifar10Utils {
     }
 
     public float getLoadPercentual() {
-        return (50000 * TAX_OF_IMAGES_FROM_FILES * 100);
+        return (TAX_OF_IMAGES_FROM_FILES * 100);
     }
 
     public int getTotalOfTrainnings() {

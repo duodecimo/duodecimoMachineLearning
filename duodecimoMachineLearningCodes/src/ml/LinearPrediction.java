@@ -43,10 +43,13 @@ public class LinearPrediction {
     }
 
     public final void linearPredictionWithRandomSearch() {
+        DuodecimoMatrixUtils.showRealMatrix("sampling Xtr", Xtr, 10, 10);
+        // lets add a column of ones to Xtr in order to perform the bias trick
+        RealMatrix XtrWithOnes = DuodecimoMatrixUtils.attachOnesColumn(Xtr);
+        DuodecimoMatrixUtils.showRealMatrix("sampling XtrWithOnes", XtrWithOnes, 10, 11);
         RealMatrix BestW = null; // to hold the best random generated weights
         float bestloss = Float.MAX_VALUE, loss;
-        boolean checkWeights = true; // lets just display some generated gaussian weights
-        boolean checkTraining = true; // lets just display some trainnings
+        boolean sampleFirstWeights = true;
         for(int i=0; i<500; i++) { // number of guesses
             DoubleStream doubleStream = new JDKRandomGenerator((int) System.currentTimeMillis()).
                     doubles((cifar10Utils.getTotalOfBytes()+1) * cifar10Utils.getNames().length);
@@ -60,40 +63,22 @@ public class LinearPrediction {
                     W.setEntry(row, col, doubles[k++]);
                 }
             }
-            if(checkWeights) {
-                DuodecimoMatrixUtils.showRealMatrix("Checking some weigths", W, -1, 10);
-                checkWeights=false;
+            if (sampleFirstWeights) {
+                DuodecimoMatrixUtils.showRealMatrix("sampling weights", W, -1, 10);
+                sampleFirstWeights = !sampleFirstWeights;
             }
             loss=0.0f;
             for (int j = 0; j < cifar10Utils.getTotalOfTrainnings(); j++) {
                 // loop to visit all trainnings
-                // notice below that we need to append a 1 to the end of the image 
-                // vector for the bias trick
                 int index = (int) Ytr.getEntry(j, 0);
-                RealVector x = Xtr.getRowVector(j);
-                if(checkTraining) {
-                    System.out.println("Checking some trainnings vector size before bias: " +
-                            x.getDimension());
-                    DuodecimoMatrixUtils.showRealMatrixLine(x, 10);
-                    checkTraining=true;
-                }
-                x = x.append(1.0d);
-                // it seems it is not appending 1.0d, but 0.0d, bug?
-                // lets try to rewrite to make sure
-                x.setEntry(x.getDimension()-1, 1.0d);
-                if(checkTraining) {
-                    System.out.println("Checking some trainnings vector size after bias: " +
-                            x.getDimension());
-                    DuodecimoMatrixUtils.showRealMatrixLine(x, 10);
-                    checkTraining=false;
-                }
+                RealVector x = XtrWithOnes.getRowVector(j);
                 loss += lossFunctionUnvectorized(x, (int) index, W);
             }
             if(loss<bestloss) {
                 bestloss = loss;
                 BestW = W.copy();
             }
-            System.out.println(String.format("in attempt %d the loss was %f, "
+            System.out.println(String.format("in guess attempt %d the loss was %f, "
                     + "best %f %c", i+1, loss, bestloss, '%'));
         }
         // BestW holds the weigths
