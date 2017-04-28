@@ -58,7 +58,6 @@ import static java.lang.Math.abs;
  * That will be the sum, for i going from 0 to 3071 of mod(Te[i] - Tr[i]). 
  * The result will be a numeric value.
  * 
- * @see NearestNeighbourgh()
  * 
  * @author duo
  */

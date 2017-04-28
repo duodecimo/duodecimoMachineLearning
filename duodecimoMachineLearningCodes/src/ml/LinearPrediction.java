@@ -35,6 +35,11 @@ public class LinearPrediction {
         private final RealMatrix Xtr, Ytr, Xte, Yte;
         private final Cifar10Utils cifar10Utils;
         private static final Logger LOGGER = Logger.getGlobal();
+
+    /**
+     *
+     * @throws IOException
+     */
     public LinearPrediction() throws IOException {
         LOGGER.setLevel(Level.INFO);
         /**
@@ -53,6 +58,9 @@ public class LinearPrediction {
         linearPredictionWithRandomSearch();
     }
 
+    /**
+     *
+     */
     public final void linearPredictionWithRandomSearch() {
         DuodecimoMatrixUtils.showRealMatrix("sampling Xtr", Xtr, 10, 10);
         // lets add a column of ones to Xtr in order to perform the bias trick
@@ -128,6 +136,13 @@ np.mean(Yte_predict == Yte)
 
     }
 
+    /**
+     *
+     * @param x one image as a vector (a line from a matrix)
+     * @param y the index of the choosen score
+     * @param W weights matrix
+     * @return the loss as a float
+     */
     public float lossFunctionUnvectorized(RealVector x, int y, RealMatrix W) {
         float delta = 1.0f;
         RealVector scores = W.operate(x);
@@ -143,6 +158,11 @@ np.mean(Yte_predict == Yte)
         return loss;
     } 
 
+    /**
+     *
+     * @param args command line parameters if needed.
+     * @throws IOException if received from class,
+     */
     public static void main(String[] args) throws IOException {
         LinearPrediction linearPrediction = new LinearPrediction();
     }}

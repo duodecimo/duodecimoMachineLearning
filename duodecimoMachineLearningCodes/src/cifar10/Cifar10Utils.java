@@ -67,8 +67,8 @@ import util.matrix.DuodecimoVectorUtils;
  * The binary version contains the files data_batch_1.bin, data_batch_2.bin, ..., 
  * data_batch_5.bin, as well as test_batch.bin. Each of these files is formatted 
  * as follows:
- * <1 x label><3072 x pixel> ...
- * <1 x label><3072 x pixel>
+ * [1 x label][3072 x pixel] ...
+ * [1 x label][3072 x pixel]
  * In other words, the first byte is the label of the first image, which is a number 
  * in the range 0-9. The next 3072 bytes are the values of the pixels of the image. 
  * The first 1024 bytes are the red channel values, the next 1024 the green, and 
@@ -110,8 +110,8 @@ import util.matrix.DuodecimoVectorUtils;
  * A versão binária contém os arquivos data_batch_1.bin, data_batch_2.bin, ..., 
  * data_batch_5.bin, bem como o test_batch.bin. Cada um destes arquivos é formatado
  * como segue:
- * <1 x rótulo><3072 x pixel> ...
- * <1 x rótulo><3072 x pixel>
+ * [1 x rótulo][3072 x pixel] ...
+ * [1 x rótulo][3072 x pixel]
  * Em outras palavras, o primeiro byte é o rótulo da primeira imagem, um número
  * entre 0-9. Os próximos 3072 bytes são os valores dos pixels da imagem.
  * Os primeiros 1024 bytes são os valores do canal vermelho, os próximos 1024 o
@@ -279,7 +279,9 @@ public class Cifar10Utils {
      * o método construtor
      * um construtor padrão (não recebe parametros)
      * 
-     * @throws IOException 
+     * @param normalized if true normalization and scale will be applied to
+     * data, usually making pixels from 0 ~ 255 to -1.0 ~ 1.0 range.
+     * @throws IOException if some problem arrises when retrieving data from files.
      */
     public Cifar10Utils(boolean normalized) throws IOException {
         this.normalized = normalized;
@@ -586,7 +588,7 @@ public class Cifar10Utils {
      * note that we should add 1 to create the RGB color (we add 1 when we must
      * discount the label in buffers of length 3073).
      * 
-     * @param index
+     * @param index index of image guessed label
      * 
      * @throws IOException
      * 
@@ -631,17 +633,13 @@ public class Cifar10Utils {
      * note that we should not add 1 to create the RGB color (we add 1 when we
      * must discount the label in buffers of length 3073).
      * 
-     * @param index
+     * @param index index of image guessed label
      * 
      * @throws IOException
      * 
      * Portuguese version:
      * 
      * Displays one image
-     *
-     * @param b aquí os dados vêm da matriz, portanto o tamanho é de 3072 bytes
-     * note que não devemos adicionar 1 para criar a cor RGB (adicionamos 1 quando é
-     * preciso descontar o rótulo em buffers de largura 3073).
      */
     public void displayImage(double[] b, double index) throws IOException {
         // just display an image
@@ -701,25 +699,50 @@ public class Cifar10Utils {
         return Yte;
     }
 
+    /**
+     *
+     * @return the tax as a float value
+     */
     public float getLoadPercentual() {
         return (TAX_OF_IMAGES_FROM_FILES * 100);
     }
 
+    /**
+     *
+     * @return the total of trainnings as an integet
+     */
     public int getTotalOfTrainnings() {
         return TOT_TRAINNINGS;
     }
 
+    /**
+     *
+     * @return the total of tests as an integer.
+     */
     public int getTotalOfTests() {
         return TOT_TESTS;
     }
 
+    /**
+     *
+     * @return the total of pixels as an integer.
+     */
     public int getTotalOfPixels() {
         return TOT_PIXELS;
     }
 
+    /**
+     *
+     * @return the total of bytes as an integer.
+     */
     public int getTotalOfBytes() {
         return TOT_BYTES;
     }
+
+    /**
+     *
+     * @return label names as a String array, i.e. {"Cat", "Airplane", ....}.
+     */
     public String[] getNames() {
         return names;
     }
