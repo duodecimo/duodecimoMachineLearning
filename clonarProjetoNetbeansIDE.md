@@ -61,7 +61,7 @@ Recomenda-se a leitura do documento <a href="https://netbeans.org/kb/docs/ide/gi
   
   
 **Passo 6:**  Observe na caixa de saída do NetBeans IDE que a clonagem deve inciar, veja a Figura 6.
-![eye](https://github.global.ssl.fastly.net/images/icons/emoji/eye.png?v5).  
+![eyes](https://github.global.ssl.fastly.net/images/icons/emoji/eyes.png?v5).  
 
 <div class="fig figcenter fighighlight">
   <img src="https://duodecimo.github.io/duodecimoMachineLearning/assets/images/nb07.png" width = "600" height="400" >
@@ -69,7 +69,7 @@ Recomenda-se a leitura do documento <a href="https://netbeans.org/kb/docs/ide/gi
 </div>
   
 **Passo 7:** Após finalizada, na aba de projetos o projeto clonado deve aparecer. Expanda as pastas para verificar se está como na imagem abaixo, veja a Figura 7. 
-![eye](https://github.global.ssl.fastly.net/images/icons/emoji/eye.png?v5).  
+![eyes](https://github.global.ssl.fastly.net/images/icons/emoji/eyes.png?v5).  
 
 <div class="fig figcenter fighighlight">
   <img src="https://duodecimo.github.io/duodecimoMachineLearning/assets/images/nb08.png" width = "600" height="400" >
@@ -77,7 +77,7 @@ Recomenda-se a leitura do documento <a href="https://netbeans.org/kb/docs/ide/gi
 </div>
   
 **Passo 8:** Na aba de Arquivos, a mesma verificação pode ser feita. Observe em especial a pasta data, que contém as bases de dados do CIFAR-10, veja a Figura 8.
-![eye](https://github.global.ssl.fastly.net/images/icons/emoji/eye.png?v5).  
+![eyes](https://github.global.ssl.fastly.net/images/icons/emoji/eyes.png?v5).  
 
 <div class="fig figcenter fighighlight">
   <img src="https://duodecimo.github.io/duodecimoMachineLearning/assets/images/nb09.png" width = "600" height="400" >
@@ -93,7 +93,7 @@ Recomenda-se a leitura do documento <a href="https://netbeans.org/kb/docs/ide/gi
 </div>
   
 **Passo 10:** Observe na Janela de Saída a execução, no final o tempo e resultado aparecem. Pode demorar mais de 60 minutos se a execução for com todas as imagens, veja a Figura 10.
-![eye](https://github.global.ssl.fastly.net/images/icons/emoji/eye.png?v5).  
+![eyes](https://github.global.ssl.fastly.net/images/icons/emoji/eyes.png?v5).  
   
 <div class="fig figcenter fighighlight">
   <img src="https://duodecimo.github.io/duodecimoMachineLearning/assets/images/nb11.png" width = "600" height="400" >
