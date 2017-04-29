@@ -1,7 +1,7 @@
 ---
 layout: page
 mathjax: true
-permalink: wiki/Inicio/
+permalink: Inicio/
 ---
 
 # Aprendizagem de Máquina
