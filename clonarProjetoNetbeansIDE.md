@@ -1,7 +1,7 @@
 ---
 layout: page
 mathjax: true
-permalink: Inicio/
+permalink: clonarProjetoNetbeansIDE/
 ---
 
 ***
