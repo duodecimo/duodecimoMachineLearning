@@ -17,7 +17,8 @@ Aprendizagem de máquina, também chamada de aprendizagem automática, de acordo
 
 Andrew NG parece preferir dizer:
 >sem terem sido **aparentemente** especificamente programados.
->[Coursera, Machine Learning](https://pt.coursera.org/learn/machine-learning), [Andrew NG Homepage](http://www.andrewng.org/)
+>[Coursera, Machine Learning](https://pt.coursera.org/learn/machine-learning), 
+[Andrew NG Homepage](http://www.andrewng.org/)
 
 O entendimento sobre aprendizagem de máquina que desejamos construir aqui é um que seja
 capaz de nos ajudar a planejar e executar programas de computador que realizem a tarefa
@@ -79,7 +80,8 @@ aonde uma sequência de ações é possível. Jogos de computador são um exempl
 
 Aprendizagem de máquina pode ser aplicada em várias atividades, vejamos alguns exemplos, dentre muitos existentes.
 
-* **Sistemas de recomendação** :+1: . Utilizados por sites de venda, como a Amazon, para recomendar compras
+* **Sistemas de recomendação** ![+1](https://github.global.ssl.fastly.net/images/icons/emoji/+1.png?v5).
+Utilizados por sites de venda, como a Amazon, para recomendar compras
 baseadas nas escolhas dos usuários comparados mutuamente. Ou em serviços de _stream_, como o Netflix ou o Prime.
 Observem a complexidade de considerar que, ao classificar o filme A como um bom filme, o usuário deverá gostar
 também do filme B. Ora, apesar de podermos classificar um filme pelo gênero (ação, romance, etc), a qualidade de
@@ -88,7 +90,8 @@ do diretor, os atores, seus desempenhos, o estilo da narrativa. E ainda é preci
 gostos semelhantes, e desta forma poder recomendar um filme que o usuário A gostou para o usuário B.
 Em síntese, são muitos fatores a considerar.
 
-* **Carros semi e auto dirigíveis** :car:. Empresas como o Google, Tesla, Uber, para mencionar algumas, já
+* **Carros semi e auto dirigíveis** ![car](https://github.global.ssl.fastly.net/images/icons/emoji/car.png?v5).
+Empresas como o Google, Tesla, Uber, para mencionar algumas, já
 estão testando, na prática em em tempo real,  carros semi ou auto dirigíveis, em algumas cidades.
 Dirigir é uma atividade complexa, que precisa levar em consideração um grande número de fatores.
 Um programa de computador que deseja _aprender_ a dirigir, de maneira semelhante a como uma pessoa aprende,
@@ -106,7 +109,8 @@ observando filmes de alguém dirigindo, e depois simular o ato de dirigir começ
 até conseguir igualar, e até mesmo ter desempenho melhor do que os motoristas observados.
 Isto seria um programa aprendendo algo sem ter sido especificamente, exatamente instruído sobre o que fazer.
 
-* **Diagnóstico de enfermidades, como o câncer** :hospital:. Muitas doenças graves, se diagnosticadas a tempo,
+* **Diagnóstico de enfermidades, como o câncer** ![car](https://github.global.ssl.fastly.net/images/icons/emoji/hospital.png?v5).
+Muitas doenças graves, se diagnosticadas a tempo,
 podem ser tratadas com mais eficiência, evitando danos mais graves e óbitos precoces. Recentemente uma série
 de televisão chamada **House** fez bastante sucesso. Mostrava as atividades de uma equipe especializada em
 diagnóstico de um grande hospital. O foco da série era a grande dificuldade de diagnosticar certas patologias.
@@ -115,10 +119,12 @@ aprender tudo que seria bom saber. Um programa de computador capaz de aprender, 
 pode atingir níveis de conhecimentos sem precedentes. Programas de aprendizagem automática têm frequentemente
 ultrapassado a eficiência de pessoas em várias situações e abordagens.
 
-* **Detecção de atividades fraudulentas na Internet** :smiling_imp:. Sites de serviços, como bancos, sites de venda,
+* **Detecção de atividades fraudulentas na Internet** ![car](https://github.global.ssl.fastly.net/images/icons/emoji/smiling_imp.png?v5).
+Sites de serviços, como bancos, sites de venda,
 são muito visados por fraudadores. Programas que podem aprender a identificar ações fraudulentas possuem grande demanda.
 
-* **Jogos** :game_die:. Programas de aprendizagem automática têm apresentado resultados expressivos aprendendo
+* **Jogos** ![car](https://github.global.ssl.fastly.net/images/icons/emoji/game_die.png?v5).
+Programas de aprendizagem automática têm apresentado resultados expressivos aprendendo
 jogos, como xadrez e go. São utilizados com grande sucesso em jogos desenvolvidos para computadores, onde a
 informação deve ser obtida através de imagens e dados do ambiente virtual.
 Jogos exigem uma forma de aprendizagem especial, diferente de, por exemplo, aprender a classificar objetos
