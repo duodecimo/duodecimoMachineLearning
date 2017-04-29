@@ -3,7 +3,7 @@ title: Duodecimo Aprendizagem Automática
 email: duodecimo@gmail.com
 description: "Materiais e notas do curso livre sobre aprendizagem automática na Universidade Severino Sombra, Vassouras, RJ."
 baseurl: ""
-url: "duodecimo.github.io/duodecimoMachineLearning/"
+url: "duodecimo.github.io/duodecimoMachineLearning"
 github_username:  duodecimo
 
 # Build settings
