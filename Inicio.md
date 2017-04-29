@@ -2,7 +2,7 @@
 layout: page
 mathjax: true
 permalink: wiki/Inicio/
----﻿
+---
 
 # Aprendizagem de Máquina
 
@@ -12,14 +12,14 @@ permalink: wiki/Inicio/
 
 1. [Inicio](duodecimo.github.io/duodecimoMachineLearning/Inicio/)
 
-1. [Como utilizar o conjunto de dados CIFAR-10](duodecimo.github.io/duodecimoMachineLearning/wiki/cifar10Como/)
+1. [Como utilizar o conjunto de dados CIFAR-10](duodecimo.github.io/duodecimoMachineLearning/cifar10Como/)
 
-1. [O algoritmo do vizinho mais próximo](duodecimo.github.io/duodecimoMachineLearning/wiki/vizinhoMaisProximo/)
+1. [O algoritmo do vizinho mais próximo](duodecimo.github.io/duodecimoMachineLearning/vizinhoMaisProximo/)
 
-1. [Clonar o projeto no NetBeans IDE](duodecimo.github.io/duodecimoMachineLearning/wiki/clonarProjetoNetbeansIDE/)
+1. [Clonar o projeto no NetBeans IDE](duodecimo.github.io/duodecimoMachineLearning/clonarProjetoNetbeansIDE/)
 
 ------------
-![IA aprendendo](https://github.com/duodecimo/duodecimoMachineLearning/blob/master/assets/images/aiLearning.png)
+![IA aprendendo](assets/images/aiLearning.png)
 
 ## Introdução
 
