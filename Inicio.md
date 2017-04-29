@@ -60,7 +60,7 @@ verdadeira. Desta diferença observada procuramos obter o que chamamos de valor 
 pode ser usado para realizar, aplicando diversas abordagens, oriundas de conhecimento matemático,
 um refinamento na fórmula. Em seguida repetimos o processo, tentando obter um erro cada vez menor.
 Eventualmente é possível obter uma fórmula exata. E é a isso que chamamos de aprendizagem
-automática. Será que Pitágoras poderia ter sido um programa de computador? :flushed:
+automática. Será que Pitágoras poderia ter sido um programa de computador? ![flushed](https://github.global.ssl.fastly.net/images/icons/emoji/flushed.png?v5)
 
 ### Tipos de aprendizagem
 
