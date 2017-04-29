@@ -243,7 +243,7 @@ Deslocar a linha separadora permite melhor resultado, como mostra a Figura 4.
 
 | Figura 1 | Figura 2 | Figura 3 | Figura 4 |
 | :---:    | :---:    | :---:    | :---:    |
-| [[https://github.com/duodecimo/duodecimoMachineLearning/blob/master/images/cartesianClustersSeparation01.png|width=200px|height=200px|align=center|alt=clusters01]] | [[https://github.com/duodecimo/duodecimoMachineLearning/blob/master/images/cartesianClustersSeparation02.png|width=200px|height=200px|alt=clusters02]] | [[https://github.com/duodecimo/duodecimoMachineLearning/blob/master/images/cartesianClustersSeparation03.png|width=200px|height=200px|align=center|alt=clusters03]] | [[https://github.com/duodecimo/duodecimoMachineLearning/blob/master/images/cartesianClustersSeparation04.png|width=200px|height=200px|align=center|alt=clusters04]] |
+| [[assets/images/cartesianClustersSeparation01.png|width=200px|height=200px|align=center|alt=clusters01]] | [[assets/images/cartesianClustersSeparation02.png|width=200px|height=200px|alt=clusters02]] | [[assets/images/cartesianClustersSeparation03.png|width=200px|height=200px|align=center|alt=clusters03]] | [[assets/images/cartesianClustersSeparation04.png|width=200px|height=200px|align=center|alt=clusters04]] |
 
 Para posicionar a reta convenientemente separando os pontos de cores diferentes, precisamos em
 primeiro lugar definir uma equação de uma reta no plano cartesiano.
@@ -292,7 +292,7 @@ para leitores como kindle ou epub. Existem às vezes traduções para outros idi
 Em uma ocasião o matemático Riemann, discípulo de Gauss, considerado um dos maiores matemáticos de todos os tempos, demonstrou em
 um artigo o cálculo da diagonal do cubo com quatro dimensões, denominado de tesseract.
 
-![tesseract](https://github.com/duodecimo/duodecimoMachineLearning/blob/master/images/tesseract.png)
+![tesseract](assets/images/tesseract.png)
 
 Na verdade, podemos com cálculos geométricos calcular e verificar em quais sacos de espacex se encontram objetos definidos em quatro
 dimensões. Apenas o cálculo é bem mais complexo que o cálculo com três dimensões. Porém, só o que aumenta é o número de operações
