@@ -32,7 +32,11 @@ de relacionar objetos e seus dados. Isso nos permite, por exemplo, utilizar uma 
 mapeie um objeto a partir de dados.
 
 Tomemos por exemplo o famoso teorema de Pitágoras, que relaciona os lados de um triângulo
-retângulo qualquer. Ao arbitrar dois lados, podemos aplicar a fórmula obtendo o terceiro.
+retângulo qualquer:
+$$
+a^2 = b^2 + c^2
+$$
+Ao arbitrar dois lados, podemos aplicar a fórmula obtendo o terceiro.
 Neste momento teremos definido um triângulo retângulo em um modelo simbólico. Obtivemos um
 objeto a partir da aplicação da fórmula em alguns dados. Esta é uma ação típica que somos
 capazes de realizar, por exemplo, por ter aprendido a fórmula.
