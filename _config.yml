@@ -1,6 +1,5 @@
 # Site settings
-title: Duodecimo Aprendizagem Automática
-email: duodecimo@gmail.com
+title: Duodecimo Aprendizagem de Máquina
 description: "Materiais e notas do curso livre sobre aprendizagem automática na Universidade Severino Sombra, Vassouras, RJ."
 baseurl: ""
 url: "duodecimo.github.io/duodecimoMachineLearning"
