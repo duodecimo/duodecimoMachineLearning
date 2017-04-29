@@ -25,7 +25,7 @@ Recomenda-se a leitura do documento <a href="https://netbeans.org/kb/docs/ide/gi
   
   
 **Passo 2:**  No menu principal do NetBeans IDE , selecione: Equipe + Git + Clonar, veja a Figura 2.
-![world_map](https://github.global.ssl.fastly.net/images/icons/emoji/world_map.png?v5).  
+![mag_right](https://github.global.ssl.fastly.net/images/icons/emoji/mag_right.png?v5).  
 
 <div class="fig figcenter fighighlight">
   <img src="https://duodecimo.github.io/duodecimoMachineLearning/assets/images/nb03.png" width = "600" height="400" >
