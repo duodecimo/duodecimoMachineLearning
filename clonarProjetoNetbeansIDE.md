@@ -8,7 +8,7 @@ permalink: Inicio/
 
 # Clonar o projeto no NetBeans IDE
 
-Recomenda-se a leitura do documento [[Usando Suporte Git no NetBeans IDE | https://netbeans.org/kb/docs/ide/git_pt_BR.html]] :bulb:.
+Recomenda-se a leitura do documento [[Usando Suporte Git no NetBeans IDE | https://netbeans.org/kb/docs/ide/git_pt_BR.html]] ![bulb](https://github.global.ssl.fastly.net/images/icons/emoji/bulb.png?v5).
 
 | Clonando o projeto passo a passo com imagens ilustrativas                                       |
 | ------------------------------------------------------------------------------------------------|
