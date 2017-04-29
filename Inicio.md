@@ -243,7 +243,8 @@ Deslocar a linha separadora permite melhor resultado, como mostra a Figura 4.
 
 | Figura 1 | Figura 2 | Figura 3 | Figura 4 |
 | :---:    | :---:    | :---:    | :---:    |
-| ![Figura1](assets/images/cartesianClustersSeparation01.png|width=200px|height=200px|align=center) | ![Figura2](assets/images/cartesianClustersSeparation02.png|width=200px|height=200px|align=center) | ![Figura3](assets/images/cartesianClustersSeparation03.png|width=200px|height=200px|align=center) | ![Figura4](assets/images/cartesianClustersSeparation04.png|width=200px|height=200px|align=center) |
+| <img src="assets/images/cartesianClustersSeparation01.png" height="200" width="200">
+ | <img src="assets/images/cartesianClustersSeparation02.png" height="200" width="200"> | <img src="assets/images/cartesianClustersSeparation03.png" height="200" width="200"> | <img src="assets/images/cartesianClustersSeparation04.png" height="200" width="200"> |
 
 Para posicionar a reta convenientemente separando os pontos de cores diferentes, precisamos em
 primeiro lugar definir uma equação de uma reta no plano cartesiano.
