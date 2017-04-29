@@ -243,8 +243,7 @@ Deslocar a linha separadora permite melhor resultado, como mostra a Figura 4.
 
 | Figura 1 | Figura 2 | Figura 3 | Figura 4 |
 | :---:    | :---:    | :---:    | :---:    |
-| <img src="/assets/images/cartesianClustersSeparation01.png" height="200" width="200">
- | <img src="/assets/images/cartesianClustersSeparation02.png" height="200" width="200"> | <img src="/assets/images/cartesianClustersSeparation03.png" height="200" width="200"> | <img src="/assets/images/cartesianClustersSeparation04.png" height="200" width="200"> |
+| <img src="https://duodecimo.github.io/duodecimoMachineLearning/assets/images/cartesianClustersSeparation01.png" height="200" width="200"> | <img src="https://duodecimo.github.io/duodecimoMachineLearning/assets/images/cartesianClustersSeparation02.png" height="200" width="200"> | <img src="https://duodecimo.github.io/duodecimoMachineLearning/assets/images/cartesianClustersSeparation03.png" height="200" width="200"> | <img src="https://duodecimo.github.io/duodecimoMachineLearning/assets/images/cartesianClustersSeparation04.png" height="200" width="200"> |
 
 Para posicionar a reta convenientemente separando os pontos de cores diferentes, precisamos em
 primeiro lugar definir uma equação de uma reta no plano cartesiano.
