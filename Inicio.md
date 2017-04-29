@@ -4,22 +4,8 @@ mathjax: true
 permalink: Inicio/
 ---
 
-# Aprendizagem de Máquina
-
 ***
-
-## Tabela de conteúdo:
-
-1. [Inicio](duodecimo.github.io/duodecimoMachineLearning/Inicio/)
-
-1. [Como utilizar o conjunto de dados CIFAR-10](duodecimo.github.io/duodecimoMachineLearning/cifar10Como/)
-
-1. [O algoritmo do vizinho mais próximo](duodecimo.github.io/duodecimoMachineLearning/vizinhoMaisProximo/)
-
-1. [Clonar o projeto no NetBeans IDE](duodecimo.github.io/duodecimoMachineLearning/clonarProjetoNetbeansIDE/)
-
-------------
-![IA aprendendo](assets/images/aiLearning.png)
+<img src="https://duodecimo.github.io/duodecimoMachineLearning/assets/images/aiLearning.png" height="200" width="200">
 
 ## Introdução
 
