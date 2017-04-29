@@ -8,51 +8,58 @@ permalink: clonarProjetoNetbeansIDE/
 
 # Clonar o projeto no NetBeans IDE
 
-Recomenda-se a leitura do documento ![Usando Suporte Git no NetBeans IDE](https://netbeans.org/kb/docs/ide/git_pt_BR.html)
+Recomenda-se a leitura do documento
+![Usando Suporte Git no NetBeans IDE](https://netbeans.org/kb/docs/ide/git_pt_BR.html)
 ![bulb](https://github.global.ssl.fastly.net/images/icons/emoji/bulb.png?v5).
 
 ## Clonando o projeto passo a passo com imagens ilustrativas
-
-Passo 1:  
+  
+  
+**Passo 1:** Abra o projeto no seu navegador e copie a URL de clonagem HTTPS para a área de transferência, é só clicar com o mouse no ícone, conforme mostra a Figura 1.  
 
 <div class="fig figcenter fighighlight">
   <img src="https://duodecimo.github.io/duodecimoMachineLearning/assets/images/nb02.png" width = "600" height="400">
-  <div class="figcaption">Abra o projeto no seu navegador e copie a URL de clonagem HTTPS para a área de transferência, é só clicar com o mouse no ícone</div>
+  <div class="figcaption">Figura 1.</div>
 </div>
-
-Passo 2:  
+  
+  
+**Passo 2:**  No menu principal do NetBeans IDE , selecione: Equipe + Git + Clonar, veja a Figura 2.  
 
 <div class="fig figcenter fighighlight">
   <img src="https://duodecimo.github.io/duodecimoMachineLearning/assets/images/nb03.png" width = "600" height="400" >
-  <div class="figcaption">No menu principal do NetBeans IDE , selecione: Equipe + Git + Clonar.</div>
+  <div class="figcaption">Figura 2.</div>
 </div>
-
-Passo 3:  
+  
+  
+**Passo 3:**  Cole a URL na caixa URL do Repositório. Selecione mais abaixo o destino do projeto na caixa Clonar para. clique no botão Próximo, veja a Figura 3.  
 
 <div class="fig figcenter fighighlight">
   <img src="https://duodecimo.github.io/duodecimoMachineLearning/assets/images/nb04.png" width = "600" height="400" >
-  <div class="figcaption">Cole a URL na caixa URL do Repositório. Selecione mais abaixo o destino do projeto na caixa Clonar para. clique no botão Próximo.</div>
+  <div class="figcaption">Figura 3.</div>
 </div>
-
-Passo 4:  
+  
+  
+**Passo 4:**  Aceite a seleção de ramificação remota master. clique no botão Próximo, veja a Figura 4.  
 
 <div class="fig figcenter fighighlight">
   <img src="https://duodecimo.github.io/duodecimoMachineLearning/assets/images/nb05.png" width = "600" height="400" >
-  <div class="figcaption">Aceite a seleção de ramificação remota master. clique no botão Próximo.</div>
+  <div class="figcaption">Figura 4.</div>
 </div>
-
-Passo 5:  
+  
+  
+**Passo 5:** Confira as seleções, provavelmente estão corretas. Deixe a caixa Procurar Projetos do Netbeans após clonagem marcada. clique no botão Finalizar, veja a Figura 5.  
 
 <div class="fig figcenter fighighlight">
   <img src="https://duodecimo.github.io/duodecimoMachineLearning/assets/images/nb06.png" width = "600" height="400" >
-  <div class="figcaption">Confira as seleções, provavelmente estão corretas. Deixe a caixa Procurar Projetos do Netbeans após clonagem marcada. clique no botão Finalizar.</div>
+  <div class="figcaption">Figura 5</div>
 </div>
-
-Passo 6:  
+  
+  
+**Passo 6:**  Observe na caixa de saída do NetBeans IDE que a clonagem deve inciar, veja a Figura 6.  
 
 <div class="fig figcenter fighighlight">
   <img src="https://duodecimo.github.io/duodecimoMachineLearning/assets/images/nb07.png" width = "600" height="400" >
-  <div class="figcaption">Observe na caixa de saída do NetBeans IDE que a clonagem deve inciar.</div>
+  <div class="figcaption">Figura 6</div>
 </div>
 
 Passo 7:  
