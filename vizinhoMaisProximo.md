@@ -18,9 +18,16 @@ E, apesar do desempenho ser fraco, pode ser observado. Ao executar o **nn** util
 
 Imagens são armazenadas em um computador como um conjunto de pixeis. Uma das maneiras mais simples de armazenar imagens digitais coloridas utiliza a forma RGB (vermelho, verde e azul, ou red, green e blue, do inglês). Cada pixel é um ponto da imagem, representando uma cor. Todas as cores são obtidas variando a intensidade de vermelho, verde e azul. Uma cor portanto é codificada através de três números inteiros, que variam de 0 a 255, e que determinam o peso de cada uma das três cores citadas.
 
-Observe uma imagem: | Ao ser digitalizada, se transforma em uma fila de bytes:
----------------------------------------------- | --------------------------------------------------------
-![2001](https://duodecimo.github.io/duodecimoMachineLearning/assets/images/2001Monkey.png) | ![FILA DE BYTES](https://duodecimo.github.io/duodecimoMachineLearning/assets/images/filaDeBytes.png)
+Observe uma imagem, como a da Figura 1: Ao ser digitalizada, se transforma em uma fila de bytes, como a da Figura 2.  
+<div class="fig figcenter fighighlight">
+  <img src="https://duodecimo.github.io/duodecimoMachineLearning/assets/images/2001Monkey.png" width = "600" height="400" >
+  <div class="figcaption">Figura 1: Cena do filme 2001 uma odisséia no espaço.</div>
+</div>  
+
+<div class="fig figcenter fighighlight">
+  <img src="https://duodecimo.github.io/duodecimoMachineLearning/assets/images/filaDeBytes.png">
+  <div class="figcaption">Figura 2: Fila de bytes.</div>
+</div>
 
   
 * Quando uma pessoa vê uma imagem, percebe cores, formas, identifica objetos.
@@ -40,9 +47,9 @@ O que vai portanto determinar os algoritmos que vamos usar em aprendizagem de m�
 
 ## Um pouco mais sobre digitalização de imagens
 
-Mencionamos acima que se utilizam mais de uma maneira de codificar as cores das imagens. Além disto, tuiliza-se mais de uma forma para codificar a posição dos pixels de uma imagem digitalizada.
+Mencionamos acima que se utilizam mais de uma maneira de codificar as cores das imagens. Além disto, utiliza-se mais de uma forma para codificar a posição dos pixeis de uma imagem digitalizada.
 
-Uma ordem natural seria armazenar os pixels da esquerda para direita, de cima para baixo. Mas outras são utilizadas.
+Uma ordem natural seria armazenar os pixeis da esquerda para direita, de cima para baixo. Mas outras são utilizadas.
 
 As imagens da base de dados Cifar-10 que vamos utilizar aqui em nosso exemplo armazenam os pixeis em uma ordem um pouco diferente. Isso precisa ser considerado se vamos construir um algoritmo para reproduzir a imagem na tela de um computador. E vai ser, quando formos cuidar disto.
 
@@ -61,7 +68,7 @@ Vamos considerar duas imagens diferentes, retiradas de cada um destes conjuntos,
 
 ![TE e TR](https://duodecimo.github.io/duodecimoMachineLearning/assets/images/TeTr.png)
 
-Vamos representar a sequência dos bytes de cada uma das imagens como (n = 3072:
+Vamos representar a sequência dos bytes de cada uma das imagens como (n = 3072):
 
 ![Bytes de TE](https://duodecimo.github.io/duodecimoMachineLearning/assets/images/SeqPte.png)  
 
@@ -77,20 +84,20 @@ Ou seja, vai ser a soma dos valores absolutos das diferenças de cada um dos byt
 
 Vamos conjecturar sobre a base desta operação. Se, ao invés de **TE** e **TR** serem imagens diferentes, forem a **mesma imagem**, os bytes nas mesmas posições relativas vão ter exatamente o **mesmo valor**, o resultado de cada uma das diferenças entre eles vai ser ,**0**, e portanto a soma dos valores absolutos das diferenças vai ser **0**.
 
-Faz sentido, a distancia entre duas imagens iguais é **0**! :bulb:
+Faz sentido, a distancia entre duas imagens iguais é **0**! ![bulb](https://github.global.ssl.fastly.net/images/icons/emoji/bulb.png?v5)
 
 Vamos conjecturar sobre o crescimento indutivo da distância. Imagine que as imagens são praticamente iguais, que apenas o primeiro byte de TE seja diferente do primeiro byte de TR. Digamos, **129** em TE e **118** em TR.
 A diferença dos dois é **129-118=11**. Como as demais diferenças vão continuar valendo **0**, a distância entre estas duas imagens vai valer **11**, uma distância pequena.
 
-Faz sentido para duas imagens praticamente iguais! :bulb:
+Faz sentido para duas imagens praticamente iguais! ![bulb](https://github.global.ssl.fastly.net/images/icons/emoji/bulb.png?v5)
 
 Finalmente, vamos conjecturar porque somamos os valores absolutos das diferenças. Imaginemos que as duas imagens diferentes acima tivessem não apenas os bytes na primeira posição diferentes, mas os da segunda também. E que os bytes da segunda posição fossem **44** e **55**. A diferença dos dois, não absoluta, seria **44-55=-11** (valor negativo). Ao somar as diferenças não absolutas. teríamos **11 + -11 + 0 + 0 + 0 ... = 0**. A distancia calculada seria **0**, como no caso das imagens iguais.
 
-Mas isto não faz sentido, pois as imagens com apenas um byte diferente resultaram em uma distancia de **11**, estas com diferença maior resultaram em **0**, como se fossem iguais? :astonished:
+Mas isto não faz sentido, pois as imagens com apenas um byte diferente resultaram em uma distancia de **11**, estas com diferença maior resultaram em **0**, como se fossem iguais? ![astonished](https://github.global.ssl.fastly.net/images/icons/emoji/astonished.png?v5)
 
 Porém, se somarmos as diferenças absolutas, no caso das imagens com os dois primeiros bytes diferentes, teríamos uma distancia de **11 + 11 + 0 + 0 + 0 ... = 22**.
 
-Agora sim, faz sentido, as imagens com os dois primeiros bytes diferentes resultam em uma distância maior que as imagens com o primeiro byte diferente, e as imagens iguais, resultam na menor distancia, **0**. :v:
+Agora sim, faz sentido, as imagens com os dois primeiros bytes diferentes resultam em uma distância maior que as imagens com o primeiro byte diferente, e as imagens iguais, resultam na menor distancia, **0**. ![v](https://github.global.ssl.fastly.net/images/icons/emoji/v.png?v5)
 
 ## Hora de estudar código Java e testar
 
@@ -102,7 +109,8 @@ Se deseja ler em **português**, basta ir avançando que ao final do texto em in
 
 Em seguida, sugerimos retornar à pagina inicial, e estudar a lição de como clonar o projeto utilizando o NetBeans IDE./duodecimoMachineLearning/wiki/clonarProjetoNetbeansIDE) para rodar o código.
 
-Eis um exemplo de resultado obtido ao rodar o NearestNeighbourgh utilizando 100% dos dados do CIFAR-10:
+Eis um exemplo de resultado obtido ao rodar o NearestNeighbourgh utilizando 100% dos dados do CIFAR-10:  
+
 ```
 Accuracy = 38.59% in 10000
 CONSTRUÍDO COM SUCESSO (tempo total: 100 minutos 47 segundos)
