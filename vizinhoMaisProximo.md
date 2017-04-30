@@ -20,8 +20,9 @@ Imagens são armazenadas em um computador como um conjunto de pixeis. Uma das ma
 
 Observe uma imagem: | Ao ser digitalizada, se transforma em uma fila de bytes:
 ---------------------------------------------- | --------------------------------------------------------
-![2001](https://duodecimo.github.io/duodecimoMachineLearning/assets/images/2001Monkey.png") | ![FILA DE BYTES](https://duodecimo.github.io/duodecimoMachineLearning/assets/images/filaDeBytes.png")
+![2001](https://duodecimo.github.io/duodecimoMachineLearning/assets/images/2001Monkey.png) | ![FILA DE BYTES](https://duodecimo.github.io/duodecimoMachineLearning/assets/images/filaDeBytes.png)
 
+  
 * Quando uma pessoa vê uma imagem, percebe cores, formas, identifica objetos.
 * Quando um programa de computador _vê_ uma imagem, tem diante de si uma sequência de números.
 * Creio que podemos afirmar que pessoas e programas de computador vêm imagens de forma diferente.
