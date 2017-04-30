@@ -20,7 +20,7 @@ Imagens são armazenadas em um computador como um conjunto de pixeis. Uma das ma
 
 Observe uma imagem: | Ao ser digitalizada, se transforma em uma fila de bytes:
 ---------------------------------------------- | --------------------------------------------------------
-<div class="fig figcenter fighighlight"><img src="https://duodecimo.github.io/duodecimoMachineLearning/assets/images/2001Monkey.png"><div class="figcaption">Figura 1: Cena do filme 2001 uma odisséia no espaço.</div></div> | <div class="fig figcenter fighighlight"><img src="https://duodecimo.github.io/duodecimoMachineLearning/assets/images/filaDeBytes.png"><div class="figcaption">Figura 2: Uma fila de bytes.</div></div>
+![2001](https://duodecimo.github.io/duodecimoMachineLearning/assets/images/2001Monkey.png") | ![FILA DE BYTES](https://duodecimo.github.io/duodecimoMachineLearning/assets/images/filaDeBytes.png")
 
 * Quando uma pessoa vê uma imagem, percebe cores, formas, identifica objetos.
 * Quando um programa de computador _vê_ uma imagem, tem diante de si uma sequência de números.
@@ -60,13 +60,17 @@ Vamos considerar duas imagens diferentes, retiradas de cada um destes conjuntos,
 
 ![TE e TR](https://duodecimo.github.io/duodecimoMachineLearning/assets/images/TeTr.png)
 
-Vamos representar a sequência dos bytes de cada uma das imagens como (n = 3072) :
+Vamos representar a sequência dos bytes de cada uma das imagens como (n = 3072:
 
-![Bytes de TE](https://duodecimo.github.io/duodecimoMachineLearning/assets/images/SeqPte.png)
-e
-![Bytes de TR](https://duodecimo.github.io/duodecimoMachineLearning/assets/images/SeqPtr.png)
+![Bytes de TE](https://duodecimo.github.io/duodecimoMachineLearning/assets/images/SeqPte.png)  
 
-A distância utilizada pelo **nn** vai ser:![Distancia Te Tr](https://duodecimo.github.io/duodecimoMachineLearning/assets/images/SumSeqTeTr.png)
+e  
+
+![Bytes de TR](https://duodecimo.github.io/duodecimoMachineLearning/assets/images/SeqPtr.png)  
+
+A distância utilizada pelo **nn** vai ser:  
+
+![Distancia Te Tr](https://duodecimo.github.io/duodecimoMachineLearning/assets/images/SumSeqTeTr.png)  
 
 Ou seja, vai ser a soma dos valores absolutos das diferenças de cada um dos bytes de **TE** com cada um dos bytes na posição equivalente de **TR**.
 
