@@ -1,5 +1,8 @@
-[[retornar ao inicio| Inicio]]
-
+---
+layout: page
+mathjax: true
+permalink: vizinhoMaisProximo/
+---
 
 # O algoritmo do vizinho mais próximo
 
@@ -13,11 +16,17 @@ E, apesar do desempenho ser fraco, pode ser observado. Ao executar o **nn** util
 
 ## Imagens digitais
 
-Imagens são armazenadas em um computador como um conjunto de pixels. Uma das maneiras mais simples de armazenar imagens digitais coloridas utiliza a forma RGB (vermelho, verde e azul, ou red, green e blue, do inglês). Cada pixel é um ponto da imagem, representando uma cor. Todas as cores são obtidas variando a intensidade de vermelho, verde e azul. Uma cor portanto é codificada através de três números inteiros, que variam de 0 a 255, e que determinam o peso de cada uma das três cores citadas.
+Imagens são armazenadas em um computador como um conjunto de pixeis. Uma das maneiras mais simples de armazenar imagens digitais coloridas utiliza a forma RGB (vermelho, verde e azul, ou red, green e blue, do inglês). Cada pixel é um ponto da imagem, representando uma cor. Todas as cores são obtidas variando a intensidade de vermelho, verde e azul. Uma cor portanto é codificada através de três números inteiros, que variam de 0 a 255, e que determinam o peso de cada uma das três cores citadas.
 
 Observe uma imagem: | Ao ser digitalizada, se transforma em uma fila de bytes:
 ---------------------------------------------- | --------------------------------------------------------
-![2001](https://github.com/duodecimo/duodecimoMachineLearning/blob/master/images/2001Monkey.png) |  ![bytes](https://github.com/duodecimo/duodecimoMachineLearning/blob/master/images/filaDeBytes.png)
+<div class="fig figcenter fighighlight">
+  <img src="https://duodecimo.github.io/duodecimoMachineLearning/assets/images/2001Monkey.png" width = "600" height="400" >
+  <div class="figcaption">Figura 1: Cena do filme 2001 uma odisséia no espaço.</div>
+</div> | <div class="fig figcenter fighighlight">
+  <img src="https://duodecimo.github.io/duodecimoMachineLearning/assets/images/filaDeBytes.png" width = "600" height="400" >
+  <div class="figcaption">Figura 2: Uma fila de bytes.</div>
+</div>
 
 * Quando uma pessoa vê uma imagem, percebe cores, formas, identifica objetos.
 * Quando um programa de computador _vê_ uma imagem, tem diante de si uma sequência de números.
@@ -26,7 +35,7 @@ Observe uma imagem: | Ao ser digitalizada, se transforma em uma fila de bytes:
 Mas, o que realmente importa, não é como cada um observa e processa a imagem, mas sim, se é possível que um programa de computador possa obter resultados semelhantes, ao observar e processar uma imagem, dos resultados e obtidos por uma pessoa.
 
 Construímos programas de aprendizagem de máquina considerando que a resposta a esta pergunta teórica é sim.
-Podemos considerar que, se obtivermos resultados semelhantes, a teoria está correta. Provavelmente o próprio [[Alan Turing | https://pt.wikipedia.org/wiki/Alan_Turing]]  concordaria com isso!
+Podemos considerar que, se obtivermos resultados semelhantes, a teoria está correta. Provavelmente o próprio [Alan Turing](https://pt.wikipedia.org/wiki/Alan_Turing) concordaria com isso!
 
 Como programas de computadores de aprendizagem de máquina têm sido bem sucedidos, ás vezes com resultados melhores do que as pessoas, em tarefas como classificar images, vamos entender isso como evidência de que, da mesma forma que pessoas percebem cores, formas, e identificam objetos em imagens, algo semelhante ocorre quando um programa de computador _vê_ os números de uma imagem digital.
 
@@ -86,13 +95,13 @@ Agora sim, faz sentido, as imagens com os dois primeiros bytes diferentes result
 
 ## Hora de estudar código Java e testar
 
-A classe [NearestNeighbourgh.java](https://github.com/duodecimo/duodecimoMachineLearning/blob/master/cifar10MachineLearnigCodes/src/ml/NearestNeighbourgh.java) :mouse: está neste repositório git, e utiliza de forma importante a classe [Cifar10Utils.java](https://github.com/duodecimo/duodecimoMachineLearning/blob/master/cifar10MachineLearnigCodes/src/cifar10/Cifar10Utils.java) :mouse:.
+Visite a área de código do projeto, estude as classes NearestNeighbourgh.java e Cifar10Utils.java.
 
 Para ver e estudar o código basta clicar nos links acima. Recomenda-se fortemente começar lendo e estudando a classe Cifar10Utils.java, e em seguida a classe NearestNeighbourgh.java. Ambas estão bem comentadas e trazem explicações importantes tanto no aspecto dos dados a serem utilizados, com relação ao algoritmo e também explicações relativas ao código Java. Os comentários estão escritos tanto em **inglês** como em **português**.
 Se deseja ler em **português**, basta ir avançando que ao final do texto em inglês encontra- se uma linha, **Portuguese version:**, a partir da qual o comentário é repetido em **português**.
 
 
-Em seguida, vamos ver como [clonar o projeto utilizando o NetBeans IDE](https://github.com/duodecimo/duodecimoMachineLearning/wiki/clonarProjetoNetbeansIDE) para rodar o código.
+Em seguida, sugerimos retornar à pagina inicial, e estudar a lição de como clonar o projeto utilizando o NetBeans IDE./duodecimoMachineLearning/wiki/clonarProjetoNetbeansIDE) para rodar o código.
 
 Eis um exemplo de resultado obtido ao rodar o NearestNeighbourgh utilizando 100% dos dados do CIFAR-10:
 ```
@@ -101,4 +110,3 @@ CONSTRUÍDO COM SUCESSO (tempo total: 100 minutos 47 segundos)
 ```
 
 
-[[retornar ao inicio| Inicio]]

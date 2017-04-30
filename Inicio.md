@@ -4,8 +4,6 @@ mathjax: true
 permalink: Inicio/
 ---
 
-***
-
 <div class="fig figcenter fighighlight">
   <img src="https://duodecimo.github.io/duodecimoMachineLearning/assets/images/aiLearning.png" width = "300" height="300">
   <div class="figcaption">Figura 1: Produzida com o Autodraw, que usa aprendizado de máquina.</div>
@@ -70,7 +68,8 @@ verdadeira. Desta diferença observada procuramos obter o que chamamos de valor 
 pode ser usado para realizar, aplicando diversas abordagens, oriundas de conhecimento matemático,
 um refinamento na fórmula. Em seguida repetimos o processo, tentando obter um erro cada vez menor.
 Eventualmente é possível obter uma fórmula exata. E é a isso que chamamos de aprendizagem
-automática. Será que Pitágoras poderia ter sido um programa de computador? ![flushed](https://github.global.ssl.fastly.net/images/icons/emoji/flushed.png?v5)
+automática. Será que Pitágoras poderia ter sido um programa de computador?
+![flushed](https://github.global.ssl.fastly.net/images/icons/emoji/flushed.png?v5)
 
 ### Tipos de aprendizagem
 

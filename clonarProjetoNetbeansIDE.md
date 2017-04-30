@@ -4,8 +4,6 @@ mathjax: true
 permalink: clonarProjetoNetbeansIDE/
 ---
 
-***
-
 # Clonar o projeto no NetBeans IDE
 
 Recomenda-se a leitura do documento <a href="https://netbeans.org/kb/docs/ide/git_pt_BR.html">Usando Suporte Git no NetBeans IDE</a>
