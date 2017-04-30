@@ -23,6 +23,7 @@ import org.apache.commons.math3.linear.ArrayRealVector;
 import org.apache.commons.math3.linear.MatrixUtils;
 import org.apache.commons.math3.linear.RealMatrix;
 import org.apache.commons.math3.linear.RealVector;
+import util.matrix.Display;
 import util.matrix.DuodecimoMatrixUtils;
 import util.matrix.DuodecimoVectorUtils;
 
@@ -53,11 +54,11 @@ import util.matrix.DuodecimoVectorUtils;
  *
  * @author duo
  */
-public class MatricesOperationsReview {
+public class MatricesAndVectorsOperationsReview {
 
     private static final Logger LOGGER = Logger.getGlobal();
 
-    public MatricesOperationsReview() {
+    public MatricesAndVectorsOperationsReview() {
         //operationsSample();
         //showTest();
         operationsForLinearClassification();
@@ -236,6 +237,14 @@ public class MatricesOperationsReview {
                 java.util.ResourceBundle.getBundle("sandbox/Bundle").getString("VECTOR R:"), r);
     }
 
+    void VectorNormalization() throws Exception {
+        // vector normalization
+        RealVector realVector = new ArrayRealVector(new double[]{128, 44, 199, 88, 255, 99, 31, 0, 127, 75, 164});
+        Display.displayRealVector("Antes de normalizar:", realVector);
+        realVector = DuodecimoVectorUtils.normalizeAndScaleToRange(realVector, new double[]{-1,1});
+        Display.displayRealVector("Após normalizar:", realVector);
+    }
+
     void displayRealMatrix(String title, String javaCode, String metadata, RealMatrix M) {
         LOGGER.info(java.text.MessageFormat.format(java.util.ResourceBundle.getBundle("sandbox/Bundle").getString("TASK: {0}"), new Object[]{title}));
         LOGGER.info(java.text.MessageFormat.format(java.util.ResourceBundle.getBundle("sandbox/Bundle").getString("CODE: {0}"), new Object[]{javaCode}));
@@ -286,6 +295,6 @@ public class MatricesOperationsReview {
     }
 
     public static void main(String[] args) {
-        MatricesOperationsReview matricesOperationsReview = new MatricesOperationsReview();
+        MatricesAndVectorsOperationsReview matricesOperationsReview = new MatricesAndVectorsOperationsReview();
     }
 }
