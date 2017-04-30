@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.DoubleStream;
+import org.apache.commons.math3.linear.ArrayRealVector;
 import org.apache.commons.math3.linear.MatrixUtils;
 import org.apache.commons.math3.linear.RealMatrix;
 import org.apache.commons.math3.linear.RealVector;
@@ -59,7 +60,14 @@ public class LinearPrediction {
     }
 
     /**
-     *
+     * Assume X_test is [3073 x 10000] (bias trick applied), Y_test [10000 x 1].
+     * scores = Wbest.dot(Xte_cols)
+     * 10 x 10000, the class scores for all test examples.
+     * find the index with max score in each column (the predicted class)
+     * Yte_predict = np.argmax(scores, axis = 0).
+     * and calculate accuracy (fraction of predictions that are correct)
+     * np.mean(Yte_predict == Yte)
+     * finds ~0.1555, round 15%      
      */
     public final void linearPredictionWithRandomSearch() {
         DuodecimoMatrixUtils.showRealMatrix("sampling Xtr", Xtr, 10, 10);
@@ -124,29 +132,71 @@ public class LinearPrediction {
         }
         System.out.println(String.format("accuracy: %5.2f %%", 
                 (float)(accuracy * 100 /numberOfTestings)));
-/*
-# Assume X_test is [3073 x 10000], Y_test [10000 x 1]
-scores = Wbest.dot(Xte_cols) # 10 x 10000, the class scores for all test examples
-# find the index with max score in each column (the predicted class)
-Yte_predict = np.argmax(scores, axis = 0)
-# and calculate accuracy (fraction of predictions that are correct)
-np.mean(Yte_predict == Yte)
-# returns 0.1555      
-*/
-
     }
 
     /**
-     *
-     * @param x one image as a vector (a line from a matrix)
-     * @param y the index of the choosen score
-     * @param W weights matrix
+     * Compute the multiclass svm loss for a single example (x,y)
+     * 
+     * @param x a column vector representing an image (e.g. 3073 x 1 in CIFAR-10)
+     * @param y is an integer giving index of correct class
+     * (e.g. between 0 and 9 in CIFAR-10)
+     * @param W is the weight matrix (e.g. 10 x 3073 in CIFAR-10)
      * @return the loss as a float
      */
     public float lossFunctionUnvectorized(RealVector x, int y, RealMatrix W) {
         float delta = 1.0f;
         RealVector scores = W.operate(x);
         double correctClassScore = scores.getEntry(y);
+        int d = W.getRowDimension();
+        float loss = 0.0f;
+        // iterate over all wrong classes
+        for(int i=0; i<d; i++) {
+            if(i == correctClassScore) {
+                continue;
+            }
+            loss += Double.max(0, scores.getEntry(i) - 
+                    correctClassScore + delta);
+        }
+        return loss;
+    } 
+
+    /**
+     * Compute the multiclass svm loss for a single example (x,y)
+     * 
+     * A faster half-vectorized implementation.
+     * half-vectorized  refers to the fact that for a single example the 
+     * implementation contains no for loops, but there is still one loop
+     * over the examples (outside this function)
+     * 
+     * @param x a column vector representing an image (e.g. 3073 x 1 in CIFAR-10)
+     * @param y is an integer giving index of correct class
+     * (e.g. between 0 and 9 in CIFAR-10)
+     * @param W is the weight matrix (e.g. 10 x 3073 in CIFAR-10)
+     * @return the loss as a float
+     */
+    public float lossFunctionSemivectorized(RealVector x, int y, RealMatrix W) {
+        /*
+        At the present time I cannot find in org.apache.commons.math3
+        the methods that would make a half-vectorized implementation
+        at least as efficient as the unvectorized version.
+        For example, the equivalent of numpy np.maximum:
+        Compare two arrays and returns a new array containing the 
+        element-wise maxima. If one of the elements being compared 
+        is a NaN, then that element is returned. If both elements are 
+        NaNs then the first is returned. The latter distinction is 
+        important for complex NaNs, which are defined as at least one 
+        of the real or imaginary parts being a NaN. 
+        The net effect is that NaNs are propagated.
+        */
+        throw new UnsupportedOperationException("");
+        /*
+        float delta = 1.0f;
+        RealVector scores = W.operate(x);
+        double correctClassScore = scores.getEntry(y);
+        // compute the margins for all classes in one vector operation
+        scores.
+        RealVector margins = max(new ArrayRealVector(scores.getDimension(), 0.0d),
+        scores.mapSubtract(scores.getEntry(y)).mapAdd(delta));
         int d = W.getRowDimension();
         float loss = 0.0f;
         for(int i=0; i<d; i++) {
@@ -156,6 +206,7 @@ np.mean(Yte_predict == Yte)
             loss += Double.max(0, scores.getEntry(i) - correctClassScore + delta);
         }
         return loss;
+        */
     } 
 
     /**
