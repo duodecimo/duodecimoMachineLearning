@@ -113,7 +113,7 @@ public class LinearPrediction {
                 BestW = W.copy();
             }
             System.out.println(String.format("in guess attempt %d the loss was %f, "
-                    + "best %f %c", i+1, loss, bestloss, '%'));
+                    + "best so far %f", i+1, loss, bestloss));
         }
         // BestW holds the weigths
             RealVector test;
@@ -134,8 +134,8 @@ public class LinearPrediction {
             if(predictLable == groundLabel) {
                 accuracy++;
             }
-            System.out.println(String.format("test %d predicted = %f  ground = %f", 
-                    k, predictLable, groundLabel));
+            System.out.println(String.format("test %d predicted = %f  ground = %f %c", 
+                    k, predictLable, groundLabel, predictLable == groundLabel? '!' : ' '));
         }
         System.out.println(String.format("accuracy: %5.2f %%", 
                 (float)(accuracy * 100 /numberOfTestings)));
