@@ -195,13 +195,7 @@ public class LinearPrediction {
         margins = scores.mapSubtract(scores.getEntry(y)).mapAdd(delta);
         margins.mapToSelf(new Maximum());
         margins.setEntry(y, 0.0d);
-        double loss = 0.0d;
-        margins.map(new Ones());
-        RealMatrix Ones = new Array2DRowRealMatrix(1, margins.getDimension());
-        //MatrixUtils.createRowRealMatrix(margins.toArray()).multiply(MatrixUtils.)
-        for(int i=0; i< margins.getDimension(); i++) {
-            loss+=margins.getEntry(i);
-        }
+        double loss = margins.dotProduct(margins.map(new Ones()));
         return loss;
     }
 
