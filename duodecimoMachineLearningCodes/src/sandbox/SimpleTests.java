@@ -39,7 +39,8 @@ public class SimpleTests {
         System.out.println(DuodecimoVectorUtils.showRealVector("Set a maximum:", realVector));
         double loss = realVector.dotProduct(realVector.map(new Ones()));
         System.out.println("got a loss of: " + loss);
-        System.out.println(DuodecimoVectorUtils.showRealVector("from dot to:", realVector.map(new Ones())));
+        System.out.println(DuodecimoVectorUtils.showRealVector("from dot to:", 
+                realVector.map(new Ones())));
     }
 
     private static class Maximum implements UnivariateFunction {

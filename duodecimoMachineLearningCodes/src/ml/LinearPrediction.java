@@ -103,7 +103,10 @@ public class LinearPrediction {
                 // loop to visit all trainnings
                 int index = (int) Ytr.getEntry(j, 0);
                 RealVector x = XtrWithOnes.getRowVector(j);
+                // we can use the unvectorized loss
                 loss += lossFunctionUnvectorized(x, (int) index, W);
+                // else we can use the semi vectorized
+                //loss += lossFunctionSemivectorized(x, index, W);
             }
             if(loss<bestloss) {
                 bestloss = loss;
