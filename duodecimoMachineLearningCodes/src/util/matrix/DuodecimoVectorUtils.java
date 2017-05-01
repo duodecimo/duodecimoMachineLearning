@@ -128,4 +128,15 @@ public class DuodecimoVectorUtils {
         // end line
         return(output.concat("\n"));
     }
+
+    public static void maximumOverZero(RealVector realVector) {
+        double value;
+        for(int i=0; i<realVector.getDimension(); i++) {
+            value = realVector.getEntry(i);
+            realVector.setEntry(i, value>0.0d ? value : 0.0d);
+        }
+    }
+
+    
+
 }

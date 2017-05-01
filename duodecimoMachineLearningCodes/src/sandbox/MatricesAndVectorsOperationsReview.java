@@ -18,6 +18,7 @@ package sandbox;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.apache.commons.math3.analysis.UnivariateFunction;
 import org.apache.commons.math3.exception.DimensionMismatchException;
 import org.apache.commons.math3.linear.ArrayRealVector;
 import org.apache.commons.math3.linear.MatrixUtils;
@@ -61,7 +62,32 @@ public class MatricesAndVectorsOperationsReview {
     public MatricesAndVectorsOperationsReview() {
         //operationsSample();
         //showTest();
-        operationsForLinearClassification();
+        // operationsForLinearClassification();
+        testTripleUnivariate();
+    }
+
+    /**
+     * This inner class implements the interface
+     * org.apache.commons.math3.analysis.UnivariateFunction
+     * 
+     * By doing so, it can becomes an argument to RealVector.mapToSelf().
+     * mapToSelf will change all vector entries by applying value() to them.
+     * In this particular implementation it will triple all entries.
+     */
+    private static class TripleUnivariateFunction implements UnivariateFunction {
+
+        @Override
+        public double value(double x) {
+            return 3 * x;
+        }
+    }
+
+    final void testTripleUnivariate() {
+        // define a vector
+        RealVector realVector = new ArrayRealVector(new double[]{1.0d, 2.0d, 3.0d});
+        LOGGER.info(DuodecimoVectorUtils.showRealVector("Define a vector", realVector));
+        realVector.mapToSelf(new TripleUnivariateFunction());
+        LOGGER.info(DuodecimoVectorUtils.showRealVector("vector after operation", realVector));
     }
 
     final void operationsForLinearClassification() {

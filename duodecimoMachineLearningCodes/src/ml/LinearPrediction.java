@@ -18,9 +18,13 @@ package ml;
 
 import cifar10.Cifar10Utils;
 import java.io.IOException;
+import static java.lang.Double.max;
+import java.lang.reflect.Array;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.DoubleStream;
+import org.apache.commons.math3.analysis.UnivariateFunction;
+import org.apache.commons.math3.linear.Array2DRowRealMatrix;
 import org.apache.commons.math3.linear.ArrayRealVector;
 import org.apache.commons.math3.linear.MatrixUtils;
 import org.apache.commons.math3.linear.RealMatrix;
@@ -174,40 +178,46 @@ public class LinearPrediction {
      * @param W is the weight matrix (e.g. 10 x 3073 in CIFAR-10)
      * @return the loss as a float
      */
-    public float lossFunctionSemivectorized(RealVector x, int y, RealMatrix W) {
-        /*
-        At the present time I cannot find in org.apache.commons.math3
-        the methods that would make a half-vectorized implementation
-        at least as efficient as the unvectorized version.
-        For example, the equivalent of numpy np.maximum:
-        Compare two arrays and returns a new array containing the 
-        element-wise maxima. If one of the elements being compared 
-        is a NaN, then that element is returned. If both elements are 
-        NaNs then the first is returned. The latter distinction is 
-        important for complex NaNs, which are defined as at least one 
-        of the real or imaginary parts being a NaN. 
-        The net effect is that NaNs are propagated.
-        */
-        throw new UnsupportedOperationException("");
-        /*
+    public double lossFunctionSemivectorized(RealVector x, int y, RealMatrix W) {
         float delta = 1.0f;
+        // scores becomes of size 10 x 1, the scores for each class
         RealVector scores = W.operate(x);
-        double correctClassScore = scores.getEntry(y);
         // compute the margins for all classes in one vector operation
-        scores.
-        RealVector margins = max(new ArrayRealVector(scores.getDimension(), 0.0d),
-        scores.mapSubtract(scores.getEntry(y)).mapAdd(delta));
-        int d = W.getRowDimension();
-        float loss = 0.0f;
-        for(int i=0; i<d; i++) {
-            if(i == correctClassScore) {
-                continue;
-            }
-            loss += Double.max(0, scores.getEntry(i) - correctClassScore + delta);
+        /*
+        margins = np.maximum(0, scores - scores[y] + delta)
+        on y-th position scores[y] - scores[y] canceled and gave delta. We want
+        to ignore the y-th position and only consider margin on max wrong class
+        margins[y] = 0
+        loss_i = np.sum(margins)
+        return loss_i
+        */
+        RealVector margins;
+        margins = scores.mapSubtract(scores.getEntry(y)).mapAdd(delta);
+        margins.mapToSelf(new Maximum());
+        margins.setEntry(y, 0.0d);
+        double loss = 0.0d;
+        margins.map(new Ones());
+        RealMatrix Ones = new Array2DRowRealMatrix(1, margins.getDimension());
+        //MatrixUtils.createRowRealMatrix(margins.toArray()).multiply(MatrixUtils.)
+        for(int i=0; i< margins.getDimension(); i++) {
+            loss+=margins.getEntry(i);
         }
         return loss;
-        */
-    } 
+    }
+
+    private static class Maximum implements UnivariateFunction {
+        @Override
+        public double value(double x) {
+            return max(0.0d, x);
+        }
+    }
+
+    private static class Ones implements UnivariateFunction {
+        @Override
+        public double value(double x) {
+            return 1.0d;
+        }
+    }
 
     /**
      *
