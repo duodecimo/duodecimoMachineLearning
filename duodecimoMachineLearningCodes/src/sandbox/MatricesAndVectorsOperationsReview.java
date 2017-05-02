@@ -62,8 +62,70 @@ public class MatricesAndVectorsOperationsReview {
     public MatricesAndVectorsOperationsReview() {
         //operationsSample();
         //showTest();
-        operationsForLinearClassification();
+        // operationsForLinearClassification();
         //testTripleUnivariate();
+        fullVectorizedLossFunction();
+    }
+
+    final void fullVectorizedLossFunction() {
+        LOGGER.setLevel(Level.INFO);
+        LOGGER.info("Given the linear mapping function, f(xi, W, b) = Wxi+b\n"
+                + "we can use matrix and vectors to perform the calculation.");
+
+        // create a matrix, X, hold images, each line an image
+        // lines = 5 images, columns = 3 bytes per image
+        RealMatrix X = MatrixUtils.createRealMatrix(new double[][]{
+            {1.0, 2.0, 3.0},
+            {4.0, 5.0, 6.0},
+            {7.0, 8.0, 9.0},
+            {10.0, 11.0, 12.0},
+            {13.0, 14.0, 15.0},
+        });
+        LOGGER.info(DuodecimoMatrixUtils.showRealMatrix("Create X (5 images of 3 bytes each):", X));
+
+        // create a vector to hold each image in x classification.
+        // lets say there are 4 classes, from 0 ~3.
+        RealVector y = new ArrayRealVector(new double[]
+            {1.0, 3.0, 0.0, 2.0, 3.0}
+        );
+        LOGGER.info(DuodecimoVectorUtils.showRealVector("y: "
+                + "(ground truth classification (3 classes) for each image)", y));
+
+
+        // create a matrix, W, holds the weights
+        // with #categories=4 lines, #image byes=3 columns
+        RealMatrix W = MatrixUtils.createRealMatrix(new double[][]{
+            {1.0d, 5.0d, 9.0d},
+            {2.0d, 6.0d, 10.0d},
+            {3.0d, 7.0d, 11.0d},
+            {4.0d, 8.0d, 12.0d},
+        });
+        LOGGER.info(DuodecimoMatrixUtils.showRealMatrix("Create W (4 categories, 3 weight per image byte:", W));
+
+        // create a vector, holds the bias
+        RealVector bias = new ArrayRealVector(new double[]
+            {1.0, 2.0, 3.0}
+        );
+        LOGGER.info(DuodecimoVectorUtils.showRealVector("Create a vector to hold the bias:", bias));
+
+        // bias trick: add bias vector as W new line, add a column of ones to X
+        RealMatrix Wb = DuodecimoMatrixUtils.attachZerosRow(W);
+        Wb.setRowVector(Wb.getRowDimension()-1, bias);
+        RealMatrix Xb = DuodecimoMatrixUtils.attachOnesColumn(X);
+
+        RealVector ones = new ArrayRealVector(Xb.getColumnDimension());
+        ones.set(1.0d);
+        
+        LOGGER.info(DuodecimoMatrixUtils.showRealMatrix("Wb:", Wb) +
+                DuodecimoMatrixUtils.showRealMatrix("Xb:", Xb) +
+                DuodecimoVectorUtils.showRealVector("ones: ", ones));
+
+        LOGGER.info("To make all in one matrices operation: " + 
+                DuodecimoMatrixUtils.showRealMatrix("Wb:", Wb) +
+                DuodecimoMatrixUtils.showRealMatrix("Xb:", Xb) +
+                DuodecimoMatrixUtils.showRealMatrix("Wb' x Xb'", Wb.transpose().multiply(Xb)) +
+                DuodecimoVectorUtils.showRealVector("Wb' x Xb' x ones", (Wb.transpose().multiply(Xb)).operate(ones)));
+        // Got a matrix where each line is a wi x xi + b to all the bytes of a image.
     }
 
     /**
