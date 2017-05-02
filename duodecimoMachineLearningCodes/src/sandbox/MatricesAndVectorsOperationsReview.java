@@ -147,10 +147,14 @@ public class MatricesAndVectorsOperationsReview {
         LOGGER.info(DuodecimoVectorUtils.showRealVector("WX1 + b: ", WX1.getColumnVector(0).add(bias)));
         */
 
+        RealVector ones = new ArrayRealVector(X.getRowDimension());
+        ones.set(1.0d);
+
         LOGGER.info("To make all in one matrices operation: " + 
                 DuodecimoMatrixUtils.showRealMatrix("W:", W) +
                 DuodecimoMatrixUtils.showRealMatrix("X:", X) +
-                DuodecimoMatrixUtils.showRealMatrix("W' x X'", W.transpose().multiply(X.transpose())));
+                DuodecimoMatrixUtils.showRealMatrix("W' x X'", W.transpose().multiply(X.transpose())) +
+                DuodecimoVectorUtils.showRealVector("W' x X' x ones", (W.transpose().multiply(X.transpose())).operate(ones)));
         // Got a matrix where each line is a wi x xi + b to all the bytes of a image.
     }
 
