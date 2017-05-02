@@ -51,7 +51,7 @@ sido especificamente programado com ela. Apenas pode receber alguns pontos de $$
 Como não conhece a equação de $$r$$, este programa _inventa_ uma, por exemplo, $$y = 5x + 7$$.
 Em seguida, ele testa a equação com os pontos que tem, entrando com o valor de $$y$$ do 
 ponto na equação inventada, e obtendo $$x$$. Naturalmente, como a equação está errada, o
-$x$ obtido vai ser diferente do $$x$$ real. Digamos então que o programa _inventa_ novos 
+$$x$$ obtido vai ser diferente do $$x$$ real. Digamos então que o programa _inventa_ novos 
 valores para os parâmetros da reta, e testa de novo. Eventualmente, ele pode acertar 
 e neste momento ele "aprendeu" sozinho a equação da reta $$r$$.  
 Evidentemente o exemplo acima é apenas uma forma de explicar a abordagem de aprendizado.
