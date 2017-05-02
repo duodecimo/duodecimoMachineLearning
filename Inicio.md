@@ -26,6 +26,8 @@ O entendimento sobre aprendizagem de máquina que desejamos construir aqui é um
 capaz de nos ajudar a planejar e executar programas de computador que realizem a tarefa
 de aprender a partir de dados disponíveis.
 
+### especificamente programado ou não?
+
 Vamos tentar desenvolver um pouco a ideia por trás da aprendizagem de máquina, que faz
 parte da área chamada de inteligência artificial (AI, do inglês, IA).
 
@@ -33,42 +35,36 @@ O estado de um objeto em um dado momento é definido por seus dados. Existem fun
 de relacionar objetos e seus dados. Isso nos permite, por exemplo, utilizar uma função que
 mapeie um objeto a partir de dados.
 
-Tomemos por exemplo o famoso teorema de Pitágoras, que relaciona os lados de um triângulo
-retângulo qualquer:  
+Tomemos como exemplo a equação de uma reta:  
 
 $$
-a^2 = b^2 + c^2.
+y = ax + b.
 $$  
 
-Ao arbitrar dois lados, podemos aplicar a fórmula obtendo o terceiro.
-Neste momento teremos definido um triângulo retângulo em um modelo simbólico. Obtivemos um
-objeto a partir da aplicação da fórmula em alguns dados. Esta é uma ação típica que somos
-capazes de realizar, por exemplo, por ter aprendido a fórmula.
+Definimos uma determinada reta ao determinarmos o valor de seus parâmetros, $a$ e $b$, 
+como por exemplo a reta $r$, cuja equação é $y = 2x + 3$.
+Podemos programar uma função em um computador para desenhar a reta $r$. Este seria um 
+exemplo de especificamente programado (para desenhar a reta $r$, dada a equação de $r$).  
 
-**Quando ensinamos ao computador:**
-Podemos construir um código de computador capaz de aplicar o teorema de Pitágoras, operar dados,
-e então definir e avaliar as propriedades de triângulos retângulos. Esta abordagem é possível
-a partir do fato de que o teorema de Pitágoras é conhecido. Mas, que tal tentar fazer o processo
-ao contrário?
-A ideia seria a partir de dados, tentar obter a fórmula. Na verdade, foi isto o que Pitágoras
-fez. E é a proposta da aprendizagem de máquina.
+Podemos, ao invés disto, programar um computador para aprender a equação de $r$ sem ter
+sido especificamente programado com ela. Apenas pode receber alguns pontos de $r$ (dados).
+Como não conhece a equação de $r$, este programa _inventa_ uma, por exemplo, $y = 5x + 7$.
+Em seguida, ele testa a equação com os pontos que tem, entrando com o valor de $y$ do 
+ponto na equação inventada, e obtendo $x$. Naturalmente, como a equação está errada, o
+$x$ obtido vai ser diferente do $x$ real. Digamos então que o programa _inventa_ novos 
+valores para os parâmetros da reta, e testa de novo. Eventualmente, ele pode acertar 
+e neste momento ele "aprendeu" sozinho a equação da reta $r$.  
+Evidentemente o exemplo acima é apenas uma forma de explicar a abordagem de aprendizado.
+Em programas de aprendizagem automática reais, em geral não se busca aprender uma
+fórmula tão específica como a equação de uma reta, mas sim, utiliza-se estruturas mais
+genéricas como redes neurais ou convolucionais. E também, não se busca otimizar parâmetros
+por adivinhação, mas utiliza-se técnicas sofisticadas, de regressão, aonde o erro de cada
+tentativa auxilia no cálculo de novos parâmetros, caminhando para a solução real.
+automática.
 
-**Quando o computador aprende:**
-Podemos dizer que a ação de um programa de aprendizagem automática é desenvolver novas fórmulas
-a partir de dados. Uma abordagem pode ser a de criar uma função que opera de alguma forma em
-todos ou parte dos dados disponíveis, de vários objetos de uma mesma classe. Se eles forem
-triângulos retângulos, neste caso, criemos uma função que opera em todos os catetos, por exemplo.
-Estas operações teriam que ser inicialmente arbitrarias. Afinal, as operações verdadeiras são
-desconhecidas.
-
-Num passo seguinte, aplicamos nossa fórmula a dados de catetos. Muito provavelmente esta fórmula
-criada ao acaso vai errar ao tentar relacioná-los com suas hipotenusas. Verificamos então o quão
-errado a fórmula está, comparado o valor da hipotenusa calculada com o valor da hipotenusa
-verdadeira. Desta diferença observada procuramos obter o que chamamos de valor de erro. Este valor
-pode ser usado para realizar, aplicando diversas abordagens, oriundas de conhecimento matemático,
-um refinamento na fórmula. Em seguida repetimos o processo, tentando obter um erro cada vez menor.
-Eventualmente é possível obter uma fórmula exata. E é a isso que chamamos de aprendizagem
-automática. Será que Pitágoras poderia ter sido um programa de computador?
+Pensamento: Será que Pitágoras, que criou o famoso teorema com seu nome, $a^2 = b^2 + c^2$,
+que relaciona os lados de um triângulo retângulo qualquer, poderia ter sido um programa
+de computador?
 ![flushed](https://github.global.ssl.fastly.net/images/icons/emoji/flushed.png?v5)
 
 ### Tipos de aprendizagem

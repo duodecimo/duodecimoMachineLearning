@@ -91,11 +91,11 @@ public class LinearPrediction {
             int k=0;
             for(int row=0; row<cifar10Utils.getNames().length; row++) {
                 for(int col=0; col<cifar10Utils.getTotalOfBytes()+1;col++) {
-                    W.setEntry(row, col, doubles[k++]);
+                    W.setEntry(row, col, doubles[k++] * 0.001);
                 }
             }
             if (sampleFirstWeights) {
-                DuodecimoMatrixUtils.showRealMatrix("sampling weights", W, -1, 10);
+                LOGGER.info(DuodecimoMatrixUtils.showRealMatrix("sampling weights", W, -1, 10));
                 sampleFirstWeights = !sampleFirstWeights;
             }
             loss=0.0f;
