@@ -41,19 +41,19 @@ $$
 y = ax + b.
 $$  
 
-Definimos uma determinada reta ao determinarmos o valor de seus parâmetros, $a$ e $b$, 
-como por exemplo a reta $r$, cuja equação é $y = 2x + 3$.
-Podemos programar uma função em um computador para desenhar a reta $r$. Este seria um 
-exemplo de especificamente programado (para desenhar a reta $r$, dada a equação de $r$).  
+Definimos uma determinada reta ao determinarmos o valor de seus parâmetros, $$a$$ e $$b$$, 
+como por exemplo a reta $$r$$, cuja equação é $$y = 2x + 3$$.
+Podemos programar uma função em um computador para desenhar a reta $$r$$. Este seria um 
+exemplo de especificamente programado (para desenhar a reta $$r$$, dada a equação de $$r$$).  
 
-Podemos, ao invés disto, programar um computador para aprender a equação de $r$ sem ter
-sido especificamente programado com ela. Apenas pode receber alguns pontos de $r$ (dados).
-Como não conhece a equação de $r$, este programa _inventa_ uma, por exemplo, $y = 5x + 7$.
-Em seguida, ele testa a equação com os pontos que tem, entrando com o valor de $y$ do 
-ponto na equação inventada, e obtendo $x$. Naturalmente, como a equação está errada, o
-$x$ obtido vai ser diferente do $x$ real. Digamos então que o programa _inventa_ novos 
+Podemos, ao invés disto, programar um computador para aprender a equação de $$r$$ sem ter
+sido especificamente programado com ela. Apenas pode receber alguns pontos de $$r$$ (dados).
+Como não conhece a equação de $$r$$, este programa _inventa_ uma, por exemplo, $$y = 5x + 7$$.
+Em seguida, ele testa a equação com os pontos que tem, entrando com o valor de $$y$$ do 
+ponto na equação inventada, e obtendo $$x$$. Naturalmente, como a equação está errada, o
+$x$ obtido vai ser diferente do $$x$$ real. Digamos então que o programa _inventa_ novos 
 valores para os parâmetros da reta, e testa de novo. Eventualmente, ele pode acertar 
-e neste momento ele "aprendeu" sozinho a equação da reta $r$.  
+e neste momento ele "aprendeu" sozinho a equação da reta $$r$$.  
 Evidentemente o exemplo acima é apenas uma forma de explicar a abordagem de aprendizado.
 Em programas de aprendizagem automática reais, em geral não se busca aprender uma
 fórmula tão específica como a equação de uma reta, mas sim, utiliza-se estruturas mais
@@ -62,7 +62,7 @@ por adivinhação, mas utiliza-se técnicas sofisticadas, de regressão, aonde o
 tentativa auxilia no cálculo de novos parâmetros, caminhando para a solução real.
 automática.
 
-Pensamento: Será que Pitágoras, que criou o famoso teorema com seu nome, $a^2 = b^2 + c^2$,
+Pensamento: Será que Pitágoras, que criou o famoso teorema com seu nome, $$a^2 = b^2 + c^2$$,
 que relaciona os lados de um triângulo retângulo qualquer, poderia ter sido um programa
 de computador?
 ![flushed](https://github.global.ssl.fastly.net/images/icons/emoji/flushed.png?v5)
