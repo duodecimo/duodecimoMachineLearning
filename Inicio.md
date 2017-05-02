@@ -58,9 +58,9 @@ Evidentemente o exemplo acima é apenas uma forma de explicar a abordagem de apr
 Em programas de aprendizagem automática reais, em geral não se busca aprender uma
 fórmula tão específica como a equação de uma reta, mas sim, utiliza-se estruturas mais
 genéricas como redes neurais ou convolucionais. E também, não se busca otimizar parâmetros
-por adivinhação, mas utiliza-se técnicas sofisticadas, de regressão, aonde o erro de cada
-tentativa auxilia no cálculo de novos parâmetros, caminhando para a solução real.
-automática.
+por adivinhação, mas utiliza-se técnicas sofisticadas, como regressão ou gradiente descendente,
+aonde o erro de cada tentativa auxilia no cálculo de novos parâmetros, caminhando para
+a solução real.
 
 Pensamento: Será que Pitágoras, que criou o famoso teorema com seu nome, $$a^2 = b^2 + c^2$$,
 que relaciona os lados de um triângulo retângulo qualquer, poderia ter sido um programa
