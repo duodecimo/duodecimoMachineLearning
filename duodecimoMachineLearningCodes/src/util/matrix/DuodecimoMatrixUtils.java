@@ -207,7 +207,8 @@ public class DuodecimoMatrixUtils {
 
     public static String showRealMatrix(RealMatrix M, int maxRows, int maxCols) {
         String output;
-        output = "\n";
+        output = "\n".concat("(" + M.getRowDimension() + ", " + 
+                M.getColumnDimension() + ")").concat("\n");
         if(maxRows == -1) {
             // show all rows
             maxRows = M.getRowDimension();

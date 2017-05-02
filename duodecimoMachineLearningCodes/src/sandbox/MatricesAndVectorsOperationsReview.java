@@ -62,8 +62,8 @@ public class MatricesAndVectorsOperationsReview {
     public MatricesAndVectorsOperationsReview() {
         //operationsSample();
         //showTest();
-        // operationsForLinearClassification();
-        testTripleUnivariate();
+        operationsForLinearClassification();
+        //testTripleUnivariate();
     }
 
     /**
@@ -128,12 +128,13 @@ public class MatricesAndVectorsOperationsReview {
         });
         */
         RealMatrix X = MatrixUtils.createRealMatrix(new double[][]{
-            {1.0, 2.0, 3.0, 4.0},
-            {5.0, 6.0, 7.0, 8.0},
+            {1.0, 2.0, 3.0},
+            {4.0, 5.0, 6.0},
         });
+        /*
         LOGGER.info(DuodecimoMatrixUtils.showRealMatrix("Create X:", X));
 
-        LOGGER.info("Calculate f(xi, W, bias) = Wx1+b 9for the first image on X)");
+        LOGGER.info("Calculate f(xi, W, bias) = Wx1+b for the first image on X)");
 
         RealMatrix X1 = X.getSubMatrix(0, 0, 0, 3).transpose();
         LOGGER.info(DuodecimoMatrixUtils.showRealMatrix("X1:", X1));
@@ -144,6 +145,13 @@ public class MatricesAndVectorsOperationsReview {
         LOGGER.info(DuodecimoMatrixUtils.showRealMatrix("Compare com WX': ", W.multiply(X.transpose())));
         
         LOGGER.info(DuodecimoVectorUtils.showRealVector("WX1 + b: ", WX1.getColumnVector(0).add(bias)));
+        */
+
+        LOGGER.info("To make all in one matrices operation: " + 
+                DuodecimoMatrixUtils.showRealMatrix("W:", W) +
+                DuodecimoMatrixUtils.showRealMatrix("X:", X) +
+                DuodecimoMatrixUtils.showRealMatrix("W' x X'", W.transpose().multiply(X.transpose())));
+        // Got a matrix where each line is a wi x xi + b to all the bytes of a image.
     }
 
     final void showTest() {
