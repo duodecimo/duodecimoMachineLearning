@@ -123,8 +123,7 @@ public class MatricesAndVectorsOperationsReview {
         LOGGER.info("To make all in one matrices operation: " + 
                 DuodecimoMatrixUtils.showRealMatrix("Wb:", Wb) +
                 DuodecimoMatrixUtils.showRealMatrix("Xb:", Xb) +
-                DuodecimoMatrixUtils.showRealMatrix("Wb x Xb'", Wb.multiply(Xb.transpose())) +
-                DuodecimoVectorUtils.showRealVector("Wb x Xb' x ones", (Wb.multiply(Xb.transpose())).operate(ones)));
+                DuodecimoMatrixUtils.showRealMatrix("Wb x Xb'", Wb.multiply(Xb.transpose())));
         // Got a matrix where each line is a wi x xi + b to all the bytes of a image.
         // Or, a categories by num_images matrix.
         // Now I have to subtract Yi from each column.
@@ -136,7 +135,12 @@ public class MatricesAndVectorsOperationsReview {
         // call the calculus!
         // then floor to 0. (part of the calculus)!
         // then sum the vector, getting the error value.
-        (Wb.multiply(Xb.transpose()).operate(ones));
+        RealMatrix Scores = Wb.multiply(Xb.transpose()).transpose();
+        LOGGER.info(DuodecimoMatrixUtils.showRealMatrix("Scores: ", Scores));
+        RealVector LV = new ArrayRealVector(Scores.getColumnDimension());
+        double delta = 10.0;
+        LV.mapToSelf(new LossUnivariateFunction(Scores, y, delta));
+        LOGGER.info(DuodecimoVectorUtils.showRealVector("LV: ", LV));
     }
 
     private static class LossUnivariateFunction implements UnivariateFunction {
@@ -146,7 +150,7 @@ public class MatricesAndVectorsOperationsReview {
         double delta;
         double loss;
 
-        public LossUnivariateFunction(RealMatrix matrix, RealVector y, int delta) {
+        public LossUnivariateFunction(RealMatrix matrix, RealVector y, double delta) {
             this.matrix = matrix;
             this.y = y;
             this.delta = delta;
@@ -157,7 +161,7 @@ public class MatricesAndVectorsOperationsReview {
             // matrix must be a vector num_images X num_classes
             // each entry contains sum(W, x).
             loss = 0.0d;
-            for(double col=0.0d; col < y.getDimension(); col++) {
+            for(double col=0.0d; col < matrix.getColumnDimension(); col++) {
                 // visiting each class score
                 if(col ==  y.getEntry((int) index)) {
                     // the correct class for the image
