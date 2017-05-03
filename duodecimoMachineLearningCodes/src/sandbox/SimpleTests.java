@@ -41,6 +41,11 @@ public class SimpleTests {
         System.out.println("got a loss of: " + loss);
         System.out.println(DuodecimoVectorUtils.showRealVector("from dot to:", 
                 realVector.map(new Ones())));
+        RealVector realVector2 = new ArrayRealVector(new double[]{-11.0d, 2.0d, 3.0d, 4.0d});
+        System.out.println(DuodecimoVectorUtils.showRealVector("Create a vector:", realVector2));
+        realVector2.mapToSelf(new test());
+        System.out.println(DuodecimoVectorUtils.showRealVector("after test:", realVector2));
+        
     }
 
     private static class Maximum implements UnivariateFunction {
@@ -57,6 +62,15 @@ public class SimpleTests {
         }
     }
 
+    private static class test implements UnivariateFunction {
+        int y = 12;
+        @Override
+        public double value(double x) {
+            System.out.println("At index:" + x);
+            y++;
+            return y;
+        }
+    }
 
     public static void main(String[] args) {
         SimpleTests simpleTests = new SimpleTests();

@@ -136,6 +136,46 @@ public class MatricesAndVectorsOperationsReview {
         // call the calculus!
         // then floor to 0. (part of the calculus)!
         // then sum the vector, getting the error value.
+        (Wb.multiply(Xb.transpose()).operate(ones));
+    }
+
+    private static class LossUnivariateFunction implements UnivariateFunction {
+        double index;
+        RealMatrix matrix;
+        RealVector y;
+        double delta;
+        double loss;
+
+        public LossUnivariateFunction(RealMatrix matrix, RealVector y, int delta) {
+            this.matrix = matrix;
+            this.y = y;
+            this.delta = delta;
+            index = 0.0d;
+        }
+
+        private final double lossOperation() {
+            // matrix must be a vector num_images X num_classes
+            // each entry contains sum(W, x).
+            loss = 0.0d;
+            for(double col=0.0d; col < y.getDimension(); col++) {
+                // visiting each class score
+                if(col ==  y.getEntry((int) index)) {
+                    // the correct class for the image
+                    // do nothing
+                } else {
+                    loss += Double.max(0.0d, matrix.getEntry((int) index, (int) col) - 
+                    matrix.getEntry((int) index, (int) y.getEntry((int) (index))) + delta);
+                }
+            }
+            index++;
+            return loss;
+        }
+
+        @Override
+        public double value(double x) {
+            return lossOperation();
+        }
+        
     }
 
     /**
