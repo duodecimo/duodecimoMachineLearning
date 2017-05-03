@@ -64,7 +64,7 @@ public class LinearPrediction {
     }
 
     /**
-     * Assume X_test is [3073 x 10000] (bias trick applied), Y_test [10000 x 1].
+     * Assume X_test is [2073 x 10000] (bias trick applied), Y_test [10000 x 1].
      * scores = Wbest.dot(Xte_cols)
      * 10 x 10000, the class scores for all test examples.
      * find the index with max score in each column (the predicted class)
@@ -79,7 +79,7 @@ public class LinearPrediction {
         RealMatrix XtrWithOnes = DuodecimoMatrixUtils.attachOnesColumn(Xtr);
         DuodecimoMatrixUtils.showRealMatrix("sampling XtrWithOnes", XtrWithOnes, 10, 11);
         RealMatrix BestW = null; // to hold the best random generated weights
-        float bestloss = Float.MAX_VALUE, loss;
+        float bestloss = Float.MAX_VALUE, loss, loss2;
         boolean sampleFirstWeights = true;
         for(int i=0; i<500; i++) { // number of guesses
             DoubleStream doubleStream = new JDKRandomGenerator((int) System.currentTimeMillis()).
@@ -95,10 +95,14 @@ public class LinearPrediction {
                 }
             }
             if (sampleFirstWeights) {
-                LOGGER.info(DuodecimoMatrixUtils.showRealMatrix("sampling weights", W, -1, 10));
+                LOGGER.info(DuodecimoMatrixUtils.showRealMatrix("sampling weights", W, 10, 10));
                 sampleFirstWeights = !sampleFirstWeights;
             }
+            RealVector Y = Ytr.getColumnVector(0);
+            loss = (float) lossFunctionFullvectorized(XtrWithOnes, Y, W);
+            LOGGER.info("Loss (full vectorized calc) = " + loss);
             loss=0.0f;
+            loss2=0.0f;
             for (int j = 0; j < cifar10Utils.getTotalOfTrainnings(); j++) {
                 // loop to visit all trainnings
                 int index = (int) Ytr.getEntry(j, 0);
@@ -106,8 +110,10 @@ public class LinearPrediction {
                 // we can use the unvectorized loss
                 loss += lossFunctionUnvectorized(x, (int) index, W);
                 // else we can use the semi vectorized
-                //loss += lossFunctionSemivectorized(x, index, W);
+                loss2 += lossFunctionSemivectorized(x, index, W);
             }
+            LOGGER.info("Loss (unvectorized calc) = " + loss);
+            LOGGER.info("Loss (semivectorized calc) = " + loss2);
             if(loss<bestloss) {
                 bestloss = loss;
                 BestW = W.copy();
@@ -200,6 +206,54 @@ public class LinearPrediction {
         margins.setEntry(y, 0.0d);
         double loss = margins.dotProduct(margins.map(new Ones()));
         return loss;
+    }
+
+    public double lossFunctionFullvectorized(RealMatrix X, RealVector Y, RealMatrix W) {
+        RealMatrix Scores = W.multiply(X.transpose()).transpose();
+        RealVector LV = new ArrayRealVector(Scores.getColumnDimension());
+        double delta = 1.0;
+        LV.mapToSelf(new LossUnivariateFunction(Scores, Y, delta));
+        double loss = LV.getL1Norm();
+        return loss;
+    }
+
+    private static class LossUnivariateFunction implements UnivariateFunction {
+        double index;
+        RealMatrix matrix;
+        RealVector y;
+        double delta;
+        double loss;
+
+        public LossUnivariateFunction(RealMatrix matrix, RealVector y, double delta) {
+            this.matrix = matrix;
+            this.y = y;
+            this.delta = delta;
+            index = 0.0d;
+        }
+
+        private final double lossOperation() {
+            // matrix must be a vector num_images X num_classes
+            // each entry contains sum(W, x).
+            loss = 0.0d;
+            for(double col=0.0d; col < matrix.getColumnDimension(); col++) {
+                // visiting each class score
+                if(col ==  y.getEntry((int) index)) {
+                    // the correct class for the image
+                    // do nothing
+                } else {
+                    loss += Double.max(0.0d, matrix.getEntry((int) index, (int) col) - 
+                    matrix.getEntry((int) index, (int) y.getEntry((int) (index))) + delta);
+                }
+            }
+            index++;
+            return loss;
+        }
+
+        @Override
+        public double value(double x) {
+            return lossOperation();
+        }
+        
     }
 
     private static class Maximum implements UnivariateFunction {

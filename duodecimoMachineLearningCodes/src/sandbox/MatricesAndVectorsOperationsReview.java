@@ -141,6 +141,8 @@ public class MatricesAndVectorsOperationsReview {
         double delta = 10.0;
         LV.mapToSelf(new LossUnivariateFunction(Scores, y, delta));
         LOGGER.info(DuodecimoVectorUtils.showRealVector("LV: ", LV));
+        double loss = LV.getL1Norm();
+        LOGGER.info("Loss = " + loss);
     }
 
     private static class LossUnivariateFunction implements UnivariateFunction {
