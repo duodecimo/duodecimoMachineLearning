@@ -126,6 +126,16 @@ public class MatricesAndVectorsOperationsReview {
                 DuodecimoMatrixUtils.showRealMatrix("Wb x Xb'", Wb.multiply(Xb.transpose())) +
                 DuodecimoVectorUtils.showRealVector("Wb x Xb' x ones", (Wb.multiply(Xb.transpose())).operate(ones)));
         // Got a matrix where each line is a wi x xi + b to all the bytes of a image.
+        // Or, a categories by num_images matrix.
+        // Now I have to subtract Yi from each column.
+        // Then, add delta.
+        // Then, sum (excluding the Yi itself line) into a vector of distances.
+        // *** Humm, maybe a univariate, with an if? ********
+        // yes, I build the result vector, and apply the univariate to it, pass
+        // the matriz and Y to it, and build the calculus. the overriden value just
+        // call the calculus!
+        // then floor to 0. (part of the calculus)!
+        // then sum the vector, getting the error value.
     }
 
     /**
