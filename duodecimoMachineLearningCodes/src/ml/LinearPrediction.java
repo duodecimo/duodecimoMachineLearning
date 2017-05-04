@@ -95,7 +95,7 @@ public class LinearPrediction {
                 }
             }
             if (sampleFirstWeights) {
-                LOGGER.info(DuodecimoMatrixUtils.showRealMatrix("sampling weights", W, 10, 10));
+                LOGGER.info(DuodecimoMatrixUtils.showRealMatrix("sampling weights", W, 6, 10));
                 sampleFirstWeights = !sampleFirstWeights;
             }
             RealVector Y = Ytr.getColumnVector(0);
