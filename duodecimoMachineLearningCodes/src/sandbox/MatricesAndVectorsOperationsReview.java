@@ -16,8 +16,10 @@
  */
 package sandbox;
 
+import static java.lang.Double.max;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import ml.LinearPrediction;
 import org.apache.commons.math3.analysis.UnivariateFunction;
 import org.apache.commons.math3.exception.DimensionMismatchException;
 import org.apache.commons.math3.linear.ArrayRealVector;
@@ -64,8 +66,172 @@ public class MatricesAndVectorsOperationsReview {
         //showTest();
         // operationsForLinearClassification();
         //testTripleUnivariate();
-        fullVectorizedLossFunction();
+        //fullVectorizedLossFunction();
+        testLossFunctions();
     }
+
+    final void testLossFunctions() {
+        // create a matrix, X, hold images, each line an image
+        // lines = 5 images, columns = 2 bytes per image
+        RealMatrix X = MatrixUtils.createRealMatrix(new double[][]{
+            {1.0, 2.0},
+            {3.0, 4.0},
+            {5.0, 6.0},
+            {7.0, 8.0},
+            {9.0, 10.0},
+        });
+        LOGGER.info(DuodecimoMatrixUtils.showRealMatrix("Create X (5 images of 2 bytes each):", X));
+
+        // create a vector to hold each image in x classification.
+        // lets say there are 4 classes, from 0 ~3.
+        RealVector Y = new ArrayRealVector(new double[]
+            {1.0, 3.0, 0.0, 2.0, 3.0}
+        );
+        LOGGER.info(DuodecimoVectorUtils.showRealVector("y: "
+                + "(ground truth classification (3 classes) for each image)", Y));
+
+
+        // create a matrix, W, holds the weights
+        // with #categories=4 lines, #image bytes=2 columns
+        RealMatrix W = MatrixUtils.createRealMatrix(new double[][]{
+            {1.0d, 5.0d},
+            {2.0d, 6.0d},
+            {3.0d, 7.0d},
+            {4.0d, 8.0d},
+        });
+        LOGGER.info(DuodecimoMatrixUtils.showRealMatrix("Create W (4 categories, 2 weight per image byte:", W));
+
+        // create a vector, holds the bias
+        RealVector bias = new ArrayRealVector(new double[]
+            {1.0, 2.0, 3.0, 4.0}
+        );
+        LOGGER.info(DuodecimoVectorUtils.showRealVector("Create a vector to hold the bias:", bias));
+
+        // bias trick: add bias vector as W new line, add a column of ones to X
+        RealMatrix Wb = DuodecimoMatrixUtils.attachZerosColumn(W);
+        Wb.setColumnVector(Wb.getColumnDimension()-1, bias);
+        RealMatrix Xb = DuodecimoMatrixUtils.attachOnesColumn(X);
+        LOGGER.info("Loss unvectorized: ".concat(Double.toString(lossFunctionUnvectorized(Xb, Y, Wb))));
+        LOGGER.info("Loss semivectorized: ".concat(Double.toString(lossFunctionSemivectorized(Xb, Y, Wb))));
+        LOGGER.info("Loss unvectorized: ".concat(Double.toString(lossFunctionFullvectorized(Xb, Y, Wb))));
+    }
+
+    public double lossFunctionUnvectorized(RealMatrix X, RealVector Y, RealMatrix W) {
+        double loss = 0.0f;
+        float delta = 1.0f;
+        RealVector x1;
+        int yGround;
+
+        for (int lin = 0; lin < X.getRowDimension(); lin++) {
+            x1 = X.getRowVector(lin);
+            yGround = (int) Y.getEntry(lin);
+
+            RealVector scores = W.operate(x1);
+            double correctClassScore = scores.getEntry(yGround);
+            int d = W.getRowDimension();
+            // iterate over all wrong classes
+            for (int i = 0; i < d; i++) {
+                if (i == yGround) {
+                    continue;
+                }
+                loss += Double.max(0, scores.getEntry(i)
+                        - correctClassScore + delta);
+            }
+        }
+        return loss;
+    } 
+
+    public double lossFunctionSemivectorized(RealMatrix X, RealVector Y, RealMatrix W) {
+        float loss = 0.0f;
+        float delta = 1.0f;
+        RealVector x1;
+        int yGround;
+        for (int lin = 0; lin < X.getRowDimension(); lin++) {
+            x1 = X.getRowVector(lin);
+            yGround = (int) Y.getEntry(lin);
+
+            // scores becomes of size 10 x 1, the scores for each class
+            RealVector scores = W.operate(x1);
+            // compute the margins for all classes in one vector operation
+            /*
+        margins = np.maximum(0, scores - scores[y] + delta)
+        on y-th position scores[y] - scores[y] canceled and gave delta. We want
+        to ignore the y-th position and only consider margin on max wrong class
+        margins[y] = 0
+        loss_i = np.sum(margins)
+        return loss_i
+             */
+            RealVector margins;
+            margins = scores.mapSubtract(scores.getEntry(yGround)).mapAdd(delta);
+            margins.mapToSelf(new Maximum());
+            margins.setEntry(yGround, 0.0d);
+            loss += margins.dotProduct(margins.map(new Ones()));
+        }
+        return loss;
+    }
+
+    public double lossFunctionFullvectorized(RealMatrix X, RealVector Y, RealMatrix W) {
+        RealMatrix Scores = W.multiply(X.transpose()).transpose();
+        RealVector LV = new ArrayRealVector(Scores.getColumnDimension());
+        double delta = 1.0;
+        LV.mapToSelf(new LossUnivariateFunction(Scores, Y, delta));
+        double loss = LV.getL1Norm();
+        return loss;
+    }
+
+    private static class LossUnivariateFunction implements UnivariateFunction {
+        double index;
+        RealMatrix matrix;
+        RealVector y;
+        double delta;
+        double loss;
+
+        public LossUnivariateFunction(RealMatrix matrix, RealVector y, double delta) {
+            this.matrix = matrix;
+            this.y = y;
+            this.delta = delta;
+            index = 0.0d;
+        }
+
+        private final double lossOperation() {
+            // matrix must be a vector num_images X num_classes
+            // each entry contains sum(W, x).
+            loss = 0.0d;
+            for(double col=0.0d; col < matrix.getColumnDimension(); col++) {
+                // visiting each class score
+                if(col ==  y.getEntry((int) index)) {
+                    // the correct class for the image
+                    // do nothing
+                } else {
+                    loss += Double.max(0.0d, matrix.getEntry((int) index, (int) col) - 
+                    matrix.getEntry((int) index, (int) y.getEntry((int) (index))) + delta);
+                }
+            }
+            index++;
+            return loss;
+        }
+
+        @Override
+        public double value(double x) {
+            return lossOperation();
+        }
+        
+    }
+
+    private static class Maximum implements UnivariateFunction {
+        @Override
+        public double value(double x) {
+            return max(0.0d, x);
+        }
+    }
+
+    private static class Ones implements UnivariateFunction {
+        @Override
+        public double value(double x) {
+            return 1.0d;
+        }
+    }
+
 
     final void fullVectorizedLossFunction() {
         LOGGER.setLevel(Level.INFO);
@@ -145,45 +311,6 @@ public class MatricesAndVectorsOperationsReview {
         LOGGER.info("Loss = " + loss);
     }
 
-    private static class LossUnivariateFunction implements UnivariateFunction {
-        double index;
-        RealMatrix matrix;
-        RealVector y;
-        double delta;
-        double loss;
-
-        public LossUnivariateFunction(RealMatrix matrix, RealVector y, double delta) {
-            this.matrix = matrix;
-            this.y = y;
-            this.delta = delta;
-            index = 0.0d;
-        }
-
-        private final double lossOperation() {
-            // matrix must be a vector num_images X num_classes
-            // each entry contains sum(W, x).
-            loss = 0.0d;
-            for(double col=0.0d; col < matrix.getColumnDimension(); col++) {
-                // visiting each class score
-                if(col ==  y.getEntry((int) index)) {
-                    // the correct class for the image
-                    // do nothing
-                } else {
-                    loss += Double.max(0.0d, matrix.getEntry((int) index, (int) col) - 
-                    matrix.getEntry((int) index, (int) y.getEntry((int) (index))) + delta);
-                }
-            }
-            index++;
-            return loss;
-        }
-
-        @Override
-        public double value(double x) {
-            return lossOperation();
-        }
-        
-    }
-
     /**
      * This inner class implements the interface
      * org.apache.commons.math3.analysis.UnivariateFunction
@@ -207,7 +334,6 @@ public class MatricesAndVectorsOperationsReview {
         realVector.mapToSelf(new TripleUnivariateFunction());
         LOGGER.info(DuodecimoVectorUtils.showRealVector("vector after operation", realVector));
     }
-
     final void operationsForLinearClassification() {
         LOGGER.setLevel(Level.INFO);
         LOGGER.info("Given the linear mapping function, f(xi, W, b) = Wxi+b\n"

@@ -19,12 +19,10 @@ package ml;
 import cifar10.Cifar10Utils;
 import java.io.IOException;
 import static java.lang.Double.max;
-import java.lang.reflect.Array;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.DoubleStream;
 import org.apache.commons.math3.analysis.UnivariateFunction;
-import org.apache.commons.math3.linear.Array2DRowRealMatrix;
 import org.apache.commons.math3.linear.ArrayRealVector;
 import org.apache.commons.math3.linear.MatrixUtils;
 import org.apache.commons.math3.linear.RealMatrix;
@@ -79,7 +77,7 @@ public class LinearPrediction {
         RealMatrix XtrWithOnes = DuodecimoMatrixUtils.attachOnesColumn(Xtr);
         DuodecimoMatrixUtils.showRealMatrix("sampling XtrWithOnes", XtrWithOnes, 10, 11);
         RealMatrix BestW = null; // to hold the best random generated weights
-        float bestloss = Float.MAX_VALUE, loss, loss2;
+        float bestloss = Float.MAX_VALUE, loss, loss2, loss3;
         boolean sampleFirstWeights = true;
         for(int i=0; i<500; i++) { // number of guesses
             DoubleStream doubleStream = new JDKRandomGenerator((int) System.currentTimeMillis()).
@@ -100,20 +98,11 @@ public class LinearPrediction {
             }
             RealVector Y = Ytr.getColumnVector(0);
             loss = (float) lossFunctionFullvectorized(XtrWithOnes, Y, W);
-            LOGGER.info("Loss (full vectorized calc) = " + loss);
-            loss=0.0f;
-            loss2=0.0f;
-            for (int j = 0; j < cifar10Utils.getTotalOfTrainnings(); j++) {
-                // loop to visit all trainnings
-                int index = (int) Ytr.getEntry(j, 0);
-                RealVector x = XtrWithOnes.getRowVector(j);
-                // we can use the unvectorized loss
-                loss += lossFunctionUnvectorized(x, (int) index, W);
-                // else we can use the semi vectorized
-                loss2 += lossFunctionSemivectorized(x, index, W);
-            }
-            LOGGER.info("Loss (unvectorized calc) = " + loss);
-            LOGGER.info("Loss (semivectorized calc) = " + loss2);
+            LOGGER.info("Loss (full vectorized calc) = ".concat(Double.toString(loss)));
+            loss2 = (float) lossFunctionSemivectorized(XtrWithOnes, Y, W);
+            LOGGER.info("Loss (semi vectorized calc) = ".concat(Double.toString(loss2)));
+            loss3 = (float) lossFunctionUnvectorized(XtrWithOnes, Y, W);
+            LOGGER.info("Loss (unvectorized calc) = ".concat(Double.toString(loss3)));
             if(loss<bestloss) {
                 bestloss = loss;
                 BestW = W.copy();
@@ -150,64 +139,101 @@ public class LinearPrediction {
     /**
      * Compute the multiclass svm loss for a single example (x,y)
      * 
-     * @param x a column vector representing an image (e.g. 3073 x 1 in CIFAR-10)
-     * @param y is an integer giving index of correct class
+     * @param X a matrix with row = number of images and column = image bytes plus
+     * extra ones column for bias trick
+     * @param Y a vector with rows = number of images and one column with ground
+     * truth image class
      * (e.g. between 0 and 9 in CIFAR-10)
-     * @param W is the weight matrix (e.g. 10 x 3073 in CIFAR-10)
-     * @return the loss as a float
+     * @param W is the weight matrix (e.g. 10 x 3073 in CIFAR-10) with bias extra
+     * column for the bias trick.
+     * @return the loss as a double
      */
-    public float lossFunctionUnvectorized(RealVector x, int y, RealMatrix W) {
+    public double lossFunctionUnvectorized(RealMatrix X, RealVector Y, RealMatrix W) {
+        double loss = 0.0f;
         float delta = 1.0f;
-        RealVector scores = W.operate(x);
-        double correctClassScore = scores.getEntry(y);
-        int d = W.getRowDimension();
-        float loss = 0.0f;
-        // iterate over all wrong classes
-        for(int i=0; i<d; i++) {
-            if(i == correctClassScore) {
-                continue;
+        RealVector x1;
+        int yGround;
+
+        for (int lin = 0; lin < X.getRowDimension(); lin++) {
+            x1 = X.getRowVector(lin);
+            yGround = (int) Y.getEntry(lin);
+
+            RealVector scores = W.operate(x1);
+            double correctClassScore = scores.getEntry(yGround);
+            int d = W.getRowDimension();
+            // iterate over all wrong classes
+            for (int i = 0; i < d; i++) {
+                if (i == yGround) {
+                    continue;
+                }
+                loss += Double.max(0, scores.getEntry(i)
+                        - correctClassScore + delta);
             }
-            loss += Double.max(0, scores.getEntry(i) - 
-                    correctClassScore + delta);
         }
         return loss;
-    } 
+    }
 
     /**
-     * Compute the multiclass svm loss for a single example (x,y)
+     * Compute the multiclass svm loss.
      * 
      * A faster half-vectorized implementation.
      * half-vectorized  refers to the fact that for a single example the 
      * implementation contains no for loops, but there is still one loop
      * over the examples (outside this function)
      * 
-     * @param x a column vector representing an image (e.g. 3073 x 1 in CIFAR-10)
-     * @param y is an integer giving index of correct class
+     * @param X a matrix with row = number of images and column = image bytes plus
+     * extra ones column for bias trick
+     * @param Y a vector with rows = number of images and one column with ground
+     * truth image class
      * (e.g. between 0 and 9 in CIFAR-10)
-     * @param W is the weight matrix (e.g. 10 x 3073 in CIFAR-10)
-     * @return the loss as a float
+     * @param W is the weight matrix (e.g. 10 x 3073 in CIFAR-10) with bias extra
+     * column for the bias trick.
+     * @return the loss as a double
      */
-    public double lossFunctionSemivectorized(RealVector x, int y, RealMatrix W) {
+    public double lossFunctionSemivectorized(RealMatrix X, RealVector Y, RealMatrix W) {
+        float loss = 0.0f;
         float delta = 1.0f;
-        // scores becomes of size 10 x 1, the scores for each class
-        RealVector scores = W.operate(x);
-        // compute the margins for all classes in one vector operation
-        /*
+        RealVector x1;
+        int yGround;
+        for (int lin = 0; lin < X.getRowDimension(); lin++) {
+            x1 = X.getRowVector(lin);
+            yGround = (int) Y.getEntry(lin);
+
+            // scores becomes of size 10 x 1, the scores for each class
+            RealVector scores = W.operate(x1);
+            // compute the margins for all classes in one vector operation
+            /*
         margins = np.maximum(0, scores - scores[y] + delta)
         on y-th position scores[y] - scores[y] canceled and gave delta. We want
         to ignore the y-th position and only consider margin on max wrong class
         margins[y] = 0
         loss_i = np.sum(margins)
         return loss_i
-        */
-        RealVector margins;
-        margins = scores.mapSubtract(scores.getEntry(y)).mapAdd(delta);
-        margins.mapToSelf(new Maximum());
-        margins.setEntry(y, 0.0d);
-        double loss = margins.dotProduct(margins.map(new Ones()));
+             */
+            RealVector margins;
+            margins = scores.mapSubtract(scores.getEntry(yGround)).mapAdd(delta);
+            margins.mapToSelf(new Maximum());
+            margins.setEntry(yGround, 0.0d);
+            loss += margins.dotProduct(margins.map(new Ones()));
+        }
         return loss;
     }
 
+    /**
+     * Compute the multiclass svm loss.
+     * 
+     * fastest full-vectorized implementation.
+     * full-vectorized  refers to the fact that all is done without interation loops.
+     * 
+     * @param X a matrix with row = number of images and column = image bytes plus
+     * extra ones column for bias trick
+     * @param Y a vector with rows = number of images and one column with ground
+     * truth image class
+     * (e.g. between 0 and 9 in CIFAR-10)
+     * @param W is the weight matrix (e.g. 10 x 3073 in CIFAR-10) with bias extra
+     * column for the bias trick.
+     * @return the loss as a double
+     */
     public double lossFunctionFullvectorized(RealMatrix X, RealVector Y, RealMatrix W) {
         RealMatrix Scores = W.multiply(X.transpose()).transpose();
         RealVector LV = new ArrayRealVector(Scores.getColumnDimension());
