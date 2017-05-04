@@ -97,12 +97,12 @@ public class LinearPrediction {
                 sampleFirstWeights = !sampleFirstWeights;
             }
             RealVector Y = Ytr.getColumnVector(0);
-            loss = (float) lossFunctionFullvectorized(XtrWithOnes, Y, W);
-            LOGGER.info("Loss (full vectorized calc) = ".concat(Double.toString(loss)));
+            loss3 = (float) lossFunctionFullvectorized(XtrWithOnes, Y, W);
+            LOGGER.info("Loss (full vectorized calc) = ".concat(Double.toString(loss3)));
             loss2 = (float) lossFunctionSemivectorized(XtrWithOnes, Y, W);
             LOGGER.info("Loss (semi vectorized calc) = ".concat(Double.toString(loss2)));
-            loss3 = (float) lossFunctionUnvectorized(XtrWithOnes, Y, W);
-            LOGGER.info("Loss (unvectorized calc) = ".concat(Double.toString(loss3)));
+            loss = (float) lossFunctionUnvectorized(XtrWithOnes, Y, W);
+            LOGGER.info("Loss (unvectorized calc) = ".concat(Double.toString(loss)));
             if(loss<bestloss) {
                 bestloss = loss;
                 BestW = W.copy();
@@ -202,14 +202,6 @@ public class LinearPrediction {
             // scores becomes of size 10 x 1, the scores for each class
             RealVector scores = W.operate(x1);
             // compute the margins for all classes in one vector operation
-            /*
-        margins = np.maximum(0, scores - scores[y] + delta)
-        on y-th position scores[y] - scores[y] canceled and gave delta. We want
-        to ignore the y-th position and only consider margin on max wrong class
-        margins[y] = 0
-        loss_i = np.sum(margins)
-        return loss_i
-             */
             RealVector margins;
             margins = scores.mapSubtract(scores.getEntry(yGround)).mapAdd(delta);
             margins.mapToSelf(new Maximum());
@@ -236,23 +228,23 @@ public class LinearPrediction {
      */
     public double lossFunctionFullvectorized(RealMatrix X, RealVector Y, RealMatrix W) {
         RealMatrix Scores = W.multiply(X.transpose()).transpose();
-        RealVector LV = new ArrayRealVector(Scores.getColumnDimension());
+        RealVector Lvalues = new ArrayRealVector(Scores.getColumnDimension());
         double delta = 1.0;
-        LV.mapToSelf(new LossUnivariateFunction(Scores, Y, delta));
-        double loss = LV.getL1Norm();
+        Lvalues.mapToSelf(new LossUnivariateFunction(Scores, Y, delta));
+        double loss = Lvalues.getL1Norm();
         return loss;
     }
 
     private static class LossUnivariateFunction implements UnivariateFunction {
         double index;
-        RealMatrix matrix;
-        RealVector y;
+        RealMatrix Scores;
+        RealVector Y;
         double delta;
         double loss;
 
-        public LossUnivariateFunction(RealMatrix matrix, RealVector y, double delta) {
-            this.matrix = matrix;
-            this.y = y;
+        public LossUnivariateFunction(RealMatrix Scores, RealVector Y, double delta) {
+            this.Scores = Scores;
+            this.Y = Y;
             this.delta = delta;
             index = 0.0d;
         }
@@ -261,14 +253,14 @@ public class LinearPrediction {
             // matrix must be a vector num_images X num_classes
             // each entry contains sum(W, x).
             loss = 0.0d;
-            for(double col=0.0d; col < matrix.getColumnDimension(); col++) {
+            for(double col=0.0d; col < Scores.getColumnDimension(); col++) {
                 // visiting each class score
-                if(col ==  y.getEntry((int) index)) {
+                if(col ==  Y.getEntry((int) index)) {
                     // the correct class for the image
                     // do nothing
                 } else {
-                    loss += Double.max(0.0d, matrix.getEntry((int) index, (int) col) - 
-                    matrix.getEntry((int) index, (int) y.getEntry((int) (index))) + delta);
+                    loss += Double.max(0.0d, Scores.getEntry((int) index, (int) col) - 
+                    Scores.getEntry((int) index, (int) Y.getEntry((int) (index))) + delta);
                 }
             }
             index++;
