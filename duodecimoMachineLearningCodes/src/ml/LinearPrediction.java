@@ -194,18 +194,27 @@ public class LinearPrediction {
         float loss = 0.0f;
         float delta = 1.0f;
         RealVector x1;
+        RealVector scores;
+        RealVector margins;
         int yGround;
-        for (int lin = 0; lin < X.getRowDimension(); lin++) {
-            x1 = X.getRowVector(lin);
-            yGround = (int) Y.getEntry(lin);
+        // iterate on all images
+        for (int row = 0; row < X.getRowDimension(); row++) {
+            // get x1 image vector from X matrix row
+            x1 = X.getRowVector(row);
+            yGround = (int) Y.getEntry(row);
 
             // scores becomes of size 10 x 1, the scores for each class
-            RealVector scores = W.operate(x1);
+            scores = W.operate(x1);
             // compute the margins for all classes in one vector operation
-            RealVector margins;
             margins = scores.mapSubtract(scores.getEntry(yGround)).mapAdd(delta);
+            // applies univariate Maximum function to self,
+            // see Maximum class code below.
             margins.mapToSelf(new Maximum());
+            // set the margin of the right class to 0.
             margins.setEntry(yGround, 0.0d);
+            // dot product with a ones equal size vector
+            // is the same as sum all entries.
+            // accumulate this image loss.
             loss += margins.dotProduct(margins.map(new Ones()));
         }
         return loss;
