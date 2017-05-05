@@ -58,7 +58,10 @@ public class LinearPrediction {
         Xte = cifar10Utils.getXte();
         Ytr = cifar10Utils.getYtr();
         Yte = cifar10Utils.getYte();
-        linearPredictionWithRandomSearch();
+        // we can try
+        //linearPredictionWithRandomSearch();
+        // or else
+        linearPredictionWithRandomLocalSearch();
     }
 
     /**
@@ -77,6 +80,7 @@ public class LinearPrediction {
         RealMatrix XtrWithOnes = DuodecimoMatrixUtils.attachOnesColumn(Xtr);
         DuodecimoMatrixUtils.showRealMatrix("sampling XtrWithOnes", XtrWithOnes, 10, 11);
         RealMatrix BestW = null; // to hold the best random generated weights
+        RealMatrix W;
         float bestloss = Float.MAX_VALUE, loss, loss2, loss3;
         boolean sampleFirstWeights = true;
         for(int i=0; i<500; i++) { // number of guesses
@@ -84,7 +88,7 @@ public class LinearPrediction {
                     doubles((cifar10Utils.getTotalOfBytes()+1) * cifar10Utils.getNames().length);
             double[] doubles = doubleStream.toArray();
             // generate random W gaussian
-            RealMatrix W = MatrixUtils.createRealMatrix(cifar10Utils.getNames().length,
+            W = MatrixUtils.createRealMatrix(cifar10Utils.getNames().length,
                     cifar10Utils.getTotalOfBytes()+1);
             int k=0;
             for(int row=0; row<cifar10Utils.getNames().length; row++) {
@@ -111,13 +115,92 @@ public class LinearPrediction {
                     + "best so far %f", i+1, loss, bestloss));
         }
         // BestW holds the weigths
-            RealVector test;
-            double groundLabel;
-            RealVector scores;
-            double predictLable;
-            int accuracy = 0;
-            int numberOfTestings = cifar10Utils.getTotalOfTests();
+        RealVector test;
+        double groundLabel;
+        RealVector scores;
+        double predictLable;
+        int accuracy = 0;
+        int numberOfTestings = cifar10Utils.getTotalOfTests();
         for(int k=0; k< numberOfTestings; k++) {
+            //lets visit all tests
+            test = Xte.getRowVector(k).append(1d);
+            groundLabel = Yte.getEntry(k, 0);
+            /*            System.out.println(String.format("BestW(%d, %d).operate(test(%d):",
+            BestW.getRowDimension(), BestW.getColumnDimension(),
+            test.getDimension()));*/
+            scores = BestW.operate(test);
+            predictLable = scores.getMaxIndex();
+            if(predictLable == groundLabel) {
+                accuracy++;
+            }
+            System.out.println(String.format("test %d predicted = %f  ground = %f %c", 
+                    k, predictLable, groundLabel, predictLable == groundLabel? '!' : ' '));
+        }
+        System.out.println(String.format("accuracy: %5.2f %%", 
+                (float)(accuracy * 100 /numberOfTestings)));
+    }
+
+    /**
+     * Assume X_test is [2073 x 10000] (bias trick applied), Y_test [10000 x 1].
+     * scores = Wbest.dot(Xte_cols)
+     * 10 x 10000, the class scores for all test examples.
+     * find the index with max score in each column (the predicted class)
+     * Yte_predict = np.argmax(scores, axis = 0).
+     * and calculate accuracy (fraction of predictions that are correct)
+     * np.mean(Yte_predict == Yte)
+     * finds ~0.1555, round 15%      
+     */
+    public final void linearPredictionWithRandomLocalSearch() {
+        DuodecimoMatrixUtils.showRealMatrix("sampling Xtr", Xtr, 10, 10);
+        // lets add a column of ones to Xtr in order to perform the bias trick
+        RealMatrix XtrWithOnes = DuodecimoMatrixUtils.attachOnesColumn(Xtr);
+        RealVector Y = Ytr.getColumnVector(0);
+        DuodecimoMatrixUtils.showRealMatrix("sampling XtrWithOnes", XtrWithOnes, 10, 11);
+        RealMatrix BestW = null; // to hold the best random generated weights
+        double stepSize = 0.0001d;
+        double bestloss = Double.MAX_VALUE, loss;
+        boolean sampleFirstWeights = true;
+        DoubleStream doubleStream = new JDKRandomGenerator((int) System.currentTimeMillis()).
+                doubles((cifar10Utils.getTotalOfBytes()+1) * cifar10Utils.getNames().length);
+        double[] doubles = doubleStream.toArray();
+        // generate random W gaussian
+        RealMatrix Wtry;
+        RealMatrix W = MatrixUtils.createRealMatrix(cifar10Utils.getNames().length,
+                cifar10Utils.getTotalOfBytes()+1);
+        int k=0;
+        for(int row=0; row<cifar10Utils.getNames().length; row++) {
+            for(int col=0; col<cifar10Utils.getTotalOfBytes()+1;col++) {
+                W.setEntry(row, col, doubles[k++] * 0.001);
+            }
+        }
+        LOGGER.info(DuodecimoMatrixUtils.showRealMatrix("sampling weights", W, 6, 10));
+        for(int i=0; i<100; i++) { // number of guesses
+            Wtry = MatrixUtils.createRealMatrix(cifar10Utils.getNames().length,
+                cifar10Utils.getTotalOfBytes()+1);
+            k=0;
+            for(int row=0; row<cifar10Utils.getNames().length; row++) {
+                for(int col=0; col<cifar10Utils.getTotalOfBytes()+1;col++) {
+                    W.setEntry(row, col, doubles[k++] * stepSize);
+                }
+            }
+            Wtry = W.add(Wtry);
+            loss = (float) lossFunctionFullvectorized(XtrWithOnes, Y, Wtry);
+            LOGGER.info("Loss (full vectorized calc) = ".concat(Double.toString(loss)));
+            if(loss<bestloss) {
+                bestloss = loss;
+                BestW = Wtry.copy();
+            }
+            System.out.println(String.format("in guess attempt %d the loss was %f, "
+                    + "best so far %f", i+1, loss, bestloss));
+        }
+        // BestW holds the weigths
+        RealVector test;
+        double groundLabel;
+        RealVector scores;
+        double predictLable;
+        int accuracy = 0;
+        int numberOfTestings = cifar10Utils.getTotalOfTests();
+        for(k=0; k< numberOfTestings; k++) {
             //lets visit all tests
             test = Xte.getRowVector(k).append(1d);
             groundLabel = Yte.getEntry(k, 0);
