@@ -228,15 +228,18 @@ public class LinearPrediction {
      */
     public double lossFunctionFullvectorized(RealMatrix X, RealVector Y, RealMatrix W) {
         RealMatrix Scores = W.multiply(X.transpose()).transpose();
-        RealVector Lvalues = new ArrayRealVector(Scores.getColumnDimension());
+        RealVector Lvalues = new ArrayRealVector(Scores.getRowDimension());
         double delta = 1.0;
         Lvalues.mapToSelf(new LossUnivariateFunction(Scores, Y, delta));
+        // L1Norm is the sum of the modules, but we can use it here
+        // to get a simple sum: no loss is <0 because of max(0.0d, -) applyed,
+        // so the modules won't change any value.
         double loss = Lvalues.getL1Norm();
         return loss;
     }
 
     private static class LossUnivariateFunction implements UnivariateFunction {
-        double index;
+        double lin;
         RealMatrix Scores;
         RealVector Y;
         double delta;
@@ -246,7 +249,7 @@ public class LinearPrediction {
             this.Scores = Scores;
             this.Y = Y;
             this.delta = delta;
-            index = 0.0d;
+            lin = 0.0d;
         }
 
         private final double lossOperation() {
@@ -255,15 +258,15 @@ public class LinearPrediction {
             loss = 0.0d;
             for(double col=0.0d; col < Scores.getColumnDimension(); col++) {
                 // visiting each class score
-                if(col ==  Y.getEntry((int) index)) {
+                if(col ==  Y.getEntry((int) lin)) {
                     // the correct class for the image
                     // do nothing
                 } else {
-                    loss += Double.max(0.0d, Scores.getEntry((int) index, (int) col) - 
-                    Scores.getEntry((int) index, (int) Y.getEntry((int) (index))) + delta);
+                    loss += Double.max(0.0d, Scores.getEntry((int) lin, (int) col) - 
+                    Scores.getEntry((int) lin, (int) Y.getEntry((int) (lin))) + delta);
                 }
             }
-            index++;
+            lin++;
             return loss;
         }
 

@@ -19,7 +19,6 @@ package sandbox;
 import static java.lang.Double.max;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import ml.LinearPrediction;
 import org.apache.commons.math3.analysis.UnivariateFunction;
 import org.apache.commons.math3.exception.DimensionMismatchException;
 import org.apache.commons.math3.linear.ArrayRealVector;
@@ -113,7 +112,7 @@ public class MatricesAndVectorsOperationsReview {
         RealMatrix Xb = DuodecimoMatrixUtils.attachOnesColumn(X);
         LOGGER.info("Loss unvectorized: ".concat(Double.toString(lossFunctionUnvectorized(Xb, Y, Wb))));
         LOGGER.info("Loss semivectorized: ".concat(Double.toString(lossFunctionSemivectorized(Xb, Y, Wb))));
-        LOGGER.info("Loss unvectorized: ".concat(Double.toString(lossFunctionFullvectorized(Xb, Y, Wb))));
+        LOGGER.info("Loss fullvectorized: ".concat(Double.toString(lossFunctionFullvectorized(Xb, Y, Wb))));
     }
 
     public double lossFunctionUnvectorized(RealMatrix X, RealVector Y, RealMatrix W) {
@@ -121,6 +120,14 @@ public class MatricesAndVectorsOperationsReview {
         float delta = 1.0f;
         RealVector x1;
         int yGround;
+        double lossOfImage, lossOfClass;
+        String debug = "Calculo não vetorizado da perda. Parametros recebidos\n";
+        debug = debug.concat(DuodecimoMatrixUtils.showRealMatrix("X:", X));
+        debug = debug.concat("\n");
+        debug = debug.concat(DuodecimoVectorUtils.showRealVector("Y:", Y));
+        debug = debug.concat("\n");
+        debug = debug.concat(DuodecimoMatrixUtils.showRealMatrix("W:", W));
+        debug = debug.concat("\n");
 
         for (int lin = 0; lin < X.getRowDimension(); lin++) {
             x1 = X.getRowVector(lin);
@@ -129,15 +136,44 @@ public class MatricesAndVectorsOperationsReview {
             RealVector scores = W.operate(x1);
             double correctClassScore = scores.getEntry(yGround);
             int d = W.getRowDimension();
+            debug = debug.concat("Linha ".concat(Integer.toString(lin)));
+            debug = debug.concat("\n");
+            debug = debug.concat(DuodecimoVectorUtils.showRealVector("X1:", x1));
+            debug = debug.concat("\n");
+            debug = debug.concat("yGround: ".concat(Integer.toString(yGround)));
+            debug = debug.concat("\n");
+            debug = debug.concat(DuodecimoVectorUtils.showRealVector("scores:", scores));
+            debug = debug.concat("\n");
+            debug = debug.concat("correctClassScore: ".concat(Double.toString(correctClassScore)));
+            debug = debug.concat("\n");
+            
             // iterate over all wrong classes
+            lossOfImage = 0.0d;
             for (int i = 0; i < d; i++) {
+                debug = debug.concat("  Classe: ".concat(Integer.toString(i)));
+                debug = debug.concat("\n");
+                
                 if (i == yGround) {
+                    debug = debug.concat("  pula, é a correta!");
+                    debug = debug.concat("\n");
                     continue;
                 }
-                loss += Double.max(0, scores.getEntry(i)
+                lossOfClass = Double.max(0, scores.getEntry(i)
                         - correctClassScore + delta);
+                debug = debug.concat("  lossOfClass = Double.max(0, ".
+                        concat(Double.toString(scores.getEntry(i))));
+                debug = debug.concat(" - ").concat(Double.toString(correctClassScore));
+                debug = debug.concat(" + ").concat(Double.toString(delta));
+                debug = debug.concat(") = ").concat(Double.toString(lossOfClass));
+                debug = debug.concat("\n");
+                lossOfImage+=lossOfClass;
             }
+            loss+= lossOfImage;
+            debug = debug.concat("Perda da Imagem: ").concat(Double.toString(lossOfImage));
+                debug = debug.concat("\n");
         }
+        debug = debug.concat("Perda final = ").concat(Double.toString(loss));
+        LOGGER.info(debug);
         return loss;
     } 
 
@@ -171,16 +207,30 @@ public class MatricesAndVectorsOperationsReview {
     }
 
     public double lossFunctionFullvectorized(RealMatrix X, RealVector Y, RealMatrix W) {
+        String debug = "Calculo vetorizado da perda. Parametros recebidos\n";
+        debug = debug.concat(DuodecimoMatrixUtils.showRealMatrix("X:", X));
+        debug = debug.concat("\n");
+        debug = debug.concat(DuodecimoVectorUtils.showRealVector("Y:", Y));
+        debug = debug.concat("\n");
+        debug = debug.concat(DuodecimoMatrixUtils.showRealMatrix("W:", W));
+        debug = debug.concat("\n");
         RealMatrix Scores = W.multiply(X.transpose()).transpose();
-        RealVector LV = new ArrayRealVector(Scores.getColumnDimension());
+        debug = debug.concat(DuodecimoMatrixUtils.showRealMatrix("Scores: (".
+                concat("W.multiply(X.transpose()).transpose())"), Scores));
+        debug = debug.concat("\n");
+        RealVector LV = new ArrayRealVector(Scores.getRowDimension());
         double delta = 1.0;
         LV.mapToSelf(new LossUnivariateFunction(Scores, Y, delta));
+        debug = debug.concat(DuodecimoVectorUtils.showRealVector("LV:", LV));
+        debug = debug.concat("\n");
         double loss = LV.getL1Norm();
+        debug = debug.concat("Perda final = ").concat(Double.toString(loss));
+        LOGGER.info(debug);
         return loss;
     }
 
     private static class LossUnivariateFunction implements UnivariateFunction {
-        double index;
+        double lin;
         RealMatrix matrix;
         RealVector y;
         double delta;
@@ -190,7 +240,7 @@ public class MatricesAndVectorsOperationsReview {
             this.matrix = matrix;
             this.y = y;
             this.delta = delta;
-            index = 0.0d;
+            lin = 0.0d;
         }
 
         private final double lossOperation() {
@@ -199,15 +249,15 @@ public class MatricesAndVectorsOperationsReview {
             loss = 0.0d;
             for(double col=0.0d; col < matrix.getColumnDimension(); col++) {
                 // visiting each class score
-                if(col ==  y.getEntry((int) index)) {
+                if(col ==  y.getEntry((int) lin)) {
                     // the correct class for the image
                     // do nothing
                 } else {
-                    loss += Double.max(0.0d, matrix.getEntry((int) index, (int) col) - 
-                    matrix.getEntry((int) index, (int) y.getEntry((int) (index))) + delta);
+                    loss += Double.max(0.0d, matrix.getEntry((int) lin, (int) col) - 
+                    matrix.getEntry((int) lin, (int) y.getEntry((int) (lin))) + delta);
                 }
             }
-            index++;
+            lin++;
             return loss;
         }
 
