@@ -157,7 +157,7 @@ public class LinearPrediction {
         RealVector Y = Ytr.getColumnVector(0);
         DuodecimoMatrixUtils.showRealMatrix("sampling XtrWithOnes", XtrWithOnes, 10, 11);
         RealMatrix BestW = null; // to hold the best random generated weights
-        double stepSize = 0.0001d;
+        double stepSize = 0.001d;
         double bestloss = Double.MAX_VALUE, loss;
         boolean sampleFirstWeights = true;
         DoubleStream doubleStream = new JDKRandomGenerator((int) System.currentTimeMillis()).
@@ -184,6 +184,10 @@ public class LinearPrediction {
                 }
             }
             Wtry = W.add(Wtry);
+            if(sampleFirstWeights) {
+                LOGGER.info(DuodecimoMatrixUtils.showRealMatrix("sampling try weights", Wtry, 6, 10));
+                sampleFirstWeights = !sampleFirstWeights;
+            }
             loss = (float) lossFunctionFullvectorized(XtrWithOnes, Y, Wtry);
             LOGGER.info("Loss (full vectorized calc) = ".concat(Double.toString(loss)));
             if(loss<bestloss) {
@@ -390,4 +394,5 @@ public class LinearPrediction {
      */
     public static void main(String[] args) throws IOException {
         LinearPrediction linearPrediction = new LinearPrediction();
-    }}
+    }
+}
