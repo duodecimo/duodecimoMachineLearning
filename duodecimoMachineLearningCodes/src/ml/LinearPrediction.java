@@ -157,7 +157,7 @@ public class LinearPrediction {
         RealVector Y = Ytr.getColumnVector(0);
         DuodecimoMatrixUtils.showRealMatrix("sampling XtrWithOnes", XtrWithOnes, 10, 11);
         RealMatrix BestW = null; // to hold the best random generated weights
-        double stepSize = 0.001d;
+        double stepSize = 0.0001d;
         double bestloss = Double.MAX_VALUE, loss;
         boolean sampleFirstWeights = true;
         DoubleStream doubleStream = new JDKRandomGenerator((int) System.currentTimeMillis()).
@@ -174,7 +174,11 @@ public class LinearPrediction {
             }
         }
         LOGGER.info(DuodecimoMatrixUtils.showRealMatrix("sampling weights", W, 6, 10));
-        for(int i=0; i<100; i++) { // number of guesses
+        for(int i=0; i<1000; i++) { // number of guesses
+            // generate random Wtry gaussian
+            doubleStream = new JDKRandomGenerator((int) System.currentTimeMillis()).
+                    doubles((cifar10Utils.getTotalOfBytes()+1) * cifar10Utils.getNames().length);
+            doubles = doubleStream.toArray();
             Wtry = MatrixUtils.createRealMatrix(cifar10Utils.getNames().length,
                 cifar10Utils.getTotalOfBytes()+1);
             k=0;
@@ -188,7 +192,7 @@ public class LinearPrediction {
                 LOGGER.info(DuodecimoMatrixUtils.showRealMatrix("sampling try weights", Wtry, 6, 10));
                 sampleFirstWeights = !sampleFirstWeights;
             }
-            loss = (float) lossFunctionFullvectorized(XtrWithOnes, Y, Wtry);
+            loss = lossFunctionFullvectorized(XtrWithOnes, Y, Wtry);
             LOGGER.info("Loss (full vectorized calc) = ".concat(Double.toString(loss)));
             if(loss<bestloss) {
                 bestloss = loss;
@@ -241,6 +245,7 @@ public class LinearPrediction {
         RealVector x1;
         int yGround;
 
+        // iterate over all images
         for (int lin = 0; lin < X.getRowDimension(); lin++) {
             x1 = X.getRowVector(lin);
             yGround = (int) Y.getEntry(lin);
@@ -257,7 +262,8 @@ public class LinearPrediction {
                         - correctClassScore + delta);
             }
         }
-        return loss;
+        // loss is the media of each image loss
+        return loss/X.getRowDimension();
     }
 
     /**
@@ -304,7 +310,8 @@ public class LinearPrediction {
             // accumulate this image loss.
             loss += margins.dotProduct(margins.map(new Ones()));
         }
-        return loss;
+        // loss is the media of each image loss
+        return loss/X.getRowDimension();
     }
 
     /**
@@ -331,7 +338,8 @@ public class LinearPrediction {
         // to get a simple sum: no loss is <0 because of max(0.0d, -) applyed,
         // so the modules won't change any value.
         double loss = Lvalues.getL1Norm();
-        return loss;
+        // loss is the media of each image loss
+        return loss/X.getRowDimension();
     }
 
     private static class LossUnivariateFunction implements UnivariateFunction {
