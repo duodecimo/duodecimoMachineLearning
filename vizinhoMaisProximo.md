@@ -36,7 +36,7 @@ Observe uma imagem, como a da Figura 1: Ao ser digitalizada, se transforma em um
 vamos deixar como está por enquanto).
 	
 
-Mas, o que realmente importa, não é como cada um observa e processa a imagem, mas sim, se é possível que um programa de computador obtenha resultados equivalentes, ao observar e processar uma imagem, dos resultados e obtidos por uma pessoa.
+Mas, o que realmente importa, não é como cada um observa e processa a imagem, mas sim, se é possível que um programa de computador obtenha resultados equivalentes, ao observar e processar uma imagem, dos resultados obtidos por uma pessoa.
 
 Construímos programas de aprendizagem de máquina considerando que a resposta a esta pergunta teórica é sim.
 Podemos considerar que, se obtivermos resultados equivalentes, a teoria está correta. Provavelmente o próprio [Alan Turing](https://pt.wikipedia.org/wiki/Alan_Turing) concordaria com isso!
