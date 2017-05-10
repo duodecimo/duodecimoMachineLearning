@@ -30,8 +30,8 @@ $$
   \end{array} } \right]
 $$
 
-O método estático createRealMatrix() da classe [MatrixUtils](http://commons.apache.org/proper/commons-math/javadocs/api-3.3/org/apache/commons/math3/linear/MatrixUtils.html) foi utilizado para criar a martriz com os elementos 
-já populados, a partir de uma constante do tipo doube[][].
+O método estático `createRealMatrix()` da classe [`MatrixUtils`](http://commons.apache.org/proper/commons-math/javadocs/api-3.3/org/apache/commons/math3/linear/MatrixUtils.html) foi utilizado para criar a martriz com os elementos 
+já populados, a partir de uma constante do tipo `doube[][]`.
 
 
 
