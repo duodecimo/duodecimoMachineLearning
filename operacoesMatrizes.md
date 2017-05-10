@@ -25,7 +25,7 @@ Observe a notação, M é o nome da matriz, os valores entre parentesis em segui
 Sempre nesta ordem.
 
 $$
-  L2C4=
+  M = 
   \left[ {\begin{array}{cccc}
    1 & 2 & 3 & 4\\
    5 & 6 & 7 & 8\\
