@@ -7,7 +7,8 @@ permalink: operacoesMatrizes/
 # Operações com Matrizes e Vetores
 
 
-Nos códigos que implementam os algoritmos estudados a biblioteca [org.apache.commons.math3.linear]{http://commons.apache.org/proper/commons-math/javadocs/api-3.3/org/apache/commons/math3/linear/package-summary.html} será utilizada.  
+Nos códigos que implementam os algoritmos estudados a biblioteca 
+[org.apache.commons.math3.linear]{http://commons.apache.org/proper/commons-math/javadocs/api-3.3/org/apache/commons/math3/linear/package-summary.html} será utilizada.  
 Especialmente matrizes e vetores serão comumente representados por objetos das classes RealMatrix e RealVector, respectivamente, desta biblioteca.  
 Vamos apresentar o resultado de alguns métodos destas classes.
 
