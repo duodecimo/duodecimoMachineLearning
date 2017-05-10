@@ -16,7 +16,8 @@ Vamos apresentar o resultado de alguns métodos destas classes.
 RealMatrix L2C4 = MatrixUtils.createRealMatrix(
 new double[][] { {1, 2, 3, 4}, {5, 6, 7, 8} });
 ```
-A matriz L2C4 é criada:
+A matriz L2C4 é criada.  
+
 $$
   L2C4=
   \left[ {\begin{array}{cccc}
