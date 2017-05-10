@@ -17,10 +17,12 @@ Vamos apresentar o resultado de alguns métodos destas classes.
 
 Com a linha de comando Java  
 ```java
-RealMatrix L2C4 = 
+RealMatrix M = 
 MatrixUtils.createRealMatrix(new double[][] { {1, 2, 3, 4}, {5, 6, 7, 8} });
 ```
-A matriz L2C4 é criada.  
+A matriz M(2x4) é criada.  
+Observe a notação, M é o nome da matriz, os valores entre parentesis em seguida significam (linhas x colunas).
+Sempre nesta ordem.
 
 $$
   L2C4=
