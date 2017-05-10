@@ -500,14 +500,12 @@ public class MatricesAndVectorsOperationsReview {
                 + "DuodecimoMatrixUtils.attachOnesColumn(L2C4):", L2C5));
 
         L3C4 = DuodecimoMatrixUtils.attachZerosRow(L2C4);
-        displayRealMatrix(java.util.ResourceBundle.getBundle("sandbox/Bundle").getString("LETS ATTACH AN EXTRA ROW OF ZEROS INSTEAD"),
-                java.util.ResourceBundle.getBundle("sandbox/Bundle").getString("L3C4 = MATRIXGROWDIMENSION.ATTACHZEROSROW(L2C4)"),
-                java.util.ResourceBundle.getBundle("sandbox/Bundle").getString("MATRIX L3C4:"), L3C4);
+        LOGGER.info(DuodecimoMatrixUtils.showRealMatrix("L3C4 = "
+                + "DuodecimoMatrixUtils.attachZerosRow(L2C4):", L3C4));
 
         L2C5 = DuodecimoMatrixUtils.attachZerosColumn(L2C4);
-        displayRealMatrix(java.util.ResourceBundle.getBundle("sandbox/Bundle").getString("LETS ATTACH AN EXTRA COLUMN OF ZEROS INSTEAD"),
-                java.util.ResourceBundle.getBundle("sandbox/Bundle").getString("L2C5 = MATRIXGROWDIMENSION.ATTACHZEROSCOLUMN(L2C4)"),
-                java.util.ResourceBundle.getBundle("sandbox/Bundle").getString("MATRIX L2C5:"), L2C5);
+        LOGGER.info(DuodecimoMatrixUtils.showRealMatrix("L2C5 = "
+                + "DuodecimoMatrixUtils.attachZerosColumn(L2C4):", L2C5));
 
         // operations
         LOGGER.info(java.util.ResourceBundle.getBundle("sandbox/Bundle").getString("SOME MATRICES OPERATIONS.\\NEWLINE"));
