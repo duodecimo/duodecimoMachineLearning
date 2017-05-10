@@ -14,7 +14,7 @@ Vamos apresentar o resultado de alguns métodos destas classes.
 ### Criar uma matriz 2 X 4.
 ```
 RealMatrix L2C4 = MatrixUtils.createRealMatrix(
-new double\[][]{{1, 2, 3, 4}, {5, 6, 7, 8}});
+new double[][]{{1, 2, 3, 4}, {5, 6, 7, 8}});
 ```
 A matriz L2C4 é criada:
 $$
