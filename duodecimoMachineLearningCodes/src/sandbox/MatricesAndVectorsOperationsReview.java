@@ -61,12 +61,12 @@ public class MatricesAndVectorsOperationsReview {
     private static final Logger LOGGER = Logger.getGlobal();
 
     public MatricesAndVectorsOperationsReview() {
-        //operationsSample();
+        operationsSample();
         //showTest();
         // operationsForLinearClassification();
         //testTripleUnivariate();
         //fullVectorizedLossFunction();
-        testLossFunctions();
+        //testLossFunctions();
     }
 
     final void testLossFunctions() {
@@ -477,39 +477,27 @@ public class MatricesAndVectorsOperationsReview {
         LOGGER.info("");
 
         RealMatrix L1C1 = MatrixUtils.createRealMatrix(new double[][]{{1}});
-        displayRealMatrix(java.util.ResourceBundle.getBundle("sandbox/Bundle").getString("LETS BUILD A MATRIX 1 X 1"),
-                java.util.ResourceBundle.getBundle("sandbox/Bundle").getString("REALMATRIX L1C1 = MATRIXUTILS.CREATEREALMATRIX(NEW DOUBLE[][]{{1}});"),
-                java.util.ResourceBundle.getBundle("sandbox/Bundle").getString("MATRIX L1C1:"), L1C1);
+        LOGGER.info(DuodecimoMatrixUtils.showRealMatrix("L1C1:", L1C1));
 
         RealMatrix L2C1 = MatrixUtils.createRealMatrix(new double[][]{{1}, {2}});
-        displayRealMatrix(java.util.ResourceBundle.getBundle("sandbox/Bundle").getString("LETS BUILD A MATRIX 2 X 1"),
-                java.util.ResourceBundle.getBundle("sandbox/Bundle").getString("REALMATRIX L2C1 = MATRIXUTILS.CREATEREALMATRIX(NEW DOUBLE[][]{{1},{2}});"),
-                java.util.ResourceBundle.getBundle("sandbox/Bundle").getString("MATRIX L2C1:"), L2C1);
+        LOGGER.info(DuodecimoMatrixUtils.showRealMatrix("L2C1:", L2C1));
 
         RealMatrix L1C2 = MatrixUtils.createRealMatrix(new double[][]{{1, 2}});
-        displayRealMatrix(java.util.ResourceBundle.getBundle("sandbox/Bundle").getString("LETS BUILD A MATRIX 1 X 2"),
-                java.util.ResourceBundle.getBundle("sandbox/Bundle").getString("REALMATRIX L1C2 = MATRIXUTILS.CREATEREALMATRIX(NEW DOUBLE[][]{{1, 2}})"),
-                java.util.ResourceBundle.getBundle("sandbox/Bundle").getString("MATRIX L1C2:"), L1C2);
+        LOGGER.info(DuodecimoMatrixUtils.showRealMatrix("L1C2:", L1C2));
 
         RealMatrix L2C2 = MatrixUtils.createRealMatrix(new double[][]{{1, 2}, {3, 4}});
-        displayRealMatrix(java.util.ResourceBundle.getBundle("sandbox/Bundle").getString("LETS BUILD A MATRIX 2 X 2"),
-                java.util.ResourceBundle.getBundle("sandbox/Bundle").getString("REALMATRIX L2C2 = MATRIXUTILS.CREATEREALMATRIX(NEW DOUBLE[][]{{1,2},{3,4}})"),
-                java.util.ResourceBundle.getBundle("sandbox/Bundle").getString("MATRIX L1C1:"), L2C2);
+        LOGGER.info(DuodecimoMatrixUtils.showRealMatrix("L2C2:", L2C2));
 
         RealMatrix L2C4 = MatrixUtils.createRealMatrix(new double[][]{{1, 2, 3, 4}, {5, 6, 7, 8}});
-        displayRealMatrix(java.util.ResourceBundle.getBundle("sandbox/Bundle").getString("LETS BUILD A MATRIX 2 X 4"),
-                java.util.ResourceBundle.getBundle("sandbox/Bundle").getString("REALMATRIX L2C4 = MATRIXUTILS.CREATEREALMATRIX(NEW DOUBLE[][]{{1,2,3,4},{5,6,7,8}})"),
-                java.util.ResourceBundle.getBundle("sandbox/Bundle").getString("MATRIX L2C4:"), L2C4);
+        LOGGER.info(DuodecimoMatrixUtils.showRealMatrix("L2C4:", L2C4));
 
         RealMatrix L3C4 = DuodecimoMatrixUtils.attachOnesRow(L2C4);
-        displayRealMatrix(java.util.ResourceBundle.getBundle("sandbox/Bundle").getString("LETS ATTACH AN EXTRA ROW OF ONES TO IT"),
-                java.util.ResourceBundle.getBundle("sandbox/Bundle").getString("REALMATRIX L3C4 = MATRIXGROWDIMENSION.ATTACHONESROW(L2C4)"),
-                java.util.ResourceBundle.getBundle("sandbox/Bundle").getString("MATRIX L3C4:"), L3C4);
+        LOGGER.info(DuodecimoMatrixUtils.showRealMatrix("RealMatrix L3C4 = "
+                + "DuodecimoMatrixUtils.attachOnesRow(L2C4):", L3C4));
 
         RealMatrix L2C5 = DuodecimoMatrixUtils.attachOnesColumn(L2C4);
-        displayRealMatrix(java.util.ResourceBundle.getBundle("sandbox/Bundle").getString("LETS ATTACH AN EXTRA COLUMN OF ONES INSTEAD"),
-                java.util.ResourceBundle.getBundle("sandbox/Bundle").getString("REALMATRIX L2C5 = MATRIXGROWDIMENSION.ATTACHONESCOLUMN(L2C4)"),
-                java.util.ResourceBundle.getBundle("sandbox/Bundle").getString("MATRIX L2C5:"), L2C5);
+        LOGGER.info(DuodecimoMatrixUtils.showRealMatrix("RealMatrix L2C5 = "
+                + "DuodecimoMatrixUtils.attachOnesColumn(L2C4):", L2C5));
 
         L3C4 = DuodecimoMatrixUtils.attachZerosRow(L2C4);
         displayRealMatrix(java.util.ResourceBundle.getBundle("sandbox/Bundle").getString("LETS ATTACH AN EXTRA ROW OF ZEROS INSTEAD"),
