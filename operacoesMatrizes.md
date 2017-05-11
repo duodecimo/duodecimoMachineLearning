@@ -24,7 +24,7 @@ Vamos apresentar o resultado de alguns métodos destas classes.
 
 <a name='crimat'></a>
 
-### Criar uma matriz de dimensões 2 X 4.
+## Criar uma matriz de dimensões 2 X 4.
 
 Com a linha de comando Java  
 ```java
@@ -48,7 +48,7 @@ já populados, a partir de uma constante do tipo `doube[][]`.
 
 <a name='matmult'></a>
 
-### Multiplicar duas matrizes, a primeira com dimensões 2 x 3, e a segunda com dimensões 3 x 4
+## Multiplicar duas matrizes, a primeira com dimensões 2 x 3, e a segunda com dimensões 3 x 4
 
 Comandos para criar as duas matrizes exemplo em Java e multiplicar uma pela outra:  
 
@@ -82,7 +82,7 @@ $$
 $$
 
 
-##### Comentários sobre a operação multiplicação de matrizes
+#### Comentários sobre a operação multiplicação de matrizes
 
 Definição da operação de multiplicação realizada acima:  
 Digamos que a matriz da esquerda da multiplicação tem dimensões (o x p), a da direita dimensões (p x q), 
@@ -106,7 +106,7 @@ $$ M3_{2,4} = 4 \times 4 + 5 \times 8 + 6 \times 12 = 16 + 40 + 72 = 128 $$.
 + Note que a multiplicação de matrizes, assim definida, não é **comutativa** ($$ M1 \times M2 \ne M2 \times M1 $$).
 
 
-##### Comentários sobre os comandos Java utilizados para a multiplicação de matrizes
+#### Comentários sobre os comandos Java utilizados para a multiplicação de matrizes
 
 Leia a documentação do [org.apache.commons.math3](http://commons.apache.org/proper/commons-math/javadocs/api-3.6.1/index.html).
 Especialmente as das classes 
@@ -118,7 +118,7 @@ Especialmente as das classes
 
 <a name='matvetmult'></a>
 
-### Multiplicar uma matriz com dimensões 2 x 3 por um vetor com dimensão 3
+## Multiplicar uma matriz com dimensões 2 x 3 por um vetor com dimensão 3
 
 Comandos para criar o vetor $$v1$$ e multiplicar $$M1 \times v1$$ :  
 
@@ -146,7 +146,7 @@ $$
 $$
 
 
-##### Comentários sobre a operação multiplicação de matriz por vetor
+#### Comentários sobre a operação multiplicação de matriz por vetor
 
 Definição da operação de multiplicação realizada acima:  
 Digamos que a matriz da esquerda da multiplicação tem dimensões (o x p), o vetor tem dimensão (p), e o vetor resultante dimensão (o).
@@ -164,7 +164,7 @@ $$ v2_2 = 4 \times 1 + 5 \times 2 + 6 \times 3 = 4 + 10 + 18 = 32 $$.
 + O vetor resultante vai ter dimensão igual ao número de linhas da matriz.
 
 
-#####  Comentários sobre os comandos Java utilizados para a multiplicação de matriz por vetor
+####  Comentários sobre os comandos Java utilizados para a multiplicação de matriz por vetor
 
 Leia a documentação do [org.apache.commons.math3](http://commons.apache.org/proper/commons-math/javadocs/api-3.6.1/index.html).
 Especialmente as das classes 
