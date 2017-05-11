@@ -4,6 +4,15 @@ mathjax: true
 permalink: operacoesMatrizes/
 ---
 
+Tabela de Conteúdos:
+
+- [Operações com Matrizes e Vetores](#opers)
+  - [Criar uma matriz 2 X 4](#crimat)
+  - [Multiplicar duas matrizes, a primeira 2 x 3, e a segunda 3 x 4](#matmult)
+  - [Multiplicar uma matriz com dimensão 2 x 3 por um vetor com dimensão 3](#matvetmult)
+
+<a name='opers'></a>
+
 # Operações com Matrizes e Vetores
 
 
@@ -12,6 +21,8 @@ Nos códigos que implementam os algoritmos estudados a biblioteca
 Especialmente matrizes e vetores serão comumente representados por objetos das classes [RealMatrix](http://commons.apache.org/proper/commons-math/javadocs/api-3.3/org/apache/commons/math3/linear/RealMatrix.html) e 
 [RealVector](http://commons.apache.org/proper/commons-math/javadocs/api-3.3/org/apache/commons/math3/linear/RealVector.html), respectivamente, desta biblioteca.  
 Vamos apresentar o resultado de alguns métodos destas classes.
+
+<a name='crimat'></a>
 
 ### Criar uma matriz 2 X 4.
 
@@ -34,6 +45,8 @@ $$
 
 O método estático `createRealMatrix()` da classe [`MatrixUtils`](http://commons.apache.org/proper/commons-math/javadocs/api-3.3/org/apache/commons/math3/linear/MatrixUtils.html) foi utilizado para criar a martriz com os elementos 
 já populados, a partir de uma constante do tipo `doube[][]`.
+
+<a name='matmult'></a>
 
 ### Multiplicar duas matrizes, a primeira 2 x 3, e a segunda 3 x 4
 
@@ -97,6 +110,8 @@ Especialmente as das classes
 ![link](https://github.global.ssl.fastly.net/images/icons/emoji/link.png?v5)  
 
 
+
+<a name='matvetmult'></a>
 
 ### Multiplicar uma matriz com dimensão 2 x 3 por um vetor com dimensão 3
 
