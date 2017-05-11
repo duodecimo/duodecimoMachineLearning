@@ -93,3 +93,52 @@ $$ M3_{2,1} = 4 \times 1 + 5 \times 5 + 6 \times 9 = 4 + 25 + 54 = 83\\
 Leia a documentação do [org.apache.commons.math3](http://commons.apache.org/proper/commons-math/javadocs/api-3.6.1/index.html).
 
 
+### Multiplicar uma matriz com dimensão 2 x 3 por um vetor com dimensão 3
+
+Comandos para criar o vetor $$v1$$ e multiplicar $$M1 \times v1$$ :  
+
+```java
+RealVector v1 = new ArrayRealVector(new double[]{1, 2, 3});
+RealVector v2 = M1.operate(v1);
+```
+
+$$
+	v2 = 
+  M1 \times v1 = 
+  \left[ {\begin{array}{ccc}
+   1 & 2 & 3\\
+   4 & 5 & 6\\
+  \end{array} } \right] \times 
+  \left[ {\begin{array}{c}
+   1\\
+   2\\
+   3\\
+  \end{array} } \right] = 
+  \left[ {\begin{array}{c}
+   14\\
+   32\\
+  \end{array} } \right]
+$$
+
+
+#### Comentários sobre a operação multiplicação de matriz por vetor
+
+Definição da operação de multiplicação realizada acima:  
+Digamos que a matriz da esquerda da multiplicação tem dimensão (M1L x M1C), e o vetor (v1L), e o vetor resultante (v2L).
+Então, o primeiro elemento da primeira linha de v2 vai valer $$ v2_1 = \sum_{i=1}^{M1L} {M1L_i \times v1_i} $$.  
+Ou seja,  
+$$ v2_1 = 1 \times 1 + 2 \times 2 + 3 \times 3 = 1 + 4 + 9 = 14 $$.  
+$$ v2_2 = 4 \times 1 + 5 \times 2 + 6 \times 3 = 4 + 10 + 18 = 32\\
+
++ Existem definições para mais de uma operação de multiplicação de matriz por vetor.
++ A que mostramos acima pode ser considerada a multiplicação padrão.
++ Só pode ser aplicada se o número de colunas da matriz é igual ao número de elementos do vetor.
++ O vetor resultante vai ter dimensão igual ao número de linhas da matriz.
+
+
+#### Comentários sobre os comandos Java utilizados para a multiplicação de matrizes
+
+Leia a documentação do [org.apache.commons.math3](http://commons.apache.org/proper/commons-math/javadocs/api-3.6.1/index.html).
+
+
+

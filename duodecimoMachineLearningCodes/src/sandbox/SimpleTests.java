@@ -60,6 +60,10 @@ public class SimpleTests {
         result = result.concat(DuodecimoMatrixUtils.showRealMatrix("M2: ", M2));
         result = result.concat(DuodecimoMatrixUtils.showRealMatrix("M1 X M2: ", M1.multiply(M2)));
         System.out.println(result);
+        
+        RealVector v1 = new ArrayRealVector(new double[]{1, 2, 3});
+        result = DuodecimoVectorUtils.showRealVector("M1.operate(v1):", M1.operate(v1));
+        System.out.println(result);
     }
 
     private static class Maximum implements UnivariateFunction {
