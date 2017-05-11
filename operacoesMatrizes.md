@@ -11,7 +11,11 @@ Tabela de Conteúdos:
   - [Multiplicar duas matrizes, a primeira 2 x 3, e a segunda 3 x 4](#matmult)
   - [Multiplicar uma matriz com dimensão 2 x 3 por um vetor com dimensão 3](#matvetmult)
 
-<a name='opers'></a>
+> Dica: Após visitar um link da tabela de conteúdos, utilize a tecla de retorno do seu navegador para voltar para a tabela.
+
+
+<a name='opers'></a>  
+
 
 # Operações com Matrizes e Vetores
 
