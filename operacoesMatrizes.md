@@ -93,7 +93,8 @@ $$ M3_{2,1} = 4 \times 1 + 5 \times 5 + 6 \times 9 = 4 + 25 + 54 = 83\\
 Leia a documentação do [org.apache.commons.math3](http://commons.apache.org/proper/commons-math/javadocs/api-3.6.1/index.html).
 Especialmente as das classes 
 [MatrixUtils](http://commons.apache.org/proper/commons-math/javadocs/api-3.6.1/org/apache/commons/math3/linear/MatrixUtils.html) e
-[RealMatrix](http://commons.apache.org/proper/commons-math/javadocs/api-3.6.1/org/apache/commons/math3/linear/RealMatrix.html).  
+[RealMatrix](http://commons.apache.org/proper/commons-math/javadocs/api-3.6.1/org/apache/commons/math3/linear/RealMatrix.html).
+![link](https://github.global.ssl.fastly.net/images/icons/emoji/link.png?v5)  
 
 
 
@@ -145,7 +146,8 @@ $$ v2_2 = 4 \times 1 + 5 \times 2 + 6 \times 3 = 4 + 10 + 18 = 32 $$.
 Leia a documentação do [org.apache.commons.math3](http://commons.apache.org/proper/commons-math/javadocs/api-3.6.1/index.html).
 Especialmente as das classes 
 [RealMatrix](http://commons.apache.org/proper/commons-math/javadocs/api-3.6.1/org/apache/commons/math3/linear/RealMatrix.html) e
-[RealVector](http://commons.apache.org/proper/commons-math/javadocs/api-3.6.1/org/apache/commons/math3/linear/RealVector.html).  
+[RealVector](http://commons.apache.org/proper/commons-math/javadocs/api-3.6.1/org/apache/commons/math3/linear/RealVector.html).
+![link](https://github.global.ssl.fastly.net/images/icons/emoji/link.png?v5)  
 
 
 
