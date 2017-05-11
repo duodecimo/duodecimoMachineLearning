@@ -91,6 +91,10 @@ $$ M3_{2,1} = 4 \times 1 + 5 \times 5 + 6 \times 9 = 4 + 25 + 54 = 83\\
 #### Comentários sobre os comandos Java utilizados para a multiplicação de matrizes
 
 Leia a documentação do [org.apache.commons.math3](http://commons.apache.org/proper/commons-math/javadocs/api-3.6.1/index.html).
+Especialmente as das classes 
+[MatrixUtils](http://commons.apache.org/proper/commons-math/javadocs/api-3.6.1/org/apache/commons/math3/linear/MatrixUtils.html) e
+[RealMatrix](http://commons.apache.org/proper/commons-math/javadocs/api-3.6.1/org/apache/commons/math3/linear/RealMatrix.html).  
+
 
 
 ### Multiplicar uma matriz com dimensão 2 x 3 por um vetor com dimensão 3
@@ -136,9 +140,13 @@ $$ v2_2 = 4 \times 1 + 5 \times 2 + 6 \times 3 = 4 + 10 + 18 = 32 $$.
 + O vetor resultante vai ter dimensão igual ao número de linhas da matriz.
 
 
-#### Comentários sobre os comandos Java utilizados para a multiplicação de matrizes
+#### Comentários sobre os comandos Java utilizados para a multiplicação de matriz por vetor
 
 Leia a documentação do [org.apache.commons.math3](http://commons.apache.org/proper/commons-math/javadocs/api-3.6.1/index.html).
+Especialmente as das classes 
+[RealMatrix](http://commons.apache.org/proper/commons-math/javadocs/api-3.6.1/org/apache/commons/math3/linear/RealMatrix.html) e
+[RealVector](http://commons.apache.org/proper/commons-math/javadocs/api-3.6.1/org/apache/commons/math3/linear/RealVector.html).  
+
 
 
 
