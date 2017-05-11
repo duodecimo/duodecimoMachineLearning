@@ -37,7 +37,7 @@ já populados, a partir de uma constante do tipo `doube[][]`.
 
 ### Multiplicar duas matrizes, a primeira 2 x 3, e a segunda 3 x 4
 
-Comandos para criar as duas matrizes exemplo em Java:  
+Comandos para criar as duas matrizes exemplo em Java e multiplicar uma pela outra:  
 
 ```java
 RealMatrix M1 = 
@@ -51,6 +51,7 @@ RealMatrix M3 = M1.multiply(M2);
 ```
 
 $$
+	M3 = 
   M1 \times M2 = 
   \left[ {\begin{array}{ccc}
    1 & 2 & 3\\
@@ -66,5 +67,29 @@ $$
    83 & 98 & 113 & 128\\
   \end{array} } \right]
 $$
+
+
+#### Comentários sobre a operação multiplicação de matrizes
+
+Definição da operação de multiplicação realizada acima:  
+Digamos que a matriz da esquerda da multiplicação tem dimensão (M1L x M1C), e a da direita (M2L x M2C), e a matriz resultante (M3L, M3C).
+Então, o primeiro elemento da primeira linha de M3 vai valer $$ M3L_1 = sum_{i=1, j=1}^{M1L, M2C} {M1L_i \times M2C_i} $$.  
+Ou seja,  
+$$ M3_{1,1} = 1 \times 1 + 2 \times 5 + 3 \times 9 = 1 + 10 + 27 = 38 $$.  
+$$ M3_{1,2} = 1 \times 2 + 2 \times 6 + 3 \times 10 = 2 + 12 + 30 = 44 $$.  
+$$ \ldots $$
+$$ M3_{2,1} = 4 \times 1 + 5 \times 5 + 6 \times 9 = 4 + 25 + 54 = 83 $$.  
+$$ \ldots $$
+
++ Existem definições para mais de uma operação de multiplicação de matrizes.
++ A que mostramos acima pode ser considerada a multiplicação padrão.
++ Só pode ser aplicada se o número de colunas da matriz da esquerda é igual ao número de linhas da matriz da direita.
++ A matriz resultante vai ter o número de linhas da matriz da direita e o número de colunas da matriz da esquerda.
++ Note que a multiplicação de matrizes, assim definida, não é **comutativa** ($$ M1 \times M2 \ne M2 \times M1 $$).
+
+
+#### Comentários sobre os comandos Java utilizados para a multiplicação de matrizes
+
+Leia a documentação do [org.apache.commons.math3](http://commons.apache.org/proper/commons-math/javadocs/api-3.6.1/index.html).
 
 
