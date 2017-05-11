@@ -19,7 +19,10 @@ package sandbox;
 import static java.lang.Double.max;
 import org.apache.commons.math3.analysis.UnivariateFunction;
 import org.apache.commons.math3.linear.ArrayRealVector;
+import org.apache.commons.math3.linear.MatrixUtils;
+import org.apache.commons.math3.linear.RealMatrix;
 import org.apache.commons.math3.linear.RealVector;
+import util.matrix.DuodecimoMatrixUtils;
 import util.matrix.DuodecimoVectorUtils;
 
 /**
@@ -46,6 +49,17 @@ public class SimpleTests {
         realVector2.mapToSelf(new test());
         System.out.println(DuodecimoVectorUtils.showRealVector("after test:", realVector2));
         
+        RealMatrix M1 = 
+        MatrixUtils.createRealMatrix(new double[][] { {1, 2, 3}, {4, 5, 6} });
+
+        RealMatrix M2 = 
+        MatrixUtils.createRealMatrix(new double[][] { {1, 2, 3, 4}, 
+                {5, 6, 7, 8}, {9, 10, 11, 12 } });
+        
+        String result = DuodecimoMatrixUtils.showRealMatrix("M1: ", M1);
+        result = result.concat(DuodecimoMatrixUtils.showRealMatrix("M2: ", M2));
+        result = result.concat(DuodecimoMatrixUtils.showRealMatrix("M1 X M2: ", M1.multiply(M2)));
+        System.out.println(result);
     }
 
     private static class Maximum implements UnivariateFunction {

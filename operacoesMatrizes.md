@@ -45,22 +45,26 @@ MatrixUtils.createRealMatrix(new double[][] { {1, 2, 3}, {4, 5, 6} });
 
 RealMatrix M2 = 
 MatrixUtils.createRealMatrix(new double[][] { {1, 2, 3, 4}, 
-	{5, 6, 7, 8}, {9, 10, 11, 12 });
+	{5, 6, 7, 8}, {9, 10, 11, 12 } });
+
+RealMatrix M3 = M1.multiply(M2);
 ```
 
 $$
-  M1 x M2 = 
+  M1 \times M2 = 
   \left[ {\begin{array}{ccc}
    1 & 2 & 3\\
    4 & 5 & 6\\
-  \end{array} } \right] x 
+  \end{array} } \right] \times 
   \left[ {\begin{array}{cccc}
    1 & 2 & 3 & 4\\
    5 & 6 & 7 & 8\\
    9 & 10 & 11 & 12\\
   \end{array} } \right] = 
+  \left[ {\begin{array}{cccc}
+   38 & 44 & 50 & 56\\
+   83 & 98 & 113 & 128\\
+  \end{array} } \right]
 $$
-
-
 
 
