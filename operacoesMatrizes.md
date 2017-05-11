@@ -13,11 +13,7 @@ Tabela de Conteúdos:
 - [Multiplicar duas matrizes, a primeira 2 x 3, e a segunda 3 x 4](#matmult)
 - [Multiplicar uma matriz com dimensão 2 x 3 por um vetor com dimensão 3](#matvetmult)
 
-> <h6>Dica: Após visitar um link da tabela de conteúdos, utilize a tecla de retorno do seu navegador para voltar para a tabela.</h6>
-
-
-<a name='opers'></a>  
-
+> Dica: Após visitar um link da tabela de conteúdos, utilize a tecla de retorno do seu navegador para voltar para a tabela.
 
 
 Nos códigos que implementam os algoritmos estudados a biblioteca 
@@ -86,7 +82,7 @@ $$
 $$
 
 
-#### Comentários sobre a operação multiplicação de matrizes
+##### Comentários sobre a operação multiplicação de matrizes
 
 Definição da operação de multiplicação realizada acima:  
 Digamos que a matriz da esquerda da multiplicação tem dimensão (L1 x C1), e a da direita (L2 x C2), e a matriz resultante (L3, C3).
@@ -105,7 +101,7 @@ $$ M3_{2,1} = 4 \times 1 + 5 \times 5 + 6 \times 9 = 4 + 25 + 54 = 83\\
 + Note que a multiplicação de matrizes, assim definida, não é **comutativa** ($$ M1 \times M2 \ne M2 \times M1 $$).
 
 
-#### Comentários sobre os comandos Java utilizados para a multiplicação de matrizes
+##### Comentários sobre os comandos Java utilizados para a multiplicação de matrizes
 
 Leia a documentação do [org.apache.commons.math3](http://commons.apache.org/proper/commons-math/javadocs/api-3.6.1/index.html).
 Especialmente as das classes 
@@ -145,7 +141,7 @@ $$
 $$
 
 
-#### Comentários sobre a operação multiplicação de matriz por vetor
+##### Comentários sobre a operação multiplicação de matriz por vetor
 
 Definição da operação de multiplicação realizada acima:  
 Digamos que a matriz da esquerda da multiplicação tem dimensão (L1 x C1), e o vetor (D1), e o vetor resultante (D2).
@@ -160,7 +156,7 @@ $$ v2_2 = 4 \times 1 + 5 \times 2 + 6 \times 3 = 4 + 10 + 18 = 32 $$.
 + O vetor resultante vai ter dimensão igual ao número de linhas da matriz.
 
 
-#### Comentários sobre os comandos Java utilizados para a multiplicação de matriz por vetor
+#####  Comentários sobre os comandos Java utilizados para a multiplicação de matriz por vetor
 
 Leia a documentação do [org.apache.commons.math3](http://commons.apache.org/proper/commons-math/javadocs/api-3.6.1/index.html).
 Especialmente as das classes 
