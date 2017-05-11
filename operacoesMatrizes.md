@@ -93,8 +93,8 @@ $$ M3_{1,1} = 1 \times 1 + 2 \times 5 + 3 \times 9 = 1 + 10 + 27 = 38 $$.
 $$ M3_{1,2} = 1 \times 2 + 2 \times 6 + 3 \times 10 = 2 + 12 + 30 = 44\\
 {}\ldots{} $$.  
 $$ M3_{2,1} = 4 \times 1 + 5 \times 5 + 6 \times 9 = 4 + 25 + 54 = 83\\
-{}\ldots{} $$
-$$ M3_{2,4} = 4 \times 4 + 5 \times 8 + 6 \times 12 = 16 + 40 + 72 = 128\\
+{}\ldots{} $$.  
+$$ M3_{2,4} = 4 \times 4 + 5 \times 8 + 6 \times 12 = 16 + 40 + 72 = 128 $$.
 
 + Existem definições para mais de uma operação de multiplicação de matrizes.
 + A que mostramos acima pode ser considerada a multiplicação padrão.
