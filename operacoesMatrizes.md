@@ -73,7 +73,7 @@ $$
 
 Definição da operação de multiplicação realizada acima:  
 Digamos que a matriz da esquerda da multiplicação tem dimensão (L1 x C1), e a da direita (L2 x C2), e a matriz resultante (L3, C3).
-Então, o primeiro elemento da primeira linha de M3 vai valer $$ M3_{1,1} = \sum\limits_{i=1}^{L1} {M1_{1,i} \times M2_{i,1} $$, etc.  
+Então, o primeiro elemento da primeira linha de M3 vai valer $$ M3_{1,1} = \sum\limits_{i=1}^{L1} {M1_{1,i} \times M2_{i,1}} $$, etc.  
 Ou seja,  
 $$ M3_{1,1} = 1 \times 1 + 2 \times 5 + 3 \times 9 = 1 + 10 + 27 = 38 $$.  
 $$ M3_{1,2} = 1 \times 2 + 2 \times 6 + 3 \times 10 = 2 + 12 + 30 = 44\\
@@ -125,10 +125,10 @@ $$
 
 Definição da operação de multiplicação realizada acima:  
 Digamos que a matriz da esquerda da multiplicação tem dimensão (L1 x C1), e o vetor (D1), e o vetor resultante (D2).
-Então, o primeiro elemento da primeira linha de v2 vai valer $$ v2_1 = \sum\limits_{i=1}^{L1} {M1_{1,i} \times v1_i}} $$, etc.  
+Então, o primeiro elemento da primeira linha de v2 vai valer $$ v2_1 = \sum\limits_{i=1}^{L1} {M1_{1,i} \times v1_i} $$, etc.  
 Ou seja,  
 $$ v2_1 = 1 \times 1 + 2 \times 2 + 3 \times 3 = 1 + 4 + 9 = 14 $$.  
-$$ v2_2 = 4 \times 1 + 5 \times 2 + 6 \times 3 = 4 + 10 + 18 = 32 $$.
+$$ v2_2 = 4 \times 1 + 5 \times 2 + 6 \times 3 = 4 + 10 + 18 = 32 $$.  
 
 + Existem definições para mais de uma operação de multiplicação de matriz por vetor.
 + A que mostramos acima pode ser considerada a multiplicação padrão.
