@@ -85,15 +85,16 @@ $$
 ##### Comentários sobre a operação multiplicação de matrizes
 
 Definição da operação de multiplicação realizada acima:  
-Digamos que a matriz da esquerda da multiplicação tem dimensões (L1 x C1), a da direita dimensões (L2 x C2), 
-e a matriz resultante dimensões (L3, C3).
-Então, o primeiro elemento da primeira linha de M3 vai valer $$ M3_{1,1} = \sum\limits_{i=1}^{L1} {M1_{1,i} \times M2_{i,1}} $$, etc.  
+Digamos que a matriz da esquerda da multiplicação tem dimensões (o x p), a da direita dimensões (p x q), 
+e a matriz resultante dimensões (o, q).
+Então, cada elemento da matriz M3 vai valer $$ M3_{i,j} = \sum\limits_{k=1}^{p} {M1_{i,k} \times M2_{k,j}} $$.  
 Ou seja,  
 $$ M3_{1,1} = 1 \times 1 + 2 \times 5 + 3 \times 9 = 1 + 10 + 27 = 38 $$.  
 $$ M3_{1,2} = 1 \times 2 + 2 \times 6 + 3 \times 10 = 2 + 12 + 30 = 44\\
 {}\ldots{} $$.  
 $$ M3_{2,1} = 4 \times 1 + 5 \times 5 + 6 \times 9 = 4 + 25 + 54 = 83\\
 {}\ldots{} $$
+$$ M3_{2,4} = 4 \times 4 + 5 \times 8 + 6 \times 12 = 16 + 40 + 72 = 128\\
 
 + Existem definições para mais de uma operação de multiplicação de matrizes.
 + A que mostramos acima pode ser considerada a multiplicação padrão.
@@ -145,8 +146,8 @@ $$
 ##### Comentários sobre a operação multiplicação de matriz por vetor
 
 Definição da operação de multiplicação realizada acima:  
-Digamos que a matriz da esquerda da multiplicação tem dimensões (L1 x C1), o vetor tem dimensão (D1), e o vetor resultante dimensão (D2).
-Então, o primeiro elemento da primeira linha de v2 vai valer $$ v2_1 = \sum\limits_{i=1}^{L1} {M1_{1,i} \times v1_i} $$, etc.  
+Digamos que a matriz da esquerda da multiplicação tem dimensões (o x p), o vetor tem dimensão (p), e o vetor resultante dimensão (o).
+Então, os elementos do vetor v2 vão valer $$ v2_i = \sum\limits_{j=1}^{p} {M1_{i,j} \times v1_j}, \mbox{para} i=1, \ldots, o $$.  
 Ou seja,  
 $$ v2_1 = 1 \times 1 + 2 \times 2 + 3 \times 3 = 1 + 4 + 9 = 14 $$.  
 $$ v2_2 = 4 \times 1 + 5 \times 2 + 6 \times 3 = 4 + 10 + 18 = 32 $$.  
