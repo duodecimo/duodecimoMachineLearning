@@ -10,21 +10,21 @@ permalink: operacoesMatrizes/
 Tabela de Conteúdos:
 
 - [Criar uma matriz 2 X 4](#crimat)
-- [Multiplicar duas matrizes, a primeira 2 x 3, e a segunda 3 x 4](#matmult)
-- [Multiplicar uma matriz com dimensão 2 x 3 por um vetor com dimensão 3](#matvetmult)
+- [Multiplicar duas matrizes, a primeira com dimensões 2 x 3, e a segunda com dimensões 3 x 4](#matmult)
+- [Multiplicar uma matriz com dimensões 2 x 3 por um vetor com dimensão 3](#matvetmult)
 
 > Dica: Após visitar um link da tabela de conteúdos, utilize a tecla de retorno do seu navegador para voltar para a tabela.
 
 
-Nos códigos que implementam os algoritmos estudados a biblioteca 
-[org.apache.commons.math3.linear](http://commons.apache.org/proper/commons-math/javadocs/api-3.3/org/apache/commons/math3/linear/package-summary.html) será utilizada.  
-Especialmente matrizes e vetores serão comumente representados por objetos das classes [RealMatrix](http://commons.apache.org/proper/commons-math/javadocs/api-3.3/org/apache/commons/math3/linear/RealMatrix.html) e 
-[RealVector](http://commons.apache.org/proper/commons-math/javadocs/api-3.3/org/apache/commons/math3/linear/RealVector.html), respectivamente, desta biblioteca.  
+Nos códigos que implementam os algoritmos estudados a biblioteca de classes
+[org.apache.commons.math3](http://commons.apache.org/proper/commons-math/javadocs/api-3.6.1/index.html) será utilizada.  
+Especialmente matrizes e vetores serão comumente representados por objetos das classes [RealMatrix](http://commons.apache.org/proper/commons-math/javadocs/api-3.6.1/org/apache/commons/math3/linear/RealMatrix.html) e 
+[RealVector](http://commons.apache.org/proper/commons-math/javadocs/api-3.6.1/org/apache/commons/math3/linear/RealVector.html), respectivamente, desta biblioteca.  
 Vamos apresentar o resultado de alguns métodos destas classes.
 
 <a name='crimat'></a>
 
-### Criar uma matriz 2 X 4.
+### Criar uma matriz de dimensões 2 X 4.
 
 Com a linha de comando Java  
 ```java
@@ -32,8 +32,8 @@ RealMatrix M =
 MatrixUtils.createRealMatrix(new double[][] { {1, 2, 3, 4}, {5, 6, 7, 8} });
 ```
 A matriz M(2x4) é criada.  
-Observe a notação, M é o nome da matriz, os valores entre parêntesis em seguida significam (linhas x colunas).
-Sempre nesta ordem.
+Observe a notação, M é o nome da matriz, os valores entre parêntesis em seguida significam as dimensões (linhas x colunas), 
+sempre nesta ordem.
 
 $$
   M = 
@@ -48,7 +48,7 @@ já populados, a partir de uma constante do tipo `doube[][]`.
 
 <a name='matmult'></a>
 
-### Multiplicar duas matrizes, a primeira 2 x 3, e a segunda 3 x 4
+### Multiplicar duas matrizes, a primeira com dimensões 2 x 3, e a segunda com dimensões 3 x 4
 
 Comandos para criar as duas matrizes exemplo em Java e multiplicar uma pela outra:  
 
@@ -85,7 +85,8 @@ $$
 ##### Comentários sobre a operação multiplicação de matrizes
 
 Definição da operação de multiplicação realizada acima:  
-Digamos que a matriz da esquerda da multiplicação tem dimensão (L1 x C1), e a da direita (L2 x C2), e a matriz resultante (L3, C3).
+Digamos que a matriz da esquerda da multiplicação tem dimensões (L1 x C1), a da direita dimensões (L2 x C2), 
+e a matriz resultante dimensões (L3, C3).
 Então, o primeiro elemento da primeira linha de M3 vai valer $$ M3_{1,1} = \sum\limits_{i=1}^{L1} {M1_{1,i} \times M2_{i,1}} $$, etc.  
 Ou seja,  
 $$ M3_{1,1} = 1 \times 1 + 2 \times 5 + 3 \times 9 = 1 + 10 + 27 = 38 $$.  
@@ -113,7 +114,7 @@ Especialmente as das classes
 
 <a name='matvetmult'></a>
 
-### Multiplicar uma matriz com dimensão 2 x 3 por um vetor com dimensão 3
+### Multiplicar uma matriz com dimensões 2 x 3 por um vetor com dimensão 3
 
 Comandos para criar o vetor $$v1$$ e multiplicar $$M1 \times v1$$ :  
 
@@ -144,7 +145,7 @@ $$
 ##### Comentários sobre a operação multiplicação de matriz por vetor
 
 Definição da operação de multiplicação realizada acima:  
-Digamos que a matriz da esquerda da multiplicação tem dimensão (L1 x C1), e o vetor (D1), e o vetor resultante (D2).
+Digamos que a matriz da esquerda da multiplicação tem dimensões (L1 x C1), o vetor tem dimensão (D1), e o vetor resultante dimensão (D2).
 Então, o primeiro elemento da primeira linha de v2 vai valer $$ v2_1 = \sum\limits_{i=1}^{L1} {M1_{1,i} \times v1_i} $$, etc.  
 Ou seja,  
 $$ v2_1 = 1 \times 1 + 2 \times 2 + 3 \times 3 = 1 + 4 + 9 = 14 $$.  
