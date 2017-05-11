@@ -73,13 +73,13 @@ $$
 
 Definição da operação de multiplicação realizada acima:  
 Digamos que a matriz da esquerda da multiplicação tem dimensão (M1L x M1C), e a da direita (M2L x M2C), e a matriz resultante (M3L, M3C).
-Então, o primeiro elemento da primeira linha de M3 vai valer $$ M3L_1 = sum_{i=1, j=1}^{M1L, M2C} {M1L_i \times M2C_i} $$.  
+Então, o primeiro elemento da primeira linha de M3 vai valer $$ M3L_1 = \sum_{i=1, j=1}^{M1L, M2C} {M1L_i \times M2C_i} $$.  
 Ou seja,  
 $$ M3_{1,1} = 1 \times 1 + 2 \times 5 + 3 \times 9 = 1 + 10 + 27 = 38 $$.  
-$$ M3_{1,2} = 1 \times 2 + 2 \times 6 + 3 \times 10 = 2 + 12 + 30 = 44 $$.  
-$$ \ldots $$
-$$ M3_{2,1} = 4 \times 1 + 5 \times 5 + 6 \times 9 = 4 + 25 + 54 = 83 $$.  
-$$ \ldots $$
+$$ M3_{1,2} = 1 \times 2 + 2 \times 6 + 3 \times 10 = 2 + 12 + 30 = 44\\
+{}\ldots{} $$.  
+$$ M3_{2,1} = 4 \times 1 + 5 \times 5 + 6 \times 9 = 4 + 25 + 54 = 83\\
+{}\ldots{} $$
 
 + Existem definições para mais de uma operação de multiplicação de matrizes.
 + A que mostramos acima pode ser considerada a multiplicação padrão.
