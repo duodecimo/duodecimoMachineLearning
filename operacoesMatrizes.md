@@ -4,20 +4,20 @@ mathjax: true
 permalink: operacoesMatrizes/
 ---
 
+# Operações com Matrizes e Vetores
+
+
 Tabela de Conteúdos:
 
-- [Operações com Matrizes e Vetores](#opers)
-  - [Criar uma matriz 2 X 4](#crimat)
-  - [Multiplicar duas matrizes, a primeira 2 x 3, e a segunda 3 x 4](#matmult)
-  - [Multiplicar uma matriz com dimensão 2 x 3 por um vetor com dimensão 3](#matvetmult)
+- [Criar uma matriz 2 X 4](#crimat)
+- [Multiplicar duas matrizes, a primeira 2 x 3, e a segunda 3 x 4](#matmult)
+- [Multiplicar uma matriz com dimensão 2 x 3 por um vetor com dimensão 3](#matvetmult)
 
-> Dica: Após visitar um link da tabela de conteúdos, utilize a tecla de retorno do seu navegador para voltar para a tabela.
+> <h6>Dica: Após visitar um link da tabela de conteúdos, utilize a tecla de retorno do seu navegador para voltar para a tabela.</h6>
 
 
 <a name='opers'></a>  
 
-
-# Operações com Matrizes e Vetores
 
 
 Nos códigos que implementam os algoritmos estudados a biblioteca 
