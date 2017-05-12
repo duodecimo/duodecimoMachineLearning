@@ -61,7 +61,9 @@ public class LinearPrediction {
         // we can try
         //linearPredictionWithRandomSearch();
         // or else
-        linearPredictionWithRandomLocalSearch();
+        //linearPredictionWithRandomLocalSearch();
+        // or else
+        linearPredictionWithNumericalGradient();
     }
 
     /**
@@ -225,6 +227,114 @@ public class LinearPrediction {
         }
         System.out.println(String.format("accuracy: %5.2f %%", 
                 (float)(accuracy * 100 /numberOfTestings)));
+    }
+
+    /**
+     * Assume X_test is [2073 x 10000] (bias trick applied), Y_test [10000 x 1].
+     * scores = Wbest.dot(Xte_cols)
+     * 10 x 10000, the class scores for all test examples.
+     * find the index with max score in each column (the predicted class)
+     * Yte_predict = np.argmax(scores, axis = 0).
+     * and calculate accuracy (fraction of predictions that are correct)
+     * np.mean(Yte_predict == Yte)
+     */
+    public final void linearPredictionWithNumericalGradient() {
+        DuodecimoMatrixUtils.showRealMatrix("sampling Xtr", Xtr, 10, 10);
+        // lets add a column of ones to Xtr in order to perform the bias trick
+        RealMatrix XtrWithOnes = DuodecimoMatrixUtils.attachOnesColumn(Xtr);
+        RealVector Y = Ytr.getColumnVector(0);
+        DuodecimoMatrixUtils.showRealMatrix("sampling XtrWithOnes", XtrWithOnes, 10, 11);
+        RealMatrix BestW = null; // to hold the best random generated weights
+        double stepSize;
+        double bestloss = Double.MAX_VALUE, loss;
+        boolean sampleFirstWeights = true;
+        DoubleStream doubleStream = new JDKRandomGenerator((int) System.currentTimeMillis()).
+                doubles((cifar10Utils.getTotalOfBytes()+1) * cifar10Utils.getNames().length);
+        double[] doubles = doubleStream.toArray();
+        // generate random W gaussian
+        RealMatrix Wtry;
+        RealMatrix W = MatrixUtils.createRealMatrix(cifar10Utils.getNames().length,
+                cifar10Utils.getTotalOfBytes()+1);
+        int k=0;
+        for(int row=0; row<cifar10Utils.getNames().length; row++) {
+            for(int col=0; col<cifar10Utils.getTotalOfBytes()+1;col++) {
+                W.setEntry(row, col, doubles[k++] * 0.001);
+            }
+        }
+        RealVector NumericalGradient, WtryLine;
+        NumericalGradient = getNumericalGradient(W);
+        LOGGER.info(DuodecimoMatrixUtils.showRealMatrix("sampling weights", W, 6, 10));
+        for(int stepSizeLog=-10, i=0; stepSizeLog<0; stepSizeLog--, i++) { // number of guesses
+            stepSize = 10^stepSizeLog;
+            Wtry = W.scalarAdd(-stepSize);
+            for(int row=0; row<Wtry.getRowDimension(); row++) {
+                WtryLine =Wtry.getRowVector(row);
+                WtryLine.mapMultiplyToSelf(NumericalGradient.getEntry(row));
+                Wtry.setRowVector(row, WtryLine);
+            }
+            if(sampleFirstWeights) {
+                LOGGER.info(DuodecimoMatrixUtils.showRealMatrix("sampling try weights", Wtry, 6, 10));
+                sampleFirstWeights = !sampleFirstWeights;
+            }
+            loss = lossFunctionFullvectorized(XtrWithOnes, Y, Wtry);
+            LOGGER.info("Loss (full vectorized calc) = ".concat(Double.toString(loss)));
+            if(loss<bestloss) {
+                bestloss = loss;
+                BestW = Wtry.copy();
+            }
+            System.out.println(String.format("in guess attempt %d the loss was %f, "
+                    + "best so far %f", i+1, loss, bestloss));
+        }
+        // BestW holds the weigths
+        RealVector test;
+        double groundLabel;
+        RealVector scores;
+        double predictLable;
+        int accuracy = 0;
+        int numberOfTestings = cifar10Utils.getTotalOfTests();
+        for(k=0; k< numberOfTestings; k++) {
+            //lets visit all tests
+            test = Xte.getRowVector(k).append(1d);
+            groundLabel = Yte.getEntry(k, 0);
+            /*            System.out.println(String.format("BestW(%d, %d).operate(test(%d):",
+            BestW.getRowDimension(), BestW.getColumnDimension(),
+            test.getDimension()));*/
+            scores = BestW.operate(test);
+            predictLable = scores.getMaxIndex();
+            if(predictLable == groundLabel) {
+                accuracy++;
+            }
+            System.out.println(String.format("test %d predicted = %f  ground = %f %c", 
+                    k, predictLable, groundLabel, predictLable == groundLabel? '!' : ' '));
+        }
+        System.out.println(String.format("accuracy: %5.2f %%", 
+                (float)(accuracy * 100 /numberOfTestings)));
+    }
+
+    public RealVector getNumericalGradient(RealMatrix X) {
+        RealVector Gradient;
+        double h = 0.00001;
+        RealVector oldXrow;
+        RealVector Y = Ytr.getColumnVector(0);
+        double loss;
+        RealMatrix XtrWithOnes = DuodecimoMatrixUtils.attachOnesColumn(Xtr);
+        double lossAtOriginal = lossFunctionFullvectorized(XtrWithOnes, Y, X);
+        // zero value same size as X
+        Gradient = X.getColumnVector(0);
+        Gradient.mapMultiplyToSelf(0.0d);
+        // we are going to eval numerical gradient for loss function (fully vectorized)
+        for(int row=0; row < X.getRowDimension(); row++) {
+            // keep original vector value of row on X
+            oldXrow = X.getRowVector(row);
+            // set X row to original value plus h
+            X.setRowVector(row, oldXrow.mapAdd(h));
+            loss = lossFunctionFullvectorized(XtrWithOnes, Y, X);
+            // restore previous value of X row
+            X.setRowVector(row, oldXrow);
+            // compute the partial derivative
+            Gradient.setEntry(row, (loss-lossAtOriginal)/h);
+        }
+        return Gradient;
     }
 
     /**
