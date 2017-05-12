@@ -230,13 +230,12 @@ public class LinearPrediction {
     }
 
     /**
-     * Assume X_test is [2073 x 10000] (bias trick applied), Y_test [10000 x 1].
-     * scores = Wbest.dot(Xte_cols)
-     * 10 x 10000, the class scores for all test examples.
-     * find the index with max score in each column (the predicted class)
-     * Yte_predict = np.argmax(scores, axis = 0).
-     * and calculate accuracy (fraction of predictions that are correct)
-     * np.mean(Yte_predict == Yte)
+     * In the previous algorithms we tryed to improve the weights randomically.
+     * Here we use a different approach, numerically calculating the gradient to
+     * give us the best direction (the one that takes us lower in each step among
+     * the several dimensions we try to follow down. We use the formula:
+     * df(x)/dx = lim(h->0) f(x+h)-f(x)/h
+     * 
      */
     public final void linearPredictionWithNumericalGradient() {
         DuodecimoMatrixUtils.showRealMatrix("sampling Xtr", Xtr, 10, 10);
