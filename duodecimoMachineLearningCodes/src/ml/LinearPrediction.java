@@ -264,8 +264,8 @@ public class LinearPrediction {
         RealVector NumericalGradient, WtryLine;
         NumericalGradient = getNumericalGradient(W);
         LOGGER.info(DuodecimoMatrixUtils.showRealMatrix("sampling weights", W, 6, 10));
-        for(int stepSizeLog=-10, i=0; stepSizeLog<0; stepSizeLog--, i++) { // number of guesses
-            stepSize = 10^stepSizeLog;
+        for(int stepSizeLog=-10, i=0; stepSizeLog<0; stepSizeLog++, i++) { // number of guesses
+            stepSize = Math.pow(10, stepSizeLog);
             Wtry = W.scalarAdd(-stepSize);
             for(int row=0; row<Wtry.getRowDimension(); row++) {
                 WtryLine =Wtry.getRowVector(row);
