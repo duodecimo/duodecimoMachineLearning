@@ -12,6 +12,19 @@ permalink: Inicio/
 ## Introdução
 
 
+
+Tabela de Conteúdos:
+
+- [Tipos de aprendizagem](#tipaprend)
+- [Aplicações](#aplics)
+- [Aprendizagem de máquina, uma nova fronteira](#novfront)
+- [Anatomia da aprendizagem](#anataprend)
+- [Podem computadores classificar objetos a partir da observação de imagens, como as pessoas fazem?](#podemcomp)
+- [Separar para classificar](#sepclass)
+
+> Dica: Após visitar um link da tabela de conteúdos, utilize a tecla de retorno do seu navegador para voltar para a tabela.
+
+
 Aprendizagem de máquina, também chamada de aprendizagem automática, de acordo com Arthur Samuel em 1959, 
 >dota computadores com a habilidade de aprender 
 >sem terem sido especificamente programados.
@@ -67,6 +80,8 @@ que relaciona os lados de um triângulo retângulo qualquer, poderia ter sido um
 de computador?
 ![flushed](https://github.global.ssl.fastly.net/images/icons/emoji/flushed.png?v5)
 
+<a name='tipaprend'></a>
+
 ### Tipos de aprendizagem
 
 Normalmente dividimos a aprendizagem automática em três tipos básicos:
@@ -80,6 +95,8 @@ destas características.
 
 * **Com reforço ou aprendizagem profunda:** É quando os dados possuem informações de um ambiente,
 aonde uma sequência de ações é possível. Jogos de computador são um exemplo de ambiente.
+
+<a name='aplics'></a>
 
 ### Aplicações
 
@@ -141,6 +158,8 @@ virar a direita ... e isso não faz diferença imediata. Só após executar um n
 as consequências começam a aparecer. Para aprender a jogar, um programa tem que ser capaz de experimentar
 e avaliar o resultado de longas tomadas de decisão.
 
+<a name='novfront'></a>
+
 ## Aprendizagem de máquina, uma nova fronteira
 
 Podemos dizer que a aprendizagem de máquina se situa na fronteira da computação e da estatística.
@@ -153,6 +172,8 @@ o que deve ser feito, com exemplos tanto de sucessos, como de fracassos.
 Uma observação aqui, com relação a graduação de engenharia da computação, é que naturalmente são cursos que estudam
 computação e estatística, e se dedicam bastante ao estudo da matemática. São portanto alunos que naturalmente
 adquirem uma base adequada, incluindo a habilidade de programar computadores, para estudar aprendizagem automática.
+
+<a name='anataprend'></a>
 
 ## Anatomia da aprendizagem
 
@@ -170,6 +191,8 @@ como ele funciona, o que é o motor, combustível, dizer que tem rodas, como fun
 preparada para adquirir estes conceitos. Espera-se que ela aprenda apenas vendo e ouvindo o nome.
 * **Aprendizagem capaz de ser generalizada**. A criança consegue, aprendendo a classificar os objetos apontados,
 a classificar também novos objetos do mesmo tipo mas que não tinham sido avistados antes.
+
+<a name='podemcomp'></a>
 
 ## Podem computadores classificar objetos a partir da observação de imagens, como as pessoas fazem?
 
@@ -203,6 +226,8 @@ nova geração, evoluída, com novos indivíduos, mais fortes, que herdam das ca
 Neste momento, não temos mais ideia exata de quais são as características selecionadas.
 Provavelmente, um grande número, e também, uma grande combinação delas.
 Não necessariamente algo evidente como rodas, cantos e para-brisas.
+
+<a name='sepclass'></a>
 
 ## Separar para classificar
 
