@@ -83,7 +83,7 @@ $$
 A distância utilizada pelo **nn** vai ser:  
 
 $$
-D = sum_{i=0}^{n} \lvert {Ptr_i - Pte_i} \rvert .
+D = \sum_{i=0}^{n} \lvert {Ptr_i - Pte_i} \rvert .
 $$  
 
 Ou seja, vai ser a soma dos valores absolutos das diferenças de cada um dos bytes de **TE** com cada um dos bytes na posição equivalente de **TR**.
