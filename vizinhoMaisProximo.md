@@ -73,17 +73,17 @@ Vamos considerar duas imagens diferentes, retiradas de cada um destes conjuntos,
 Vamos representar a sequência dos bytes de cada uma das imagens como (n = 3072):
 
 $$
-Tr = Ptr_1, Ptr_2, Ptr_3, \vdot, Ptr_n.
+Tr = Ptr_1, Ptr_2, Ptr_3, \dotsm, Ptr_n.
 $$  
 e  
 $$
-Te = Pte_1, Pte_2, Pte_3, \vdot, Pte_n.
+Te = Pte_1, Pte_2, Pte_3, \dotsm, Pte_n.
 $$  
 
 A distância utilizada pelo **nn** vai ser:  
 
 $$
-D = sum_{i=0}^{n} \abs{Ptr_i - Pte_i}.
+D = sum_{i=0}^{n} \lvert {Ptr_i - Pte_i} \rvert .
 $$  
 
 Ou seja, vai ser a soma dos valores absolutos das diferenças de cada um dos bytes de **TE** com cada um dos bytes na posição equivalente de **TR**.
