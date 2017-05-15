@@ -26,7 +26,8 @@ Observe uma imagem, como a da Figura 1: Ao ser digitalizada, se transforma em um
 
 <div class="fig figcenter fighighlight">
   <img src="https://duodecimo.github.io/duodecimoMachineLearning/assets/images/filaDeBytes.png">
-  <div class="figcaption">Figura 2: Fila de bytes. A largura da fila de bytes será igual ao número de pixeis na imagem multiplicado por 3.</div>
+  <div class="figcaption">Figura 2: Fila de bytes. A largura da fila de bytes será igual ao número de pixeis na imagem multiplicado por 3, no caso
+	de uma imagem RGB (três tonalidades de cores, vermelha, verde e azul, variando de 0 a 255, por pixel).</div>
 </div>
 
   
@@ -67,21 +68,23 @@ Uma imagem de 32x32 pixeis na forma RGB, possui 32x32x3 bytes, totalizando 3072 
 
 Suponha que temos imagens disponíveis em dois conjuntos de imagens distintos, um de teste (**CTE**) e outro de treino (**CTR**).
 
-Vamos considerar duas imagens diferentes, retiradas de cada um destes conjuntos,
-
-![TE e TR](https://duodecimo.github.io/duodecimoMachineLearning/assets/images/TeTr.png)
+Vamos considerar duas imagens diferentes, retiradas de cada um destes conjuntos, $$ Te \ne Tr $$.
 
 Vamos representar a sequência dos bytes de cada uma das imagens como (n = 3072):
 
-![Bytes de TE](https://duodecimo.github.io/duodecimoMachineLearning/assets/images/SeqPte.png)  
-
+$$
+Tr = Ptr_1, Ptr_2, Ptr_3, \vdot, Ptr_n.
+$$  
 e  
-
-![Bytes de TR](https://duodecimo.github.io/duodecimoMachineLearning/assets/images/SeqPtr.png)  
+$$
+Te = Pte_1, Pte_2, Pte_3, \vdot, Pte_n.
+$$  
 
 A distância utilizada pelo **nn** vai ser:  
 
-![Distancia Te Tr](https://duodecimo.github.io/duodecimoMachineLearning/assets/images/SumSeqTeTr.png)  
+$$
+D = sum_{i=0}^{n} \abs{Ptr_i - Pte_i}.
+$$  
 
 Ou seja, vai ser a soma dos valores absolutos das diferenças de cada um dos bytes de **TE** com cada um dos bytes na posição equivalente de **TR**.
 
