@@ -92,21 +92,21 @@ Vamos conjecturar sobre a base desta operação. Se, ao invés de $$Tr$$ e $$Te$
 
 Faz sentido, a distancia entre duas imagens iguais é **0**! ![bulb](https://github.global.ssl.fastly.net/images/icons/emoji/bulb.png?v5)
 
-Vamos conjecturar sobre o crescimento indutivo da distância. Imagine que as imagens são praticamente iguais, que apenas o primeiro byte de $$Tr$$ seja diferente do primeiro byte de $$Te$$. Digamos, $$Ptr_1 = 129$$ e $$Pte_1 = 118$$.
-A diferença dos dois é $$129-118=11$$. Como as demais diferenças vão continuar valendo $$0$$, a distância entre estas duas imagens vai 
+Vamos conjecturar sobre o crescimento indutivo da distância. Imagine que as imagens são praticamente iguais, que apenas o primeiro byte de $$Tr$$ seja diferente do primeiro byte de $$Te$$. Digamos, $$Ptr_1 = 129$$ e $$Pte_1 = 118.$$
+A diferença dos dois é $$129-118=11.$$ Como as demais diferenças vão continuar valendo $$0$$, a distância entre estas duas imagens vai 
 valer $$11$$, uma distância pequena.
 
 Faz sentido para duas imagens praticamente iguais! ![bulb](https://github.global.ssl.fastly.net/images/icons/emoji/bulb.png?v5)
 
 Finalmente, vamos conjecturar porque somamos os valores **absolutos** das diferenças. Imaginemos que as duas imagens diferentes acima tivessem não apenas os bytes na primeira posição diferentes, mas os da segunda também. E que os bytes da segunda posição fossem $$Ptr_2 = 44$$ e $$Pte_2 = 55$$. A diferença dos dois, não absoluta,
-seria $$44-55=-11$$ (valor negativo). Ao somar as diferenças não absolutas. teríamos $$11 + -11 + 0 + 0 + 0 ... = 0$$.
+seria $$44-55=-11$$ (valor negativo). Ao somar as diferenças não absolutas. teríamos $$11 + -11 + 0 + 0 + 0 ... = 0.$$
 A distancia calculada seria $$0$$, como no caso das imagens iguais.
 
 Mas isto não faz sentido, pois as imagens com apenas um byte diferente resultariam em uma distancia de $$11$$, enquanto estas duas, com diferença maior,
 resultariam em $$0$$, como se fossem iguais? ![astonished](https://github.global.ssl.fastly.net/images/icons/emoji/astonished.png?v5)
 
 Porém, se somarmos as diferenças **absolutas**, no caso das imagens com os dois primeiros bytes diferentes, teríamos uma distancia
-de $$11 + 11 + 0 + 0 + 0 ... = 22$$.
+de $$11 + 11 + 0 + 0 + 0 ... = 22.$$
 
 Agora sim, faz sentido: as imagens com os dois primeiros bytes diferentes resultam em uma distância = $$22$$, maior que as imagens com o primeiro
 byte diferente, com distancia = $$11$$, e as imagens iguais, resultam na menor distancia, $$0$$.
