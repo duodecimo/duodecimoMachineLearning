@@ -4,10 +4,26 @@ mathjax: true
 permalink: kVizinhoMaisProximo/
 ---
 
-# O algoritmo do k-vizinho mais próximo
+<div class="fig figcenter fighighlight">
+  <img src="https://duodecimo.github.io/duodecimoMachineLearning/assets/images/kNearestNeighbourg.png" width = "400" height="300">
+  <div class="figcaption">Figura 1: Produzida com o Autodraw, que usa aprendizado de máquina.</div>
+</div>  
 
 
-## Sobre o algoritmo do k-vizinho mais próximo
+## O algoritmo do k-vizinho mais próximo
+
+
+Tabela de Conteúdos:
+
+- [Sobre o algoritmo do k-vizinho mais próximo](#sobreKvizinho)
+- [Hora de estudar código Java e testar](#codigoJava)
+
+> Dica: Após visitar um link da tabela de conteúdos, utilize a tecla de retorno do seu navegador para voltar para a tabela.
+
+
+<a name='sobreKvizinho'></a>
+
+### Sobre o algoritmo do k-vizinho mais próximo
 
 
 O algoritmo do k-vizinho mais próximo, chamado também de **knn** (k-nearest neighbourg, em inglês) é uma variação do vizinho mais pŕoximo.
@@ -35,7 +51,10 @@ e testa-se com vários valores de k, observando o melhor acerto em algumas image
 Naturalmente, as imagens de treino utlizadas nesta seleção não devem ser utilizadas na classificação final, para evitar **overfitting** (quando o
 resultado fica viciado por ser obtido com dados especializados).
 
-## Hora de estudar código Java e testar
+
+<a name='codigoJava'></a>
+
+### Hora de estudar código Java e testar
 
 Visite a área de código do projeto, estude a classe KnearestNeighbourgh.java.
 
