@@ -7,6 +7,7 @@ permalink: classificacaoLinear/
 
 ## Classificação Linear
 
+
 Tabela de Conteúdos:
 
 - [Tipos de aprendizagem](#emSeguida)
