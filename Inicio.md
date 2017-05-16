@@ -15,6 +15,7 @@ permalink: Inicio/
 
 Tabela de Conteúdos:
 
+- [Especificamente programado ou não?](#espProgramado)
 - [Tipos de aprendizagem](#tipaprend)
 - [Aplicações](#aplics)
 - [Aprendizagem de máquina, uma nova fronteira](#novfront)
@@ -39,7 +40,10 @@ O entendimento sobre aprendizagem de máquina que desejamos construir aqui é um
 capaz de nos ajudar a planejar e executar programas de computador que realizem a tarefa
 de aprender a partir de dados disponíveis.
 
-### especificamente programado ou não?
+
+<a name='espProgramado'></a>
+
+### Especificamente programado ou não?
 
 Vamos tentar desenvolver um pouco a ideia por trás da aprendizagem de máquina, que faz
 parte da área chamada de inteligência artificial (AI, do inglês, IA).

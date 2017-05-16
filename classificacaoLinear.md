@@ -5,13 +5,19 @@ permalink: classificacaoLinear/
 ---
 
 
-# Classificação Linear
+## Classificação Linear
+
+Tabela de Conteúdos:
+
+- [Tipos de aprendizagem](#emSeguida)
+- [Hora de estudar código Java e testar](#codigoJava)
+
+> Dica: Após visitar um link da tabela de conteúdos, utilize a tecla de retorno do seu navegador para voltar para a tabela.
 
 
-No caminho de uma maior eficiência.
+<a name='emSeguida'></a>
 
-
-## O que faremos em seguida
+### O que faremos em seguida
 
 
 O algoritmo do k-vizinho mais próximo apresenta uma série de desvantagens, além do fraco desempenho. Para cada classificação (uma imagem de teste)
@@ -23,7 +29,10 @@ uma imagem para o rótulo que a classifica. A segunda, uma **função de custo**
 primeira função em sua tarefa. Então, passamos a tratar do problema de otimização, utilizando os resultados da segunda função para ajustar os
 pesos da primeira.
 
-## Hora de estudar código Java e testar
+
+<a name='codigoJava'></a>
+
+### Hora de estudar código Java e testar
 
 Visite a área de código do projeto, estude a classe LinearPrediction.java.
 
