@@ -6,17 +6,19 @@ permalink: vizinhoMaisProximo/
 
 
 <div class="fig figcenter fighighlight">
-  <img src="https://duodecimo.github.io/duodecimoMachineLearning/assets/images/aiLearning.png" width = "300" height="300">
+  <img src="https://duodecimo.github.io/duodecimoMachineLearning/assets/images/nearestNeighbourg.png" width = "300" height="300">
   <div class="figcaption">Figura 1: Produzida com o Autodraw, que usa aprendizado de máquina.</div>
-</div>
+</div>  
 
 
-# O algoritmo do vizinho mais próximo
+## O algoritmo do vizinho mais próximo
+
 
 Tabela de Conteúdos:
 
 - [Sobre o algoritmo do vizinho mais próximo](#sobreVizinho)
 - [Imagens digitais](#imagensDigitais)
+- [Um pouco mais sobre digitalização de imagens](#digitIamgem)
 - [A proposta do algoritmo NN](#propostaAlg)
 - [Hora de estudar código Java e testar](#codigoJava)
 
@@ -25,7 +27,7 @@ Tabela de Conteúdos:
 
 <a name='sobreVizinho'></a>
 
-## Sobre o algoritmo do vizinho mais próximo
+### Sobre o algoritmo do vizinho mais próximo
 
 
 O algoritmo do vizinho mais próximo, chamado também de **nn** (nearest neighbourg, em inglês) vai ser o primeiro a ser apresentado. Vamos construir um programa destinado a classificar imagens. O **nn** não apresenta desempenho razoável para realizar classificação de imagens. Não quer dizer que seja inútil, na verdade, pode ter uso prático com bons resultados em outras atividades.
@@ -34,7 +36,7 @@ E, apesar do desempenho ser fraco, não é desprovido de significado. Ao executa
 
 <a name='imagensDigitais'></a>
 
-## Imagens digitais
+### Imagens digitais
 
 Imagens são armazenadas em um computador como um conjunto de pixeis. Uma das maneiras mais simples de armazenar imagens digitais coloridas utiliza a forma RGB (vermelho, verde e azul, ou red, green e blue, do inglês). Cada pixel é um ponto da imagem, representando uma cor. Todas as cores são obtidas variando a intensidade de vermelho, verde e azul. Uma cor portanto é codificada através de três números inteiros, que variam de 0 a 255, e que determinam o peso de cada uma das três cores citadas.
 
@@ -68,7 +70,11 @@ Comparabilidade é uma propriedade matemática que permite tomar decisões opera
 
 O que vai portanto determinar os algoritmos que vamos usar em aprendizagem de máquina são as operações matemáticas que vamos aplicar aos números, aos valores.
 
-## Um pouco mais sobre digitalização de imagens
+
+<a name='digitIamgem'></a>
+
+### Um pouco mais sobre digitalização de imagens
+
 
 Mencionamos acima que se utilizam mais de uma maneira de codificar as cores das imagens. Além disto, utiliza-se mais de uma forma para codificar a posição dos pixeis de uma imagem digitalizada.
 
@@ -79,9 +85,11 @@ As imagens da base de dados Cifar-10 que vamos utilizar aqui em nosso exemplo ar
 O que queremos estabelecer aqui é outra coisa. Ao aplicar operações matemáticas em dados de duas ou mais imagens diferentes não é necessário que os dados estejam na ordem natural, apenas é necessário que estejam em ordens iguais. Comutatividade (a+b = b+a), associatividade (a+(b+c) = ((a+b)+c), e outras propriedades de operações são
 úteis para explicar estas manobras com exatidão, mas explicá-las aquí foge ao escopo da obra.
 
+
 <a name='propostaAlg'></a>
 
-## A proposta do algoritmo NN
+### A proposta do algoritmo NN
+
 
 Ao comparar duas imagens, o algoritmo **nn** pretende obter algo chamado de distancia entre elas.
 A distância vai ser a soma de todas as diferenças entre os pixeis nas mesmas posições das imagens.
@@ -137,7 +145,8 @@ byte diferente, com distancia = $$11$$, e as imagens iguais, resultam na menor d
 
 <a name='codigoJava'></a>
 
-## Hora de estudar código Java e testar
+### Hora de estudar código Java e testar
+
 
 Visite a área de código do projeto, estude as classes NearestNeighbourgh.java e Cifar10Utils.java.
 
