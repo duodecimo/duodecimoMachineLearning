@@ -4,8 +4,26 @@ mathjax: true
 permalink: vizinhoMaisProximo/
 ---
 
+
+<div class="fig figcenter fighighlight">
+  <img src="https://duodecimo.github.io/duodecimoMachineLearning/assets/images/aiLearning.png" width = "300" height="300">
+  <div class="figcaption">Figura 1: Produzida com o Autodraw, que usa aprendizado de máquina.</div>
+</div>
+
+
 # O algoritmo do vizinho mais próximo
 
+Tabela de Conteúdos:
+
+- [Sobre o algoritmo do vizinho mais próximo](#sobreVizinho)
+- [Imagens digitais](#imagensDigitais)
+- [A proposta do algoritmo NN](#propostaAlg)
+- [Hora de estudar código Java e testar](#codigoJava)
+
+> Dica: Após visitar um link da tabela de conteúdos, utilize a tecla de retorno do seu navegador para voltar para a tabela.
+
+
+<a name='sobreVizinho'></a>
 
 ## Sobre o algoritmo do vizinho mais próximo
 
@@ -13,6 +31,8 @@ permalink: vizinhoMaisProximo/
 O algoritmo do vizinho mais próximo, chamado também de **nn** (nearest neighbourg, em inglês) vai ser o primeiro a ser apresentado. Vamos construir um programa destinado a classificar imagens. O **nn** não apresenta desempenho razoável para realizar classificação de imagens. Não quer dizer que seja inútil, na verdade, pode ter uso prático com bons resultados em outras atividades.
 A vantagem de começar por ele é que as operações que ele realiza nos dados das imagens são de  baixa complexidade. Desta forma, o **nn** vai nos permitir introduzir código para obter os dados de imagens a partir de arquivos, e código capaz de operar nestas grandes quantidades de dados. É um primeiro passo para aprender a desenvolver algoritmos mais eficientes, como redes neurais e convolucionais.
 E, apesar do desempenho ser fraco, não é desprovido de significado. Ao executar o **nn** utilizando a base CIFAR-10, ele obtém um percentual de acerto em torno de 30%. Se os acertos fossem obra do acaso, como existem 10 categorias de imagens na base de dados, ficaria em torno de 10%.
+
+<a name='imagensDigitais'></a>
 
 ## Imagens digitais
 
@@ -59,7 +79,9 @@ As imagens da base de dados Cifar-10 que vamos utilizar aqui em nosso exemplo ar
 O que queremos estabelecer aqui é outra coisa. Ao aplicar operações matemáticas em dados de duas ou mais imagens diferentes não é necessário que os dados estejam na ordem natural, apenas é necessário que estejam em ordens iguais. Comutatividade (a+b = b+a), associatividade (a+(b+c) = ((a+b)+c), e outras propriedades de operações são
 úteis para explicar estas manobras com exatidão, mas explicá-las aquí foge ao escopo da obra.
 
-## A proposta do algoritmo nn
+<a name='propostaAlg'></a>
+
+## A proposta do algoritmo NN
 
 Ao comparar duas imagens, o algoritmo **nn** pretende obter algo chamado de distancia entre elas.
 A distância vai ser a soma de todas as diferenças entre os pixeis nas mesmas posições das imagens.
@@ -111,6 +133,9 @@ de $$11 + 11 + 0 + 0 + 0 ... = 22.$$
 Agora sim, faz sentido: as imagens com os dois primeiros bytes diferentes resultam em uma distância = $$22$$, maior que as imagens com o primeiro
 byte diferente, com distancia = $$11$$, e as imagens iguais, resultam na menor distancia, $$0$$.
 ![v](https://github.global.ssl.fastly.net/images/icons/emoji/v.png?v5)
+
+
+<a name='codigoJava'></a>
 
 ## Hora de estudar código Java e testar
 
