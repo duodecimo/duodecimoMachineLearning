@@ -10,7 +10,8 @@ permalink: classificacaoLinear/
 
 Tabela de Conteúdos:
 
-- [Tipos de aprendizagem](#emSeguida)
+
+- [O que faremos em seguida](#emSeguida)
 - [Hora de estudar código Java e testar](#codigoJava)
 
 > Dica: Após visitar um link da tabela de conteúdos, utilize a tecla de retorno do seu navegador para voltar para a tabela.
