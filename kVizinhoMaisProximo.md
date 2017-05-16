@@ -5,7 +5,7 @@ permalink: kVizinhoMaisProximo/
 ---
 
 <div class="fig figcenter fighighlight">
-  <img src="https://duodecimo.github.io/duodecimoMachineLearning/assets/images/kNearestNeighbourg.png" width = "500" height="300">
+  <img src="https://duodecimo.github.io/duodecimoMachineLearning/assets/images/kNearestNeighbourg.png" width = "800" height="400">
   <div class="figcaption">Figura 1: Produzida com o Autodraw, que usa aprendizado de máquina.</div>
 </div>  
 
