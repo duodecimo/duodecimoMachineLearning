@@ -16,7 +16,6 @@
  */
 package ml;
 
-import java.util.List;
 import java.util.stream.DoubleStream;
 import org.apache.commons.math3.linear.ArrayRealVector;
 import org.apache.commons.math3.linear.MatrixUtils;
