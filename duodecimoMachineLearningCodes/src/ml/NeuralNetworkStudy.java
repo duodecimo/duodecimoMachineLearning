@@ -16,12 +16,21 @@
  */
 package ml;
 
+import java.io.IOException;
 import java.util.stream.DoubleStream;
+import javax.swing.WindowConstants;
 import org.apache.commons.math3.linear.ArrayRealVector;
 import org.apache.commons.math3.linear.MatrixUtils;
 import org.apache.commons.math3.linear.RealMatrix;
 import org.apache.commons.math3.linear.RealVector;
 import org.apache.commons.math3.random.JDKRandomGenerator;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartFrame;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.data.xy.XYDataset;
+import org.jfree.data.xy.XYSeries;
+import org.jfree.data.xy.XYSeriesCollection;
 
 /**
  *
@@ -53,35 +62,67 @@ public class NeuralNetworkStudy {
     // vector with all entries = 0.0d, class labels
     RealVector Y = new ArrayRealVector(pointsPerClass * numberOfClasses);
     public NeuralNetworkStudy() {
-        for(int j=0; j < numberOfClasses; j++) {
-            int k = pointsPerClass*(j+1) - pointsPerClass*j;
-            int[] ix = new int[k];
-            for(int l = pointsPerClass*j, m=0; l<pointsPerClass*(j+1); l++ ) {
-                ix[m++] = l;
-            }
-            double[] r = new double[pointsPerClass]; // radius
-            double interval = (1-0)/(pointsPerClass-1);
-            r[0] = 0d;
-            for(int l = 1; l < pointsPerClass; l++) {
-                r[l] = r[l-1]+interval;
-            }
+        double[] r = new double[pointsPerClass]; // radius
+        double interval = (1 - 0) / (pointsPerClass - 1);
+        r[0] = 0d;
+        for (int l = 1; l < pointsPerClass; l++) {
+            r[l] = r[l - 1] + interval;
+        }
+        for (int j = 0; j < numberOfClasses; j++) {
             double[] t = new double[pointsPerClass]; // theta
-            interval = (((j+1)*4) - (j*4))/(pointsPerClass-1);
-            t[0] = j*4;
-            for(int l = 1; l < pointsPerClass; l++) {
-                t[l] = t[l-1] * interval;
+            interval = (((j + 1) * 4) - (j * 4)) / (pointsPerClass - 1);
+            t[0] = j * 4;
+            for (int l = 1; l < pointsPerClass; l++) {
+                t[l] = t[l - 1] * interval;
             }
             DoubleStream doubleStream = new JDKRandomGenerator((int) System.currentTimeMillis()).
                     doubles(pointsPerClass);
             double[] doubles = doubleStream.toArray();
-            for(int l = 0; l < pointsPerClass; l++) {
-                t[l]+= doubles[l]*0.2d;
+            for (int l = 0; l < pointsPerClass; l++) {
+                t[l] += doubles[l] * 0.2d;
             }
-            for(int i=0; i<pointsPerClass; i++) {
-                X.setEntry(i, 0, Math.sin(t[i]));
-                X.setEntry(i, 1, Math.cos(t[i]));
-                Y.setEntry(i, j);
+            for (int ix = pointsPerClass * j, k=0; ix < pointsPerClass * (j + 1); ix++, k++) {
+                X.setEntry(ix, 0, Math.sin(t[k]));
+                X.setEntry(ix, 1, Math.cos(t[k]));
+                Y.setEntry(ix, j);
             }
         }
+        showChart();
+    }
+
+    private XYDataset createJFreeChartDataset(RealMatrix X) {
+        XYSeriesCollection result = new XYSeriesCollection();
+        XYSeries series = new XYSeries("Spiral");
+        for (int i = 0; i < 300; i++) {
+            series.add(X.getEntry(i, 0), X.getEntry(i, 1));
+        }
+        result.addSeries(series);
+        return result;
+    }
+
+    private void showChart() {
+        JFreeChart chart = ChartFactory.createScatterPlot(
+            "Scatter Plot", // chart title
+            "X", // x axis label
+            "Y", // y axis label
+            createJFreeChartDataset(X), // data
+            PlotOrientation.VERTICAL,
+            true, // include legend
+            true, // tooltips
+            false // urls
+            );
+        ChartFrame frame = new ChartFrame("Neural Network Study", chart);
+        frame.pack();
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        frame.setVisible(true);
+    }
+
+    /**
+     *
+     * @param args command line parameters if needed.
+     * @throws IOException if received from class,
+     */
+    public static void main(String[] args) throws IOException {
+        NeuralNetworkStudy neuralNetworkStudy = new NeuralNetworkStudy();
     }
 }
