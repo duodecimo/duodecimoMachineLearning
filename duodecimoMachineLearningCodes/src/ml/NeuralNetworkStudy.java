@@ -74,9 +74,9 @@ public class NeuralNetworkStudy {
             r[l] = r[l - 1] + interval;
         }
         System.out.println("R: (interval = " + interval + ")");
-        for (int l = 1; l < pointsPerClass; l++) {
+        for (int l = 0; l < pointsPerClass; l++) {
             System.out.print(r[l]);
-            if(l%10==0) System.out.println("");
+            if(l>0 & l%8==0) System.out.println("");
             else System.out.print(", ");
         }
         System.out.println("");
@@ -86,14 +86,38 @@ public class NeuralNetworkStudy {
             interval = (((j + 1) * 4) - (j * 4)) / (pointsPerClass - 1);
             t[0] = j * 4;
             for (int l = 1; l < pointsPerClass; l++) {
-                t[l] = t[l - 1] * interval;
+                t[l] = t[l - 1] + interval;
             }
             DoubleStream doubleStream = new JDKRandomGenerator((int) System.currentTimeMillis()).
-                    doubles(pointsPerClass, 0.0d, pointsPerClass);
+                    doubles(pointsPerClass, -1.0d, 1.0d);
             double[] doubles = doubleStream.toArray();
             for (int l = 0; l < pointsPerClass; l++) {
-                t[l] += doubles[l] * 0.2d;
+                t[l] += (doubles[l]/1.5d);
             }
+
+            System.out.println("doubles " + j + ":");
+            for (int l = 0; l < pointsPerClass; l++) {
+                System.out.print(doubles[l]);
+                if (l>0 & l % 8 == 0) {
+                    System.out.println("");
+                } else {
+                    System.out.print(", ");
+                }
+            }
+            System.out.println("");
+
+            System.out.println("t" + j + ":");
+            for (int l = 0; l < pointsPerClass; l++) {
+                System.out.print(t[l]);
+                if (l>0 & l % 8 == 0) {
+                    System.out.println("");
+                } else {
+                    System.out.print(", ");
+                }
+            }
+            System.out.println("");
+
+
             for (int ix = pointsPerClass * j, k=0; ix < pointsPerClass * (j + 1); ix++, k++) {
                 X.setEntry(ix, 0, r[k]*Math.sin(t[k]));
                 X.setEntry(ix, 1, r[k]*Math.cos(t[k]));
