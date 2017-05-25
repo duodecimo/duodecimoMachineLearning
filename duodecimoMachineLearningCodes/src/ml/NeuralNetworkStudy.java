@@ -16,6 +16,7 @@
  */
 package ml;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.io.File;
 import java.io.IOException;
@@ -35,9 +36,11 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.ValueAxis;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.XYPlot;
+import org.jfree.chart.renderer.xy.XYItemRenderer;
 import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
+import org.jfree.util.ShapeUtilities;
 import util.matrix.DuodecimoMatrixUtils;
 
 /**
@@ -76,6 +79,7 @@ public class NeuralNetworkStudy {
         for (int l = 1; l < pointsPerClass; l++) {
             r[l] = r[l - 1] + interval;
         }
+        /* debug
         System.out.println("R: (interval = " + interval + ")");
         for (int l = 0; l < pointsPerClass; l++) {
             System.out.print(r[l]);
@@ -83,7 +87,7 @@ public class NeuralNetworkStudy {
             else System.out.print(", ");
         }
         System.out.println("");
-        
+        */
         for (int j = 0; j < numberOfClasses; j++) {
             double[] t = new double[pointsPerClass]; // theta
             interval = (double) (((j + 1) * 4) - (j * 4)) / (double) (pointsPerClass - 1);
@@ -91,7 +95,7 @@ public class NeuralNetworkStudy {
             for (int l = 1; l < pointsPerClass; l++) {
                 t[l] = t[l - 1] + interval;
             }
-
+            /* debug
             System.out.println("t pure " + j + "(interval = " + interval +"(:");
             for (int l = 0; l < pointsPerClass; l++) {
                 System.out.print(t[l]);
@@ -102,14 +106,15 @@ public class NeuralNetworkStudy {
                 }
             }
             System.out.println("");
-
+            */
             DoubleStream doubleStream = new JDKRandomGenerator((int) System.currentTimeMillis()).
                     doubles(pointsPerClass, -1.0d, 1.0d);
             double[] doubles = doubleStream.toArray();
             for (int l = 0; l < pointsPerClass; l++) {
-                t[l] += (doubles[l]*0.4d);
+                t[l] += (doubles[l]*0.2d);
             }
 
+            /* debug
             System.out.println("doubles " + j + ":");
             for (int l = 0; l < pointsPerClass; l++) {
                 System.out.print(doubles[l]);
@@ -131,7 +136,7 @@ public class NeuralNetworkStudy {
                 }
             }
             System.out.println("");
-
+            */
 
             for (int ix = pointsPerClass * j, k=0; ix < pointsPerClass * (j + 1); ix++, k++) {
                 X.setEntry(ix, 0, r[k]*Math.sin(t[k]));
@@ -139,23 +144,25 @@ public class NeuralNetworkStudy {
                 Y.setEntry(ix, j);
             }
         }
+        /* debug
         System.out.println(DuodecimoMatrixUtils.showRealMatrix("X:", X, 20, X.getColumnDimension()));
+        */
         showChart();
     }
 
     private XYDataset createJFreeChartDataset(RealMatrix X) {
         XYSeriesCollection result = new XYSeriesCollection();
-        XYSeries series = new XYSeries("Cat A");
+        XYSeries series = new XYSeries("Category A");
         for (int i = 0; i < 100; i++) {
             series.add(X.getEntry(i, 0), X.getEntry(i, 1));
         }
         result.addSeries(series);
-        series = new XYSeries("Cat B");
+        series = new XYSeries("Category B");
         for (int i = 100; i < 200; i++) {
             series.add(X.getEntry(i, 0), X.getEntry(i, 1));
         }
         result.addSeries(series);
-        series = new XYSeries("Cat C");
+        series = new XYSeries("Category C");
         for (int i = 200; i < 300; i++) {
             series.add(X.getEntry(i, 0), X.getEntry(i, 1));
         }
@@ -165,7 +172,7 @@ public class NeuralNetworkStudy {
 
     private void showChart() throws IOException {
         JFreeChart chart = ChartFactory.createScatterPlot(
-            "Scatter Plot", // chart title
+            "Spiral Dataset Plot", // chart title
             "X", // x axis label
             "Y", // y axis label
             createJFreeChartDataset(X), // data
@@ -180,11 +187,14 @@ public class NeuralNetworkStudy {
         yAxis.setRange(-1.0d, 1.0d);
         ValueAxis xAxis = plot.getDomainAxis();
         xAxis.setRange(-1.0d, 1.0d);
+        plot.setBackgroundPaint(Color.WHITE);
+        plot.setRangeGridlinePaint(Color.BLACK);
+        plot.setDomainGridlinePaint(Color.BLACK);
+        //XYItemRenderer renderer = plot.getRenderer();
         ChartPanel chartPanel = new ChartPanel(chart);
-        chartPanel.setPreferredSize(new Dimension(800, 800));
-        chartPanel.setMaximumDrawWidth(600);
+        chartPanel.setPreferredSize(new Dimension(600, 600));
         ChartUtilities.saveChartAsPNG(new File("NeuralNetworkStudy.png"), chart, 
-                800, 800);
+                600, 600);
         JFrame frame = new JFrame("Neural Network Study");
         frame.getContentPane().add(chartPanel);
         frame.pack();
