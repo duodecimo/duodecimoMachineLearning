@@ -16,6 +16,7 @@
  */
 package ml;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.stream.DoubleStream;
 import javax.swing.JFrame;
@@ -28,6 +29,7 @@ import org.apache.commons.math3.random.JDKRandomGenerator;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartFrame;
 import org.jfree.chart.ChartPanel;
+import org.jfree.chart.ChartUtilities;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.ValueAxis;
 import org.jfree.chart.plot.PlotOrientation;
@@ -66,7 +68,7 @@ public class NeuralNetworkStudy {
     RealMatrix X = MatrixUtils.createRealMatrix(pointsPerClass* numberOfClasses , dimensionality);
     // vector with all entries = 0.0d, class labels
     RealVector Y = new ArrayRealVector(pointsPerClass * numberOfClasses);
-    public NeuralNetworkStudy() {
+    public NeuralNetworkStudy() throws IOException {
         double[] r = new double[pointsPerClass]; // radius
         double interval = (1.0d - 0.0d) / (double)(pointsPerClass - 1);
         r[0] = 0d;
@@ -83,11 +85,23 @@ public class NeuralNetworkStudy {
         
         for (int j = 0; j < numberOfClasses; j++) {
             double[] t = new double[pointsPerClass]; // theta
-            interval = (((j + 1) * 4) - (j * 4)) / (pointsPerClass - 1);
+            interval = (double) (((j + 1) * 4) - (j * 4)) / (double) (pointsPerClass - 1);
             t[0] = j * 4;
             for (int l = 1; l < pointsPerClass; l++) {
                 t[l] = t[l - 1] + interval;
             }
+
+            System.out.println("t pure " + j + "(interval = " + interval +"(:");
+            for (int l = 0; l < pointsPerClass; l++) {
+                System.out.print(t[l]);
+                if (l>0 & l % 8 == 0) {
+                    System.out.println("");
+                } else {
+                    System.out.print(", ");
+                }
+            }
+            System.out.println("");
+
             DoubleStream doubleStream = new JDKRandomGenerator((int) System.currentTimeMillis()).
                     doubles(pointsPerClass, -1.0d, 1.0d);
             double[] doubles = doubleStream.toArray();
@@ -148,7 +162,7 @@ public class NeuralNetworkStudy {
         return result;
     }
 
-    private void showChart() {
+    private void showChart() throws IOException {
         JFreeChart chart = ChartFactory.createScatterPlot(
             "Scatter Plot", // chart title
             "X", // x axis label
@@ -166,10 +180,10 @@ public class NeuralNetworkStudy {
         ValueAxis xAxis = plot.getDomainAxis();
         xAxis.setRange(-1.0d, 1.0d);
         ChartPanel chartPanel = new ChartPanel(chart);
-        chartPanel.setMaximumDrawHeight(400);
-        chartPanel.setMinimumDrawHeight(10);
+        chartPanel.setMaximumDrawHeight(800);
         chartPanel.setMaximumDrawWidth(600);
-        chartPanel.setMinimumDrawWidth(10);
+        ChartUtilities.saveChartAsPNG(new File("NeuralNetworkStudy.png"), chart, 
+                800, 600);
         JFrame frame = new JFrame("Neural Network Study");
         frame.getContentPane().add(chartPanel);
         frame.pack();
