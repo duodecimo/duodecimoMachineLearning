@@ -29,7 +29,9 @@ import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartFrame;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.axis.ValueAxis;
 import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.chart.plot.XYPlot;
 import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
@@ -87,7 +89,7 @@ public class NeuralNetworkStudy {
                 t[l] = t[l - 1] * interval;
             }
             DoubleStream doubleStream = new JDKRandomGenerator((int) System.currentTimeMillis()).
-                    doubles(pointsPerClass);
+                    doubles(pointsPerClass, 0.0d, pointsPerClass);
             double[] doubles = doubleStream.toArray();
             for (int l = 0; l < pointsPerClass; l++) {
                 t[l] += doubles[l] * 0.02d;
@@ -134,6 +136,11 @@ public class NeuralNetworkStudy {
             true, // tooltips
             false // urls
             );
+        XYPlot plot = (XYPlot) chart.getPlot();
+        ValueAxis yAxis = plot.getRangeAxis();
+        yAxis.setRange(-1.0d, 1.0d);
+        ValueAxis xAxis = plot.getDomainAxis();
+        xAxis.setRange(-1.0d, 1.0d);
         ChartPanel chartPanel = new ChartPanel(chart);
         chartPanel.setMaximumDrawHeight(400);
         chartPanel.setMinimumDrawHeight(10);
