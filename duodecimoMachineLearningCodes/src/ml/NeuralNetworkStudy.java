@@ -92,7 +92,7 @@ public class NeuralNetworkStudy {
                     doubles(pointsPerClass, 0.0d, pointsPerClass);
             double[] doubles = doubleStream.toArray();
             for (int l = 0; l < pointsPerClass; l++) {
-                t[l] += doubles[l] * 0.02d;
+                t[l] += doubles[l] * 0.2d;
             }
             for (int ix = pointsPerClass * j, k=0; ix < pointsPerClass * (j + 1); ix++, k++) {
                 X.setEntry(ix, 0, r[k]*Math.sin(t[k]));
