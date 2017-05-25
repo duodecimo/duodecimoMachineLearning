@@ -5,6 +5,8 @@
         <group>
             <file>file:/home/duo/NetBeansProjects/gitHub/duodecimoMachineLearning/duodecimoMachineLearningCodes/src/sandbox/SimpleTests.java</file>
             <file>file:/home/duo/NetBeansProjects/gitHub/duodecimoMachineLearning/duodecimoMachineLearningCodes/src/ml/LinearPrediction.java</file>
+            <file>file:/home/duo/NetBeansProjects/gitHub/duodecimoMachineLearning/duodecimoMachineLearningCodes/src/ml/NeuralNetworkStudy.java</file>
+            <file>file:/home/duo/NetBeansProjects/gitHub/duodecimoMachineLearning/duodecimoMachineLearningCodes/src/cifar10/Cifar10Utils.java</file>
         </group>
     </open-files>
 </project-private>

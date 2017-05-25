@@ -18,6 +18,7 @@ package ml;
 
 import java.io.IOException;
 import java.util.stream.DoubleStream;
+import javax.swing.JFrame;
 import javax.swing.WindowConstants;
 import org.apache.commons.math3.linear.ArrayRealVector;
 import org.apache.commons.math3.linear.MatrixUtils;
@@ -26,11 +27,13 @@ import org.apache.commons.math3.linear.RealVector;
 import org.apache.commons.math3.random.JDKRandomGenerator;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartFrame;
+import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
+import util.matrix.DuodecimoMatrixUtils;
 
 /**
  *
@@ -63,11 +66,19 @@ public class NeuralNetworkStudy {
     RealVector Y = new ArrayRealVector(pointsPerClass * numberOfClasses);
     public NeuralNetworkStudy() {
         double[] r = new double[pointsPerClass]; // radius
-        double interval = (1 - 0) / (pointsPerClass - 1);
+        double interval = (1.0d - 0.0d) / (double)(pointsPerClass - 1);
         r[0] = 0d;
         for (int l = 1; l < pointsPerClass; l++) {
             r[l] = r[l - 1] + interval;
         }
+        System.out.println("R: (interval = " + interval + ")");
+        for (int l = 1; l < pointsPerClass; l++) {
+            System.out.print(r[l]);
+            if(l%10==0) System.out.println("");
+            else System.out.print(", ");
+        }
+        System.out.println("");
+        
         for (int j = 0; j < numberOfClasses; j++) {
             double[] t = new double[pointsPerClass]; // theta
             interval = (((j + 1) * 4) - (j * 4)) / (pointsPerClass - 1);
@@ -79,21 +90,32 @@ public class NeuralNetworkStudy {
                     doubles(pointsPerClass);
             double[] doubles = doubleStream.toArray();
             for (int l = 0; l < pointsPerClass; l++) {
-                t[l] += doubles[l] * 0.2d;
+                t[l] += doubles[l] * 0.02d;
             }
             for (int ix = pointsPerClass * j, k=0; ix < pointsPerClass * (j + 1); ix++, k++) {
-                X.setEntry(ix, 0, Math.sin(t[k]));
-                X.setEntry(ix, 1, Math.cos(t[k]));
+                X.setEntry(ix, 0, r[k]*Math.sin(t[k]));
+                X.setEntry(ix, 1, r[k]*Math.cos(t[k]));
                 Y.setEntry(ix, j);
             }
         }
+        System.out.println(DuodecimoMatrixUtils.showRealMatrix("X:", X, 20, X.getColumnDimension()));
         showChart();
     }
 
     private XYDataset createJFreeChartDataset(RealMatrix X) {
         XYSeriesCollection result = new XYSeriesCollection();
-        XYSeries series = new XYSeries("Spiral");
-        for (int i = 0; i < 300; i++) {
+        XYSeries series = new XYSeries("Cat A");
+        for (int i = 0; i < 100; i++) {
+            series.add(X.getEntry(i, 0), X.getEntry(i, 1));
+        }
+        result.addSeries(series);
+        series = new XYSeries("Cat B");
+        for (int i = 100; i < 200; i++) {
+            series.add(X.getEntry(i, 0), X.getEntry(i, 1));
+        }
+        result.addSeries(series);
+        series = new XYSeries("Cat C");
+        for (int i = 200; i < 300; i++) {
             series.add(X.getEntry(i, 0), X.getEntry(i, 1));
         }
         result.addSeries(series);
@@ -107,11 +129,18 @@ public class NeuralNetworkStudy {
             "Y", // y axis label
             createJFreeChartDataset(X), // data
             PlotOrientation.VERTICAL,
+            //PlotOrientation.HORIZONTAL,
             true, // include legend
             true, // tooltips
             false // urls
             );
-        ChartFrame frame = new ChartFrame("Neural Network Study", chart);
+        ChartPanel chartPanel = new ChartPanel(chart);
+        chartPanel.setMaximumDrawHeight(400);
+        chartPanel.setMinimumDrawHeight(10);
+        chartPanel.setMaximumDrawWidth(600);
+        chartPanel.setMinimumDrawWidth(10);
+        JFrame frame = new JFrame("Neural Network Study");
+        frame.getContentPane().add(chartPanel);
         frame.pack();
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setVisible(true);
