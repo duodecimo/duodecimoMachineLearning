@@ -92,7 +92,7 @@ public class NeuralNetworkStudy {
                     doubles(pointsPerClass, -1.0d, 1.0d);
             double[] doubles = doubleStream.toArray();
             for (int l = 0; l < pointsPerClass; l++) {
-                t[l] += (doubles[l]/1.5d);
+                t[l] += (doubles[l]*0.4d);
             }
 
             System.out.println("doubles " + j + ":");
