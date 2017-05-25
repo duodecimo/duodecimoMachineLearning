@@ -16,6 +16,7 @@
  */
 package ml;
 
+import java.awt.Dimension;
 import java.io.File;
 import java.io.IOException;
 import java.util.stream.DoubleStream;
@@ -180,10 +181,10 @@ public class NeuralNetworkStudy {
         ValueAxis xAxis = plot.getDomainAxis();
         xAxis.setRange(-1.0d, 1.0d);
         ChartPanel chartPanel = new ChartPanel(chart);
-        chartPanel.setMaximumDrawHeight(800);
+        chartPanel.setPreferredSize(new Dimension(800, 800));
         chartPanel.setMaximumDrawWidth(600);
         ChartUtilities.saveChartAsPNG(new File("NeuralNetworkStudy.png"), chart, 
-                800, 600);
+                800, 800);
         JFrame frame = new JFrame("Neural Network Study");
         frame.getContentPane().add(chartPanel);
         frame.pack();
