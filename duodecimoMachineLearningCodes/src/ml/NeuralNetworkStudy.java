@@ -29,18 +29,15 @@ import org.apache.commons.math3.linear.RealMatrix;
 import org.apache.commons.math3.linear.RealVector;
 import org.apache.commons.math3.random.JDKRandomGenerator;
 import org.jfree.chart.ChartFactory;
-import org.jfree.chart.ChartFrame;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.ChartUtilities;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.ValueAxis;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.XYPlot;
-import org.jfree.chart.renderer.xy.XYItemRenderer;
 import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
-import org.jfree.util.ShapeUtilities;
 import util.matrix.DuodecimoMatrixUtils;
 
 /**
@@ -153,6 +150,14 @@ public class NeuralNetworkStudy {
             }
         }
         System.out.println(DuodecimoMatrixUtils.showRealMatrix("W:", W));
+        RealMatrix Scores = X.multiply(W);
+        System.out.println(DuodecimoMatrixUtils.showRealMatrix("Scores:", Scores, 10, -1));
+        for(int i=0; i<Scores.getRowDimension(); i++) {
+            for(int j=0; j< Scores.getColumnDimension(); j++) {
+                Scores.setEntry(i, j, (Scores.getEntry(i, j)+b.getEntry(j)));
+            }
+        }
+        System.out.println(DuodecimoMatrixUtils.showRealMatrix("Scores:", Scores, 10, -1));
     }
 
     private XYDataset createJFreeChartDataset(RealMatrix X) {
@@ -207,7 +212,7 @@ public class NeuralNetworkStudy {
         JFrame frame = new JFrame("Neural Network Study");
         frame.getContentPane().add(chartPanel);
         frame.pack();
-        //frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setVisible(true);
     }
 
