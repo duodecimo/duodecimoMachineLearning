@@ -48,23 +48,6 @@ import util.matrix.DuodecimoMatrixUtils;
  * @author duo
  */
 public class NeuralNetworkStudy {
-
-/*
-    Lets generate a classification dataset that is not easily linearly separable. Our favorite example is the spiral dataset, which can be generated as follows:
-    N = 100 # number of points per class
-    D = 2 # dimensionality
-    K = 3 # number of classes
-    X = np.zeros((N*K,D)) # data matrix (each row = single example)
-    y = np.zeros(N*K, dtype='uint8') # class labels
-    for j in xrange(K):
-    ix = range(N*j,N*(j+1))
-    r = np.linspace(0.0,1,N) # radius
-    t = np.linspace(j*4,(j+1)*4,N) + np.random.randn(N)*0.2 # theta
-    X[ix] = np.c_[r*np.sin(t), r*np.cos(t)]
-    y[ix] = j
-    # lets visualize the data:
-    plt.scatter(X[:, 0], X[:, 1], c=y, s=40, cmap=plt.cm.Spectral)
-     */
     int pointsPerClass = 100;
     int dimensionality = 2;
     int numberOfClasses = 3;
@@ -73,6 +56,10 @@ public class NeuralNetworkStudy {
     // vector with all entries = 0.0d, class labels
     RealVector Y = new ArrayRealVector(pointsPerClass * numberOfClasses);
     public NeuralNetworkStudy() throws IOException {
+        /*
+        Lets generate a classification dataset that is not easily linearly separable.
+        A dataset with 3 classes where each one makes a spiral shape.
+        */
         double[] r = new double[pointsPerClass]; // radius
         double interval = (1.0d - 0.0d) / (double)(pointsPerClass - 1);
         r[0] = 0d;
@@ -147,22 +134,44 @@ public class NeuralNetworkStudy {
         /* debug
         System.out.println(DuodecimoMatrixUtils.showRealMatrix("X:", X, 20, X.getColumnDimension()));
         */
+        /* now we can plot the dataset in order to see taht it is not liearly separable.
+        */
         showChart();
+        
+        // lets crete a weight matrix W and a bias vector b
+        RealMatrix W = MatrixUtils.createRealMatrix(dimensionality, numberOfClasses);
+        RealVector b = new ArrayRealVector(numberOfClasses);
+        // lets generate random values to initialize W
+        JDKRandomGenerator generator = new JDKRandomGenerator((int) System.currentTimeMillis());
+        DoubleStream doubleStream;
+        double[] doubles;
+        for(int i=0; i<W.getRowDimension(); i++) {
+            doubleStream = generator.doubles(numberOfClasses, -1.0d, 1.0d);
+            doubles = doubleStream.toArray();
+            for(int j=0; j< numberOfClasses; j++) {
+                W.setEntry(i, j, doubles[j]*0.01d);
+            }
+        }
+        System.out.println(DuodecimoMatrixUtils.showRealMatrix("W:", W));
     }
 
     private XYDataset createJFreeChartDataset(RealMatrix X) {
+        // in order to use JFreeChart to scatter plot the data,
+        // we can store our data in a XYSeriesCollection object
+        // the we add to it K XYSeries objects, each one
+        // holding a class
         XYSeriesCollection result = new XYSeriesCollection();
-        XYSeries series = new XYSeries("Category A");
+        XYSeries series = new XYSeries("Class A");
         for (int i = 0; i < 100; i++) {
             series.add(X.getEntry(i, 0), X.getEntry(i, 1));
         }
         result.addSeries(series);
-        series = new XYSeries("Category B");
+        series = new XYSeries("Class B");
         for (int i = 100; i < 200; i++) {
             series.add(X.getEntry(i, 0), X.getEntry(i, 1));
         }
         result.addSeries(series);
-        series = new XYSeries("Category C");
+        series = new XYSeries("Class C");
         for (int i = 200; i < 300; i++) {
             series.add(X.getEntry(i, 0), X.getEntry(i, 1));
         }
@@ -198,7 +207,7 @@ public class NeuralNetworkStudy {
         JFrame frame = new JFrame("Neural Network Study");
         frame.getContentPane().add(chartPanel);
         frame.pack();
-        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        //frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setVisible(true);
     }
 
