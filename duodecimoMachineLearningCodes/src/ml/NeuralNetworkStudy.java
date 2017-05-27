@@ -158,6 +158,29 @@ public class NeuralNetworkStudy {
             }
         }
         System.out.println(DuodecimoMatrixUtils.showRealMatrix("Scores:", Scores, 10, -1));
+
+        // some hyperparameters
+        double stepSize = 1e-0;
+        double reg = 1e-3; // regularization strength
+        // gradient descent loop
+        int numExamples = X.getRowDimension();
+        for(int i=0; i<200; i++) {
+            // evaluate class scores, [N x K]
+            Scores = X.multiply(W);
+            for (int l = 0; l < Scores.getRowDimension(); l++) {
+                for (int c = 0; c < Scores.getColumnDimension(); c++) {
+                    Scores.setEntry(l, c, (Scores.getEntry(l, c) + b.getEntry(c)));
+                }
+            }
+            /*
+            # compute the class probabilities
+            exp_scores = np.exp(scores)
+            probs = exp_scores / np.sum(exp_scores, axis=1, keepdims=True) # [N x K]
+            */
+            // compute the class probabilities
+            //RealMatrix ExpScores = Scores;
+            //double probs = exp_scores / np.sum(exp_scores, axis=1, keepdims=True) # [N x K];
+        }
     }
 
     private XYDataset createJFreeChartDataset(RealMatrix X) {
