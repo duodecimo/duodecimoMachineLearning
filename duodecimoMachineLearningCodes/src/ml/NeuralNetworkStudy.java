@@ -172,6 +172,17 @@ public class NeuralNetworkStudy {
                     Scores.setEntry(l, c, (Scores.getEntry(l, c) + b.getEntry(c)));
                 }
             }
+            RealVector divisor = new ArrayRealVector(Scores.getRowDimension());
+            RealMatrix ExpScores = Scores.copy();
+            double rowSum;
+            for(int row = 0; row < ExpScores.getRowDimension(); row++) {
+                rowSum = 0;
+                for(int col = 0; col < ExpScores.getColumnDimension(); col++) {
+                    ExpScores.setEntry(row, col, Math.exp(ExpScores.getEntry(row, col)));
+                    rowSum+=ExpScores.getEntry(row, col);
+                }
+                divisor.setEntry(row, rowSum);
+            }
             /*
             # compute the class probabilities
             exp_scores = np.exp(scores)
