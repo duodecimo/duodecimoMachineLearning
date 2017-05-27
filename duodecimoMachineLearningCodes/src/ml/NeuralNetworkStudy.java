@@ -176,6 +176,14 @@ public class NeuralNetworkStudy {
             # compute the class probabilities
             exp_scores = np.exp(scores)
             probs = exp_scores / np.sum(exp_scores, axis=1, keepdims=True) # [N x K]
+            type(scores): 
+            <type 'numpy.ndarray'> (300, 3)
+            type(exp_scores): 
+            <type 'numpy.ndarray'> (300, 3)
+            type(a): (a=np.sum(exp_scores, axis=1, keepdims=True))
+            <type 'numpy.ndarray'> (300, 1)
+            type(probs): 
+            <type 'numpy.ndarray'> (300, 3)
             */
             // compute the class probabilities
             //RealMatrix ExpScores = Scores;
