@@ -172,6 +172,7 @@ public class NeuralNetworkStudy {
                     Scores.setEntry(l, c, (Scores.getEntry(l, c) + b.getEntry(c)));
                 }
             }
+            // compute the class probabilities
             RealVector divisor = new ArrayRealVector(Scores.getRowDimension());
             RealMatrix ExpScores = Scores.copy();
             double rowSum;
@@ -182,6 +183,10 @@ public class NeuralNetworkStudy {
                     rowSum+=ExpScores.getEntry(row, col);
                 }
                 divisor.setEntry(row, rowSum);
+            }
+            RealMatrix Probabilities = ExpScores.copy();
+            for(int row=0; row<Probabilities.getRowDimension(); row++) {
+                Probabilities.setRowVector(row, Probabilities.getRowVector(row).ebeDivide(divisor));
             }
             /*
             # compute the class probabilities
@@ -196,9 +201,31 @@ public class NeuralNetworkStudy {
             type(probs): 
             <type 'numpy.ndarray'> (300, 3)
             */
-            // compute the class probabilities
-            //RealMatrix ExpScores = Scores;
-            //double probs = exp_scores / np.sum(exp_scores, axis=1, keepdims=True) # [N x K];
+            
+            /*
+            # compute the loss: average cross-entropy loss and regularization
+              corect_logprobs = -np.log(probs[range(num_examples),y])
+              data_loss = np.sum(corect_logprobs)/num_examples
+              reg_loss = 0.5*reg*np.sum(W*W)
+              loss = data_loss + reg_loss
+              if i % 10 == 0:
+                print "iteration %d: loss %f" % (i, loss)
+
+              # compute the gradient on scores
+              dscores = probs
+              dscores[range(num_examples),y] -= 1
+              dscores /= num_examples
+
+              # backpropate the gradient to the parameters (W,b)
+              dW = np.dot(X.T, dscores)
+              db = np.sum(dscores, axis=0, keepdims=True)
+
+              dW += reg*W # regularization gradient
+
+              # perform a parameter update
+              W += -step_size * dW
+              b += -step_size * db
+            */
         }
     }
 
