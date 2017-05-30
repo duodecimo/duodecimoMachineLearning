@@ -238,6 +238,11 @@ public class NeuralNetworkStudy {
               W += -step_size * dW
               b += -step_size * db
             */
+            RealVector logProbs = new ArrayRealVector(X.getRowDimension());
+            for(int row=0; row<Probabilities.getRowDimension(); row++) {
+                logProbs.setEntry(row, -Math.log(Probabilities.getEntry(row, (int) Y.getEntry(row))));
+            }
+            //double dataLoss = logProbs.
         }
     }
 
