@@ -136,8 +136,8 @@ public class NeuralNetworkStudy {
         showChart();
         
         // lets crete a weight matrix W and a bias vector b
-        RealMatrix W = MatrixUtils.createRealMatrix(dimensionality, numberOfClasses);
-        RealVector b = new ArrayRealVector(numberOfClasses);
+        RealMatrix W = MatrixUtils.createRealMatrix(dimensionality, numberOfClasses); // 2X3
+        RealVector b = new ArrayRealVector(numberOfClasses); // 1X3
         // lets generate random values to initialize W
         JDKRandomGenerator generator = new JDKRandomGenerator((int) System.currentTimeMillis());
         DoubleStream doubleStream;
@@ -150,7 +150,8 @@ public class NeuralNetworkStudy {
             }
         }
         System.out.println(DuodecimoMatrixUtils.showRealMatrix("W:", W));
-        RealMatrix Scores = X.multiply(W);
+        RealMatrix Scores;
+        Scores = X.multiply(W);
         System.out.println(DuodecimoMatrixUtils.showRealMatrix("Scores:", Scores, 10, -1));
         for(int i=0; i<Scores.getRowDimension(); i++) {
             for(int j=0; j< Scores.getColumnDimension(); j++) {
@@ -161,11 +162,16 @@ public class NeuralNetworkStudy {
 
         // some hyperparameters
         double stepSize = 1e-0;
-        double reg = 1e-3; // regularization strength
+        double regularization = 1e-3; // regularization strength
+        /*
+            int pointsPerClass = 100;
+            int dimensionality = 2;
+            int numberOfClasses = 3;
+        */
         // gradient descent loop
         int numExamples = X.getRowDimension();
         for(int i=0; i<200; i++) {
-            // evaluate class scores, [N x K]
+            // evaluate class scores, [pointsPerClass x numberOfClasses]
             Scores = X.multiply(W);
             for (int l = 0; l < Scores.getRowDimension(); l++) {
                 for (int c = 0; c < Scores.getColumnDimension(); c++) {
@@ -173,22 +179,7 @@ public class NeuralNetworkStudy {
                 }
             }
             // compute the class probabilities
-            RealVector divisor = new ArrayRealVector(Scores.getRowDimension());
-            RealMatrix ExpScores = Scores.copy();
-            double rowSum;
-            for(int row = 0; row < ExpScores.getRowDimension(); row++) {
-                rowSum = 0;
-                for(int col = 0; col < ExpScores.getColumnDimension(); col++) {
-                    ExpScores.setEntry(row, col, Math.exp(ExpScores.getEntry(row, col)));
-                    rowSum+=ExpScores.getEntry(row, col);
-                }
-                divisor.setEntry(row, rowSum);
-            }
-            RealMatrix Probabilities = ExpScores.copy();
-            for(int row=0; row<Probabilities.getRowDimension(); row++) {
-                Probabilities.setRowVector(row, Probabilities.getRowVector(row).ebeDivide(divisor));
-            }
-            /*
+            /* python:
             # compute the class probabilities
             exp_scores = np.exp(scores)
             probs = exp_scores / np.sum(exp_scores, axis=1, keepdims=True) # [N x K]
@@ -201,7 +192,22 @@ public class NeuralNetworkStudy {
             type(probs): 
             <type 'numpy.ndarray'> (300, 3)
             */
-            
+            RealVector divisor = new ArrayRealVector(Scores.getRowDimension()); // pointsPerClass
+            RealMatrix ExpScores = Scores.copy(); // [pointsPerClass x numberOfClasses]
+            double rowSum;
+            for(int row = 0; row < ExpScores.getRowDimension(); row++) {
+                rowSum = 0;
+                for(int col = 0; col < ExpScores.getColumnDimension(); col++) {
+                    ExpScores.setEntry(row, col, Math.exp(ExpScores.getEntry(row, col)));
+                    rowSum+=ExpScores.getEntry(row, col);
+                }
+                divisor.setEntry(row, rowSum);
+            }
+            RealMatrix Probabilities = ExpScores.copy();
+            for(int row=0; row<Probabilities.getRowDimension(); row++) {
+                Probabilities.setRowVector(row, Probabilities.getRowVector(row).
+                        mapDivideToSelf(divisor.getEntry(row)));
+            }
             /*
             # compute the loss: average cross-entropy loss and regularization
               corect_logprobs = -np.log(probs[range(num_examples),y])

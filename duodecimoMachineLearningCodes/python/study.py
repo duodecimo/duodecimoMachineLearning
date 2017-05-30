@@ -1,6 +1,6 @@
 # A bit of setup
 import numpy as np
-import matplotlib.pyplot as plt
+#import matplotlib.pyplot as plt
 
 
 np.random.seed(0)
@@ -11,11 +11,13 @@ K = 3 # number of classes
 # using np.sum
 # explain probs = exp_scores / np.sum(exp_scores, axis=1, keepdims=True) # [N x K]
 
-k = np.array([[1.0, 1.0, 1.0],[2.0, 2.0, 2.0]])
+k = np.array([[1.0, 2.0, 3.0],[4.0, 5.0, 6.0]])
 print("k:"),
 print(type(k)),
 print(k.shape)
 print(k)
+print("k.shape[0]: "),
+print(k.shape[0])
 
 l = np.sum(k, axis=1, keepdims=True)
 
