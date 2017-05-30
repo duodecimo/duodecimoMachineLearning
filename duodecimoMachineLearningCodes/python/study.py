@@ -32,4 +32,6 @@ print("m:"),
 print(type(m)),
 print(m.shape)
 print(m)
+y=np.ones(6, dtype='uint8');
+ct = np.log(k[range(6),y])
 

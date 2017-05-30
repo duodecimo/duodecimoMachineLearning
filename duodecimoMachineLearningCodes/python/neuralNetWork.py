@@ -90,7 +90,10 @@ for i in xrange(200):
   # compute the class probabilities
   exp_scores = np.exp(scores)
   probs = exp_scores / np.sum(exp_scores, axis=1, keepdims=True) # [N x K]
-  
+  print("probs[range(num_examples),y]: ")
+  print(type(probs[range(num_examples),y]))
+  print(probs[range(num_examples),y])
+  quit()
   # compute the loss: average cross-entropy loss and regularization
   corect_logprobs = -np.log(probs[range(num_examples),y])
   data_loss = np.sum(corect_logprobs)/num_examples

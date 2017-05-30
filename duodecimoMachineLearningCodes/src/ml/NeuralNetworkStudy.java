@@ -210,6 +210,12 @@ public class NeuralNetworkStudy {
             }
             /*
             # compute the loss: average cross-entropy loss and regularization
+
+                    att: probs[range(num_examples),y]
+                         will select from each probs row (range(num_examples))
+                         the value of the column of the correct class (y)
+                         returning a vector of num_examples elements
+            
               corect_logprobs = -np.log(probs[range(num_examples),y])
               data_loss = np.sum(corect_logprobs)/num_examples
               reg_loss = 0.5*reg*np.sum(W*W)
