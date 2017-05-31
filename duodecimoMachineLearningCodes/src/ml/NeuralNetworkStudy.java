@@ -173,6 +173,7 @@ public class NeuralNetworkStudy {
             }
         }
         System.out.println(DuodecimoMatrixUtils.showRealMatrix("Scores:", Scores, 10, -1));
+        // scores debug: using read python data from file, it is equivalent!
 
         // some hyperparameters
         double stepSize = 1e-0;
@@ -203,6 +204,10 @@ public class NeuralNetworkStudy {
                 for (int col = 0; col < Scores.getColumnDimension(); col++) {
                     Scores.setEntry(row, col, (Scores.getEntry(row, col) + b.getEntry(col)));
                 }
+            }
+            if(i<1) {
+                System.out.println(DuodecimoMatrixUtils.showRealMatrix("Scores:", Scores, 10, -1));
+                // scores debug: using read python data from file, it is equivalent!
             }
             // compute the class probabilities
             /* python:

@@ -40,10 +40,6 @@ X = np.loadtxt("Xdata.txt", delimiter = ', ')
 y = np.loadtxt("Ydata.txt", dtype='uint8', delimiter = ', ')
 
 scores = np.dot(X, W) + b
-print("\nscores:"),
-print(type(scores)),
-print(scores.shape)
-print(scores)
 
 
 #Z = np.ones((N, K))
@@ -63,49 +59,42 @@ reg = 1e-3 # regularization strength
 # gradient descent loop
 num_examples = X.shape[0]
 
-scores = np.dot(X, W) + b 
- 
-# compute the class probabilities
-exp_scores = np.exp(scores)
-probs = exp_scores / np.sum(exp_scores, axis=1, keepdims=True) # [N x K]
+# print("type(exp_scores): ")
+# print(type(exp_scores)),
+# print(exp_scores.shape)
 
-print("type(scores): ")
-print(type(scores)),
-print(scores.shape)
-print("type(exp_scores): ")
-print(type(exp_scores)),
-print(exp_scores.shape)
+# a = np.sum(exp_scores, axis=1, keepdims=True)
+# print("type(a): ")
+# print(type(a)),
+# print(a.shape)
 
-a = np.sum(exp_scores, axis=1, keepdims=True)
-print("type(a): ")
-print(type(a)),
-print(a.shape)
+# print("type(probs): ")
+# print(type(probs)),
+# print(probs.shape)
+# print("probs");
+# print(probs);
 
-print("type(probs): ")
-print(type(probs)),
-print(probs.shape)
-print("probs");
-print(probs);
-
-print("type(probs[range(num_examples),y]): "),
-print(type(probs[range(num_examples),y])),
-print(probs[range(num_examples),y].shape)
-print("probs[range(num_examples),y]: ")
-print(probs[range(num_examples),y])
+# print("type(probs[range(num_examples),y]): "),
+# print(type(probs[range(num_examples),y])),
+# print(probs[range(num_examples),y].shape)
+# print("probs[range(num_examples),y]: ")
+# print(probs[range(num_examples),y])
 
 
 for i in xrange(200):
   
   # evaluate class scores, [N x K]
-  scores = np.dot(X, W) + b 
+  scores = np.dot(X, W) + b
+
+  if i<1:
+    print("\nscores:"),
+    print(type(scores)),
+    print(scores.shape)
+    print(scores)
   
   # compute the class probabilities
   exp_scores = np.exp(scores)
   probs = exp_scores / np.sum(exp_scores, axis=1, keepdims=True) # [N x K]
-
-  #print("probs[range(num_examples),y]: ")
-  #print(type(probs[range(num_examples),y]))
-  #print(probs[range(num_examples),y])
 
   # compute the loss: average cross-entropy loss and regularization
   corect_logprobs = -np.log(probs[range(num_examples),y])
