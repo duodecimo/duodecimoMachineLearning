@@ -5,16 +5,15 @@ D=2
 
 X = np.zeros((N*K,D))
 y = np.zeros(N*K, dtype='uint8')
-for j in xrange(K):
-  ix = range(N*j,N*(j+1))
-  r = np.linspace(0.0,1,N) # radius
-  t = np.linspace(j*4,(j+1)*4,N) + np.random.randn(N)*0.2 # theta
-  X[ix] = np.c_[r*np.sin(t), r*np.cos(t)]
-  y[ix] = j
 
+# initialize W randomly
+#W = 0.01 * np.random.randn(D,K)
 
-W = 0.01 * np.random.randn(D,K)
+# alternative: fixed initial W
+W = np.array([[0.01, 0.0, -0.01],[0.0, -0.01, 0.01]])
+
 b = np.zeros((1,K))
+
 print("W:"),
 print(type(W)),
 print(W.shape)
@@ -23,6 +22,20 @@ print("\nb:"),
 print(type(b)),
 print(b.shape)
 print(b)
+
+
+for j in xrange(K):
+  ix = range(N*j,N*(j+1))
+  r = np.linspace(0.0,1,N) # radius
+  t = np.linspace(j*4,(j+1)*4,N) + np.random.randn(N)*0.2 # theta
+  X[ix] = np.c_[r*np.sin(t), r*np.cos(t)]
+  y[ix] = j
+
+# numpy.savetxt(fname, X, fmt='%.18e', delimiter=' ', newline='\n', header='', footer='', comments='# ')
+np.savetxt("Xdata.txt", X, delimiter = ', ')
+
+# numpy.loadtxt(fname, dtype=<type 'float'>, comments='#', delimiter=None, converters=None, skiprows=0, usecols=None, unpack=False, ndmin=0)
+X = np.loadtxt("Xdata.txt", delimiter = ', ')
 
 scores = np.dot(X, W) + b
 print("\nscores:"),
@@ -40,10 +53,6 @@ print(scores)
 
 #Train a Linear Classifier
 
-# initialize parameters randomly
-
-W = 0.01 * np.random.randn(D,K)
-b = np.zeros((1,K))
 
 # some hyperparameters
 step_size = 1e-0
@@ -81,15 +90,6 @@ print(type(probs[range(num_examples),y])),
 print(probs[range(num_examples),y].shape)
 print("probs[range(num_examples),y]: ")
 print(probs[range(num_examples),y])
-
-print("W: "),
-print(type(W)),
-print(W.shape)
-print(W)
-
-print("np.sum(W*W): "),
-print(type(np.sum(W*W))),
-print(np.sum(W*W))
 
 
 for i in xrange(200):

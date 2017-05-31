@@ -139,6 +139,7 @@ public class NeuralNetworkStudy {
         RealMatrix W = MatrixUtils.createRealMatrix(dimensionality, numberOfClasses); // 2X3
         RealVector b = new ArrayRealVector(numberOfClasses); // 1X3
         // lets generate random values to initialize W
+        /*
         JDKRandomGenerator generator = new JDKRandomGenerator((int) System.currentTimeMillis());
         DoubleStream doubleStream;
         double[] doubles;
@@ -149,6 +150,9 @@ public class NeuralNetworkStudy {
                 W.setEntry(i, j, doubles[j]*0.01d);
             }
         }
+        */
+        // debug: create W with fixed values
+        W = MatrixUtils.createRealMatrix(new double[][]{{0.01d, 0.0d, -0.01d},{0.0d, -0.01d, 0.01d}});
         System.out.println(DuodecimoMatrixUtils.showRealMatrix("W:", W));
         RealMatrix Scores;
         Scores = X.multiply(W);
