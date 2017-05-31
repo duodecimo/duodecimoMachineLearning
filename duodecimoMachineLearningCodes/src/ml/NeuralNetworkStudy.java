@@ -133,7 +133,7 @@ public class NeuralNetworkStudy {
         */
         /* now we can plot the dataset in order to see taht it is not liearly separable.
         */
-        showChart();
+        //showChart();
         
         // lets crete a weight matrix W and a bias vector b
         RealMatrix W = MatrixUtils.createRealMatrix(dimensionality, numberOfClasses); // 2X3
@@ -179,15 +179,15 @@ public class NeuralNetworkStudy {
         double regularizedLoss;
         double wSum;
         double loss;
-        RealMatrix DW;
+        RealMatrix DW = null;
         RealVector db;
         RealMatrix DScores;
         for(int i=0; i<200; i++) {
             // evaluate class scores, [pointsPerClass x numberOfClasses]
             Scores = X.multiply(W);
-            for (int l = 0; l < Scores.getRowDimension(); l++) {
-                for (int c = 0; c < Scores.getColumnDimension(); c++) {
-                    Scores.setEntry(l, c, (Scores.getEntry(l, c) + b.getEntry(c)));
+            for (int row = 0; row < Scores.getRowDimension(); row++) {
+                for (int col = 0; col < Scores.getColumnDimension(); col++) {
+                    Scores.setEntry(row, col, (Scores.getEntry(row, col) + b.getEntry(col)));
                 }
             }
             // compute the class probabilities
@@ -204,7 +204,7 @@ public class NeuralNetworkStudy {
             type(probs): 
             <type 'numpy.ndarray'> (300, 3)
             */
-            divisor = new ArrayRealVector(Scores.getRowDimension()); // pointsPerClass
+            divisor = new ArrayRealVector(Scores.getRowDimension()); // zeros vector of size pointsPerClass
             ExpScores = Scores.copy(); // [pointsPerClass x numberOfClasses]
             for(int row = 0; row < ExpScores.getRowDimension(); row++) {
                 rowSum = 0;
@@ -217,7 +217,7 @@ public class NeuralNetworkStudy {
             Probabilities = ExpScores.copy();
             for(int row=0; row<Probabilities.getRowDimension(); row++) {
                 Probabilities.setRowVector(row, Probabilities.getRowVector(row).
-                        mapDivideToSelf(divisor.getEntry(row)));
+                        mapDivide(divisor.getEntry(row)));
             }
             /*
             # compute the loss: average cross-entropy loss and regularization
@@ -234,7 +234,7 @@ public class NeuralNetworkStudy {
               if i % 10 == 0:
                 print "iteration %d: loss %f" % (i, loss)
             */
-            logProbs = new ArrayRealVector(X.getRowDimension());
+            logProbs = new ArrayRealVector(X.getRowDimension()); // zeros vector
             sumLogProbs=0;
             for(int row=0; row<Probabilities.getRowDimension(); row++) {
                 logProbs.setEntry(row, -Math.log(Probabilities.getEntry(row, (int) Y.getEntry(row))));
@@ -251,6 +251,11 @@ public class NeuralNetworkStudy {
             loss = dataLoss + regularizedLoss;
             if(i%10==0) {
                 System.out.println(String.format("iteration %d: loss %f", i, loss));
+                /*
+                if (DW != null) {
+                    System.out.println(DuodecimoMatrixUtils.showRealMatrix("DW.scalarMultiply(-stepSize):", DW.scalarMultiply(-stepSize)));
+                }
+                */
             }
             /*
               # compute the gradient on scores
@@ -286,10 +291,10 @@ public class NeuralNetworkStudy {
                     db.setEntry(col, (db.getEntry(col)+DScores.getEntry(row, col)));
                 }
             }
-            DW.add(W.scalarMultiply(regularization));
+            DW = DW.add(W.scalarMultiply(regularization));
             // perform a parameter update
-            W.add(DW.scalarMultiply(-stepSize));
-            b.add(db.mapMultiply(-stepSize));
+            W = W.add(DW.scalarMultiply(-stepSize));
+            b = b.add(db.mapMultiply(-stepSize));
         }
     }
 

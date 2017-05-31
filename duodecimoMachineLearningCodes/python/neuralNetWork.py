@@ -100,9 +100,11 @@ for i in xrange(200):
   # compute the class probabilities
   exp_scores = np.exp(scores)
   probs = exp_scores / np.sum(exp_scores, axis=1, keepdims=True) # [N x K]
-  print("probs[range(num_examples),y]: ")
-  print(type(probs[range(num_examples),y]))
-  print(probs[range(num_examples),y])
+
+  #print("probs[range(num_examples),y]: ")
+  #print(type(probs[range(num_examples),y]))
+  #print(probs[range(num_examples),y])
+
   # compute the loss: average cross-entropy loss and regularization
   corect_logprobs = -np.log(probs[range(num_examples),y])
   data_loss = np.sum(corect_logprobs)/num_examples
@@ -113,27 +115,30 @@ for i in xrange(200):
   
   # compute the gradient on scores
   dscores = probs
-  print("1: dscores: "),
-  print(type(dscores)),
-  print(dscores.shape)
-  print(dscores)
+
+  #print("1: dscores: "),
+  #print(type(dscores)),
+  #print(dscores.shape)
+  #print(dscores)
+
 	# minus one from correct class columns
   dscores[range(num_examples),y] -= 1
-  print("2: dscores: "),
-  print(type(dscores)),
-  print(dscores.shape)
-  print(dscores)
+
+  #print("2: dscores: "),
+  #print(type(dscores)),
+  #print(dscores.shape)
+  #print(dscores)
+
   dscores /= num_examples
-  print("3: dscores: "),
-  print(type(dscores)),
-  print(dscores.shape)
-  print(dscores)
 
-  print("np.sum(dscores, axis=0, keepdims=True): "),
-  print(type(np.sum(dscores, axis=0, keepdims=True))),
-  print(np.sum(dscores, axis=0, keepdims=True))
+  #print("3: dscores: "),
+  #print(type(dscores)),
+  #print(dscores.shape)
+  #print(dscores)
 
-  quit()
+  #print("np.sum(dscores, axis=0, keepdims=True): "),
+  #print(type(np.sum(dscores, axis=0, keepdims=True))),
+  #print(np.sum(dscores, axis=0, keepdims=True))
 
   # backpropate the gradient to the parameters (W,b)
   dW = np.dot(X.T, dscores)
