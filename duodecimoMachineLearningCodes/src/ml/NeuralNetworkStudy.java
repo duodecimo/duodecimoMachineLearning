@@ -20,6 +20,12 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.DoubleStream;
 import javax.swing.JFrame;
 import javax.swing.WindowConstants;
@@ -39,6 +45,7 @@ import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 import util.matrix.DuodecimoMatrixUtils;
+import util.matrix.DuodecimoVectorUtils;
 
 /**
  *
@@ -122,18 +129,21 @@ public class NeuralNetworkStudy {
             System.out.println("");
             */
 
+            /*
             for (int ix = pointsPerClass * j, k=0; ix < pointsPerClass * (j + 1); ix++, k++) {
                 X.setEntry(ix, 0, r[k]*Math.sin(t[k]));
                 X.setEntry(ix, 1, r[k]*Math.cos(t[k]));
                 Y.setEntry(ix, j);
             }
+            */
         }
-        /* debug
+        readMatrixFromTxt(X, Y);
         System.out.println(DuodecimoMatrixUtils.showRealMatrix("X:", X, 20, X.getColumnDimension()));
-        */
+        System.out.println(DuodecimoVectorUtils.showRealVector("Y:", Y, 20));
         /* now we can plot the dataset in order to see taht it is not liearly separable.
         */
-        //showChart();
+        showChart();
+        //System.exit(0);
         
         // lets crete a weight matrix W and a bias vector b
         RealMatrix W = MatrixUtils.createRealMatrix(dimensionality, numberOfClasses); // 2X3
@@ -356,6 +366,35 @@ public class NeuralNetworkStudy {
         frame.pack();
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setVisible(true);
+    }
+
+    private void readMatrixFromTxt(RealMatrix X, RealVector Y) {
+        try {
+            List<String> lines = Files.readAllLines(
+                    Paths.get("/home/duo/NetBeansProjects/gitHub/"
+                            + "duodecimoMachineLearning/duodecimoMachineLearningCodes/"
+                            + "python/Xdata.txt"), Charset.forName("UTF-8"));
+            double[][] values = new double[X.getRowDimension()][X.getColumnDimension()];
+            String[] v;
+            int row=0;
+            for(String line : lines) {
+                v = line.split(", ");
+                X.setEntry(row, 0, new Double(v[0]));
+                X.setEntry(row, 1, new Double(v[1]));
+                row++;
+            }
+            lines = Files.readAllLines(
+                    Paths.get("/home/duo/NetBeansProjects/gitHub/"
+                            + "duodecimoMachineLearning/duodecimoMachineLearningCodes/"
+                            + "python/Ydata.txt"), Charset.forName("UTF-8"));
+            row=0;
+            for(String line : lines) {
+                Y.setEntry(row, new Double(line));
+                row++;
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(NeuralNetworkStudy.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**

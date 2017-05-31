@@ -32,10 +32,12 @@ for j in xrange(K):
   y[ix] = j
 
 # numpy.savetxt(fname, X, fmt='%.18e', delimiter=' ', newline='\n', header='', footer='', comments='# ')
-np.savetxt("Xdata.txt", X, delimiter = ', ')
+#np.savetxt("Xdata.txt", X, delimiter = ', ')
+#np.savetxt("Ydata.txt", y, delimiter = ', ')
 
 # numpy.loadtxt(fname, dtype=<type 'float'>, comments='#', delimiter=None, converters=None, skiprows=0, usecols=None, unpack=False, ndmin=0)
 X = np.loadtxt("Xdata.txt", delimiter = ', ')
+y = np.loadtxt("Ydata.txt", dtype='uint8', delimiter = ', ')
 
 scores = np.dot(X, W) + b
 print("\nscores:"),

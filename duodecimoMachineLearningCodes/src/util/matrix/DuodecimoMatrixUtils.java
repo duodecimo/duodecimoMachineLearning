@@ -241,7 +241,7 @@ public class DuodecimoMatrixUtils {
         }
         // show first batch
         for (int c = 0; c < (maxCols < realVector. getDimension() ? maxCols/2 : maxCols); c++) {
-            output = output.concat(String.format(" %8.4f", realVector.getEntry(c)));
+            output = output.concat(String.format(" %12.8f", realVector.getEntry(c)));
         }
         // if not all, reticenses
         if(maxCols < realVector. getDimension()) {
@@ -251,7 +251,7 @@ public class DuodecimoMatrixUtils {
         if(maxCols < realVector. getDimension()) {
             maxCols -= maxCols/2;
             for (int c = realVector.getDimension() - maxCols; c < realVector.getDimension(); c++) {
-                output = output.concat(String.format(" %8.4f", realVector.getEntry(c)));
+                output = output.concat(String.format(" %12.8f", realVector.getEntry(c)));
             }
         }
         // end line
