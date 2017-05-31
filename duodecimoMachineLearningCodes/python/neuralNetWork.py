@@ -41,6 +41,7 @@ print(scores)
 #Train a Linear Classifier
 
 # initialize parameters randomly
+
 W = 0.01 * np.random.randn(D,K)
 b = np.zeros((1,K))
 
@@ -81,6 +82,15 @@ print(probs[range(num_examples),y].shape)
 print("probs[range(num_examples),y]: ")
 print(probs[range(num_examples),y])
 
+print("W: "),
+print(type(W)),
+print(W.shape)
+print(W)
+
+print("np.sum(W*W): "),
+print(type(np.sum(W*W))),
+print(np.sum(W*W))
+
 
 for i in xrange(200):
   
@@ -93,7 +103,6 @@ for i in xrange(200):
   print("probs[range(num_examples),y]: ")
   print(type(probs[range(num_examples),y]))
   print(probs[range(num_examples),y])
-  quit()
   # compute the loss: average cross-entropy loss and regularization
   corect_logprobs = -np.log(probs[range(num_examples),y])
   data_loss = np.sum(corect_logprobs)/num_examples
@@ -104,9 +113,28 @@ for i in xrange(200):
   
   # compute the gradient on scores
   dscores = probs
+  print("1: dscores: "),
+  print(type(dscores)),
+  print(dscores.shape)
+  print(dscores)
+	# minus one from correct class columns
   dscores[range(num_examples),y] -= 1
+  print("2: dscores: "),
+  print(type(dscores)),
+  print(dscores.shape)
+  print(dscores)
   dscores /= num_examples
-  
+  print("3: dscores: "),
+  print(type(dscores)),
+  print(dscores.shape)
+  print(dscores)
+
+  print("np.sum(dscores, axis=0, keepdims=True): "),
+  print(type(np.sum(dscores, axis=0, keepdims=True))),
+  print(np.sum(dscores, axis=0, keepdims=True))
+
+  quit()
+
   # backpropate the gradient to the parameters (W,b)
   dW = np.dot(X.T, dscores)
   db = np.sum(dscores, axis=0, keepdims=True)

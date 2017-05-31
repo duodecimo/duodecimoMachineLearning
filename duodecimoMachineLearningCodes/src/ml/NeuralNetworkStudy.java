@@ -169,7 +169,19 @@ public class NeuralNetworkStudy {
             int numberOfClasses = 3;
         */
         // gradient descent loop
-        int numExamples = X.getRowDimension();
+        RealVector divisor;
+        RealMatrix ExpScores;
+        double rowSum;
+        RealMatrix Probabilities;
+        RealVector logProbs;
+        double sumLogProbs;
+        double dataLoss;
+        double regularizedLoss;
+        double wSum;
+        double loss;
+        RealMatrix DW;
+        RealVector db;
+        RealMatrix DScores;
         for(int i=0; i<200; i++) {
             // evaluate class scores, [pointsPerClass x numberOfClasses]
             Scores = X.multiply(W);
@@ -192,9 +204,8 @@ public class NeuralNetworkStudy {
             type(probs): 
             <type 'numpy.ndarray'> (300, 3)
             */
-            RealVector divisor = new ArrayRealVector(Scores.getRowDimension()); // pointsPerClass
-            RealMatrix ExpScores = Scores.copy(); // [pointsPerClass x numberOfClasses]
-            double rowSum;
+            divisor = new ArrayRealVector(Scores.getRowDimension()); // pointsPerClass
+            ExpScores = Scores.copy(); // [pointsPerClass x numberOfClasses]
             for(int row = 0; row < ExpScores.getRowDimension(); row++) {
                 rowSum = 0;
                 for(int col = 0; col < ExpScores.getColumnDimension(); col++) {
@@ -203,7 +214,7 @@ public class NeuralNetworkStudy {
                 }
                 divisor.setEntry(row, rowSum);
             }
-            RealMatrix Probabilities = ExpScores.copy();
+            Probabilities = ExpScores.copy();
             for(int row=0; row<Probabilities.getRowDimension(); row++) {
                 Probabilities.setRowVector(row, Probabilities.getRowVector(row).
                         mapDivideToSelf(divisor.getEntry(row)));
@@ -222,7 +233,26 @@ public class NeuralNetworkStudy {
               loss = data_loss + reg_loss
               if i % 10 == 0:
                 print "iteration %d: loss %f" % (i, loss)
-
+            */
+            logProbs = new ArrayRealVector(X.getRowDimension());
+            sumLogProbs=0;
+            for(int row=0; row<Probabilities.getRowDimension(); row++) {
+                logProbs.setEntry(row, -Math.log(Probabilities.getEntry(row, (int) Y.getEntry(row))));
+                sumLogProbs+=logProbs.getEntry(row);
+            }
+            dataLoss = sumLogProbs/X.getRowDimension();
+            wSum = 0.0d;
+            for(int row=0; row<W.getRowDimension(); row++) {
+                for(int col=0; col<W.getColumnDimension(); col++) {
+                    wSum+=(W.getEntry(row, col)*W.getEntry(row, col));
+                }
+            }
+            regularizedLoss = 0.5d * regularization * wSum;
+            loss = dataLoss + regularizedLoss;
+            if(i%10==0) {
+                System.out.println(String.format("iteration %d: loss %f", i, loss));
+            }
+            /*
               # compute the gradient on scores
               dscores = probs
               dscores[range(num_examples),y] -= 1
@@ -238,11 +268,28 @@ public class NeuralNetworkStudy {
               W += -step_size * dW
               b += -step_size * db
             */
-            RealVector logProbs = new ArrayRealVector(X.getRowDimension());
-            for(int row=0; row<Probabilities.getRowDimension(); row++) {
-                logProbs.setEntry(row, -Math.log(Probabilities.getEntry(row, (int) Y.getEntry(row))));
+            // compute the gradient on scores
+            DScores = Probabilities.copy();
+            for(int row=0; row<DScores.getRowDimension(); row++) {
+                DScores.setEntry(row, (int) Y.getEntry(row), 
+                        DScores.getEntry(row, (int) Y.getEntry(row)));
+                for(int col=0; col<DScores.getColumnDimension(); col++) {
+                DScores.setEntry(row, col, 
+                        DScores.getEntry(row, col)/X.getRowDimension());
+                }
             }
-            //double dataLoss = logProbs.
+            // backpropate the gradient to the parameters (W,b)
+            DW = X.transpose().multiply(DScores);
+            db = new ArrayRealVector(b.getDimension()); // zeros vector
+            for(int row=0; row<DScores.getRowDimension(); row++) {
+                for(int col=0; col<DScores.getColumnDimension(); col++) {
+                    db.setEntry(col, (db.getEntry(col)+DScores.getEntry(row, col)));
+                }
+            }
+            DW.add(W.scalarMultiply(regularization));
+            // perform a parameter update
+            W.add(DW.scalarMultiply(-stepSize));
+            b.add(db.mapMultiply(-stepSize));
         }
     }
 

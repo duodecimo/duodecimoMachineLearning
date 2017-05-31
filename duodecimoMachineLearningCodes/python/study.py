@@ -32,6 +32,10 @@ print("m:"),
 print(type(m)),
 print(m.shape)
 print(m)
-y=np.ones(6, dtype='uint8');
-ct = np.log(k[range(6),y])
+#y=np.ones(6, dtype='uint8');
+#ct = np.log(k[range(6),y])
 
+print("k: ")
+print(k)
+print("np.sum(k, axis=0, keepdims=True): ")
+print(np.sum(k, axis=0, keepdims=True))
