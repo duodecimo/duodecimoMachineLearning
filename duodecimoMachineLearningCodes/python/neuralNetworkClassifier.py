@@ -1,3 +1,12 @@
+import numpy as np
+N=100
+K=3
+D=2
+
+X = np.zeros((N*K,D))
+y = np.zeros(N*K, dtype='uint8')
+
+
 # initialize parameters randomly
 h = 100 # size of hidden layer
 W = 0.01 * np.random.randn(D,h)
@@ -15,7 +24,20 @@ for i in xrange(10000):
   
   # evaluate class scores, [N x K]
   hidden_layer = np.maximum(0, np.dot(X, W) + b) # note, ReLU activation
+  if i<1:
+    print("\nhidden_layer:"),
+    print(type(hidden_layer)),
+    print(hidden_layer.shape)
+    print(hidden_layer)
+    print("=====================================================================\n\n")
+  
   scores = np.dot(hidden_layer, W2) + b2
+  if i<1:
+    print("\nscores:"),
+    print(type(scores)),
+    print(scores.shape)
+    print(scores)
+    print("=====================================================================\n\n")
   
   # compute the class probabilities
   exp_scores = np.exp(scores)
@@ -46,6 +68,21 @@ for i in xrange(10000):
   dW = np.dot(X.T, dhidden)
   db = np.sum(dhidden, axis=0, keepdims=True)
   
+  if i<1:
+    print("\ndW2:"),
+    print(type(dW2)),
+    print(dW2.shape)
+    print("=====================================================================\n\n")
+    print("\ndb2:"),
+    print(type(db2)),
+    print(db2.shape)
+    print("=====================================================================\n\n")
+    print("\ndhidden:"),
+    print(type(dhidden)),
+    print(dhidden.shape)
+    print("=====================================================================\n\n")
+  
+
   # add regularization gradient contribution
   dW2 += reg * W2
   dW += reg * W
@@ -55,3 +92,10 @@ for i in xrange(10000):
   b += -step_size * db
   W2 += -step_size * dW2
   b2 += -step_size * db2
+
+# evaluate training set accuracy
+hidden_layer = np.maximum(0, np.dot(X, W) + b)
+scores = np.dot(hidden_layer, W2) + b2
+predicted_class = np.argmax(scores, axis=1)
+print 'training accuracy: %.2f' % (np.mean(predicted_class == y))
+

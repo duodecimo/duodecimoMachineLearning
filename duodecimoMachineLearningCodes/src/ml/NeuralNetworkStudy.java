@@ -145,9 +145,10 @@ public class NeuralNetworkStudy {
         System.out.println(DuodecimoVectorUtils.showRealVector("Y:", Y, 20));
         /* now we can plot the dataset in order to see taht it is not liearly separable.
         */
-        showChart();
+        //showChart();
         //System.exit(0);
-        trainingSoftmaxLinearClassifier();
+        //trainingSoftmaxLinearClassifier();
+        trainingNeuralNetwork();
     }
 
     private void trainingSoftmaxLinearClassifier() {
@@ -164,11 +165,11 @@ public class NeuralNetworkStudy {
             JDKRandomGenerator generator = new JDKRandomGenerator((int) System.currentTimeMillis());
             DoubleStream doubleStream;
             double[] doubles;
-            for(int i=0; i<W.getRowDimension(); i++) {
+            for(int row=0; row<W.getRowDimension(); row++) {
                 doubleStream = generator.doubles(numberOfClasses, -1.0d, 1.0d);
                 doubles = doubleStream.toArray();
-                for(int j=0; j< numberOfClasses; j++) {
-                    W.setEntry(i, j, doubles[j]*0.01d);
+                for(int col=0; col< numberOfClasses; col++) {
+                    W.setEntry(row, col, doubles[col]*0.01d);
                 }
             }
         }
@@ -343,29 +344,81 @@ public class NeuralNetworkStudy {
         // size of the hidden layer
         int hiddenLayerSize = 100;
         // lets crete a weight matrix W and a bias vector b
-        RealMatrix W = MatrixUtils.createRealMatrix(dimensionality, numberOfClasses); // 2X3
+        RealMatrix W = MatrixUtils.createRealMatrix(dimensionality, hiddenLayerSize); // 2X100
         RealVector b = new ArrayRealVector(hiddenLayerSize); // 1X100
         // lets crete a weight matrix W2 and a bias vector b2 for hidden layer
         RealMatrix W2 = MatrixUtils.createRealMatrix(hiddenLayerSize, numberOfClasses); // 100X3
         RealVector b2 = new ArrayRealVector(numberOfClasses); // 1X3
         if (DEBUGCOMPAREPYTHON) {
             // create W with fixed values
-            W = MatrixUtils.createRealMatrix(new double[][]{{0.01d, 0.0d, -0.01d},{0.0d, -0.01d, 0.01d}});
+            W = MatrixUtils.createRealMatrix(new double[][]{
+                {
+                    0.01d, 0.0d, -0.01d, 0.0d, 0.01d, 0.0d, -0.01d, 0.0d, 0.01d, 0.0d, -0.01d, 0.0d, 0.01d, 0.0d, -0.01d, 0.0d, 0.01d, 0.0d, -0.01d, 0.0d,
+                    0.01d, 0.0d, -0.01d, 0.0d, 0.01d, 0.0d, -0.01d, 0.0d, 0.01d, 0.0d, -0.01d, 0.0d, 0.01d, 0.0d, -0.01d, 0.0d, 0.01d, 0.0d, -0.01d, 0.0d,
+                    0.01d, 0.0d, -0.01d, 0.0d, 0.01d, 0.0d, -0.01d, 0.0d, 0.01d, 0.0d, -0.01d, 0.0d, 0.01d, 0.0d, -0.01d, 0.0d, 0.01d, 0.0d, -0.01d, 0.0d,
+                    0.01d, 0.0d, -0.01d, 0.0d, 0.01d, 0.0d, -0.01d, 0.0d, 0.01d, 0.0d, -0.01d, 0.0d, 0.01d, 0.0d, -0.01d, 0.0d, 0.01d, 0.0d, -0.01d, 0.0d,
+                    0.01d, 0.0d, -0.01d, 0.0d, 0.01d, 0.0d, -0.01d, 0.0d, 0.01d, 0.0d, -0.01d, 0.0d, 0.01d, 0.0d, -0.01d, 0.0d, 0.01d, 0.0d, -0.01d, 0.0d
+                },
+                {
+                    0.0d, -0.01d, 0.0d, 0.01d, 0.0d, -0.01d, 0.0d, 0.01d, 0.0d, -0.01d, 0.0d, 0.01d, 0.0d, -0.01d, 0.0d, 0.01d, 0.0d, -0.01d, 0.0d, 0.01d, 
+                    0.0d, -0.01d, 0.0d, 0.01d, 0.0d, -0.01d, 0.0d, 0.01d, 0.0d, -0.01d, 0.0d, 0.01d, 0.0d, -0.01d, 0.0d, 0.01d, 0.0d, -0.01d, 0.0d, 0.01d, 
+                    0.0d, -0.01d, 0.0d, 0.01d, 0.0d, -0.01d, 0.0d, 0.01d, 0.0d, -0.01d, 0.0d, 0.01d, 0.0d, -0.01d, 0.0d, 0.01d, 0.0d, -0.01d, 0.0d, 0.01d, 
+                    0.0d, -0.01d, 0.0d, 0.01d, 0.0d, -0.01d, 0.0d, 0.01d, 0.0d, -0.01d, 0.0d, 0.01d, 0.0d, -0.01d, 0.0d, 0.01d, 0.0d, -0.01d, 0.0d, 0.01d, 
+                    0.0d, -0.01d, 0.0d, 0.01d, 0.0d, -0.01d, 0.0d, 0.01d, 0.0d, -0.01d, 0.0d, 0.01d, 0.0d, -0.01d, 0.0d, 0.01d, 0.0d, -0.01d, 0.0d, 0.01d
+                },
+                {
+                    0.0d, -0.01d, 0.0d, 0.01d, 0.0d, -0.01d, 0.0d, 0.01d, 0.0d, -0.01d, 0.0d, 0.01d, 0.0d, -0.01d, 0.0d, 0.01d, 0.0d, -0.01d, 0.0d, 0.01d, 
+                    0.0d, -0.01d, 0.0d, 0.01d, 0.0d, -0.01d, 0.0d, 0.01d, 0.0d, -0.01d, 0.0d, 0.01d, 0.0d, -0.01d, 0.0d, 0.01d, 0.0d, -0.01d, 0.0d, 0.01d, 
+                    0.0d, -0.01d, 0.0d, 0.01d, 0.0d, -0.01d, 0.0d, 0.01d, 0.0d, -0.01d, 0.0d, 0.01d, 0.0d, -0.01d, 0.0d, 0.01d, 0.0d, -0.01d, 0.0d, 0.01d, 
+                    0.0d, -0.01d, 0.0d, 0.01d, 0.0d, -0.01d, 0.0d, 0.01d, 0.0d, -0.01d, 0.0d, 0.01d, 0.0d, -0.01d, 0.0d, 0.01d, 0.0d, -0.01d, 0.0d, 0.01d, 
+                    0.0d, -0.01d, 0.0d, 0.01d, 0.0d, -0.01d, 0.0d, 0.01d, 0.0d, -0.01d, 0.0d, 0.01d, 0.0d, -0.01d, 0.0d, 0.01d, 0.0d, -0.01d, 0.0d, 0.01d
+                }
+            });
+            W2 = MatrixUtils.createRealMatrix(new double[][]{
+                {0.01d, 0.0d, -0.01d}, {0.0d, -0.01d, 0.01d}, {0.0d, -0.01d, 0.01d}, {0.0d, -0.01d, 0.01d}, {0.0d, -0.01d, 0.01d},
+                {0.01d, 0.0d, -0.01d}, {0.0d, -0.01d, 0.01d}, {0.0d, -0.01d, 0.01d}, {0.0d, -0.01d, 0.01d}, {0.0d, -0.01d, 0.01d},
+                {0.01d, 0.0d, -0.01d}, {0.0d, -0.01d, 0.01d}, {0.0d, -0.01d, 0.01d}, {0.0d, -0.01d, 0.01d}, {0.0d, -0.01d, 0.01d},
+                {0.01d, 0.0d, -0.01d}, {0.0d, -0.01d, 0.01d}, {0.0d, -0.01d, 0.01d}, {0.0d, -0.01d, 0.01d}, {0.0d, -0.01d, 0.01d},
+                {0.01d, 0.0d, -0.01d}, {0.0d, -0.01d, 0.01d}, {0.0d, -0.01d, 0.01d}, {0.0d, -0.01d, 0.01d}, {0.0d, -0.01d, 0.01d},
+                {0.01d, 0.0d, -0.01d}, {0.0d, -0.01d, 0.01d}, {0.0d, -0.01d, 0.01d}, {0.0d, -0.01d, 0.01d}, {0.0d, -0.01d, 0.01d},
+                {0.01d, 0.0d, -0.01d}, {0.0d, -0.01d, 0.01d}, {0.0d, -0.01d, 0.01d}, {0.0d, -0.01d, 0.01d}, {0.0d, -0.01d, 0.01d},
+                {0.01d, 0.0d, -0.01d}, {0.0d, -0.01d, 0.01d}, {0.0d, -0.01d, 0.01d}, {0.0d, -0.01d, 0.01d}, {0.0d, -0.01d, 0.01d},
+                {0.01d, 0.0d, -0.01d}, {0.0d, -0.01d, 0.01d}, {0.0d, -0.01d, 0.01d}, {0.0d, -0.01d, 0.01d}, {0.0d, -0.01d, 0.01d},
+                {0.01d, 0.0d, -0.01d}, {0.0d, -0.01d, 0.01d}, {0.0d, -0.01d, 0.01d}, {0.0d, -0.01d, 0.01d}, {0.0d, -0.01d, 0.01d},
+                {0.01d, 0.0d, -0.01d}, {0.0d, -0.01d, 0.01d}, {0.0d, -0.01d, 0.01d}, {0.0d, -0.01d, 0.01d}, {0.0d, -0.01d, 0.01d},
+                {0.01d, 0.0d, -0.01d}, {0.0d, -0.01d, 0.01d}, {0.0d, -0.01d, 0.01d}, {0.0d, -0.01d, 0.01d}, {0.0d, -0.01d, 0.01d},
+                {0.01d, 0.0d, -0.01d}, {0.0d, -0.01d, 0.01d}, {0.0d, -0.01d, 0.01d}, {0.0d, -0.01d, 0.01d}, {0.0d, -0.01d, 0.01d},
+                {0.01d, 0.0d, -0.01d}, {0.0d, -0.01d, 0.01d}, {0.0d, -0.01d, 0.01d}, {0.0d, -0.01d, 0.01d}, {0.0d, -0.01d, 0.01d},
+                {0.01d, 0.0d, -0.01d}, {0.0d, -0.01d, 0.01d}, {0.0d, -0.01d, 0.01d}, {0.0d, -0.01d, 0.01d}, {0.0d, -0.01d, 0.01d},
+                {0.01d, 0.0d, -0.01d}, {0.0d, -0.01d, 0.01d}, {0.0d, -0.01d, 0.01d}, {0.0d, -0.01d, 0.01d}, {0.0d, -0.01d, 0.01d},
+                {0.01d, 0.0d, -0.01d}, {0.0d, -0.01d, 0.01d}, {0.0d, -0.01d, 0.01d}, {0.0d, -0.01d, 0.01d}, {0.0d, -0.01d, 0.01d},
+                {0.01d, 0.0d, -0.01d}, {0.0d, -0.01d, 0.01d}, {0.0d, -0.01d, 0.01d}, {0.0d, -0.01d, 0.01d}, {0.0d, -0.01d, 0.01d},
+                {0.01d, 0.0d, -0.01d}, {0.0d, -0.01d, 0.01d}, {0.0d, -0.01d, 0.01d}, {0.0d, -0.01d, 0.01d}, {0.0d, -0.01d, 0.01d},
+                {0.01d, 0.0d, -0.01d}, {0.0d, -0.01d, 0.01d}, {0.0d, -0.01d, 0.01d}, {0.0d, -0.01d, 0.01d}, {0.0d, -0.01d, 0.01d}
+            });
         }
         else {
             // lets generate random values to initialize W
             JDKRandomGenerator generator = new JDKRandomGenerator((int) System.currentTimeMillis());
             DoubleStream doubleStream;
             double[] doubles;
-            for(int i=0; i<W.getRowDimension(); i++) {
+            for(int row=0; row<W.getRowDimension(); row++) {
+                doubleStream = generator.doubles(hiddenLayerSize, -1.0d, 1.0d);
+                doubles = doubleStream.toArray();
+                for(int col=0; col< hiddenLayerSize; col++) {
+                    W.setEntry(row, col, doubles[col]*0.01d);
+                }
+            }
+            for(int row=0; row<W2.getRowDimension(); row++) {
                 doubleStream = generator.doubles(numberOfClasses, -1.0d, 1.0d);
                 doubles = doubleStream.toArray();
-                for(int j=0; j< numberOfClasses; j++) {
-                    W.setEntry(i, j, doubles[j]*0.01d);
+                for(int col=0; col< numberOfClasses; col++) {
+                    W2.setEntry(row, col, doubles[col]*0.01d);
                 }
             }
         }
-        System.out.println(DuodecimoMatrixUtils.showRealMatrix("W:", W));
+        System.out.println(DuodecimoMatrixUtils.showRealMatrix("W:", W, -1, 10));
+        System.out.println(DuodecimoMatrixUtils.showRealMatrix("W2:", W2, 10, -1));
         RealMatrix Scores;
         Scores = X.multiply(W);
         System.out.println(DuodecimoMatrixUtils.showRealMatrix("Scores:", Scores, 10, -1));
@@ -386,6 +439,7 @@ public class NeuralNetworkStudy {
             int numberOfClasses = 3;
         */
         // gradient descent loop
+        RealMatrix HiddenLayer;
         RealVector divisor;
         RealMatrix ExpScores;
         double rowSum;
@@ -396,18 +450,31 @@ public class NeuralNetworkStudy {
         double regularizedLoss;
         double wSum;
         double loss;
-        RealMatrix DW = null;
+        RealMatrix DW;
         RealVector db;
+        RealMatrix DW2;
+        RealVector db2;
+        RealMatrix Dhidden;
         RealMatrix DScores;
-        for(int i=0; i<200; i++) {
+        for(int i=0; i<10000; i++) {
             // evaluate class scores, [pointsPerClass x numberOfClasses]
-            Scores = X.multiply(W);
+            HiddenLayer = X.multiply(W);
+            for (int row = 0; row < HiddenLayer.getRowDimension(); row++) {
+                for (int col = 0; col < HiddenLayer.getColumnDimension(); col++) {
+                    HiddenLayer.setEntry(row, col, (Scores.getEntry(row, col) + b.getEntry(col)));
+                    if(HiddenLayer.getEntry(row, col)<0) { //  note, ReLU activation
+                        HiddenLayer.setEntry(row, col, 0.0d);
+                    }
+                }
+            }
+            Scores = HiddenLayer.multiply(W2);
             for (int row = 0; row < Scores.getRowDimension(); row++) {
                 for (int col = 0; col < Scores.getColumnDimension(); col++) {
-                    Scores.setEntry(row, col, (Scores.getEntry(row, col) + b.getEntry(col)));
+                    Scores.setEntry(row, col, (Scores.getEntry(row, col) + b2.getEntry(col)));
                 }
             }
             if(i<1) {
+                System.out.println(DuodecimoMatrixUtils.showRealMatrix("HiddenLayer:", HiddenLayer, 10, 10));
                 System.out.println(DuodecimoMatrixUtils.showRealMatrix("Scores:", Scores, 10, -1));
                 // scores debug: using read python data from file, it is equivalent! (05/31/2017)
             }
@@ -458,6 +525,11 @@ public class NeuralNetworkStudy {
                     wSum+=(W.getEntry(row, col)*W.getEntry(row, col));
                 }
             }
+            for(int row=0; row<W2.getRowDimension(); row++) {
+                for(int col=0; col<W2.getColumnDimension(); col++) {
+                    wSum+=(W2.getEntry(row, col)*W2.getEntry(row, col));
+                }
+            }
             regularizedLoss = 0.5d * regularization * wSum;
             if(i<1) {
                 System.out.println(String.format("\nRegularized loss = %f\n\n", regularizedLoss));
@@ -468,7 +540,7 @@ public class NeuralNetworkStudy {
                 System.out.println(String.format("\nLoss = %f\n\n", loss));
                 // loss debug: using read python data from file, it is equivalent! (06/01/2017)
             }
-            if(i%10==0) {
+            if(i%1000==0) {
                 System.out.println(String.format("iteration %d: loss %f", i, loss));
                 // loss debug: using read python data from file,
                 // all iterations are equivalent! (06/01/2017)
@@ -487,30 +559,78 @@ public class NeuralNetworkStudy {
                 System.out.println(DuodecimoMatrixUtils.showRealMatrix("DScores:", DScores, 10, -1));
                 // dscores debug: using read python data from file, it is equivalent! (06/01/2017)
             }
-            // backpropate the gradient to the parameters (W,b)
-            DW = X.transpose().multiply(DScores);
-            db = new ArrayRealVector(b.getDimension()); // zeros vector
+            // backpropate the gradient
+            /*
+                # first backprop into parameters W2 and b2
+                  dW2 = np.dot(hidden_layer.T, dscores)
+                  db2 = np.sum(dscores, axis=0, keepdims=True)
+                  # next backprop into hidden layer
+                  dhidden = np.dot(dscores, W2.T)
+                  # backprop the ReLU non-linearity
+                  dhidden[hidden_layer <= 0] = 0
+                  # finally into W,b
+                  dW = np.dot(X.T, dhidden)
+                  db = np.sum(dhidden, axis=0, keepdims=True)
+            */
+            // first backprop into parameters W2 and b2
+            DW2 = HiddenLayer.transpose().multiply(DScores);
+            db2 = new ArrayRealVector(b2.getDimension()); // zeros vector
             for(int row=0; row<DScores.getRowDimension(); row++) {
                 for(int col=0; col<DScores.getColumnDimension(); col++) {
-                    db.setEntry(col, (db.getEntry(col)+DScores.getEntry(row, col)));
+                    db2.setEntry(col, (db2.getEntry(col)+DScores.getEntry(row, col)));
                 }
             }
+            Dhidden = DScores.multiply(W2.transpose());
+            // backprop the ReLU non-linearity
+            for(int row=0; row<HiddenLayer.getRowDimension(); row++) {
+                for(int col=0; col<HiddenLayer.getColumnDimension(); col++) {
+                    if(HiddenLayer.getEntry(row, col)<=0) {
+                        Dhidden.setEntry(row, col, 0.0d);
+                    }
+                }
+            }
+            // finally into W,b
+            DW = X.transpose().multiply(Dhidden);
+            db = new ArrayRealVector(b.getDimension()); // zeros vector
+            for(int row=0; row<Dhidden.getRowDimension(); row++) {
+                for(int col=0; col<Dhidden.getColumnDimension(); col++) {
+                    db.setEntry(col, (db.getEntry(col)+Dhidden.getEntry(row, col)));
+                }
+            }
+            DW2 = DW2.add(W2.scalarMultiply(regularization));
             DW = DW.add(W.scalarMultiply(regularization));
             // perform a parameter update
             W = W.add(DW.scalarMultiply(-stepSize));
             b = b.add(db.mapMultiply(-stepSize));
+            W2 = W2.add(DW2.scalarMultiply(-stepSize));
+            b2 = b2.add(db2.mapMultiply(-stepSize));
         }
         /*
             # evaluate training set accuracy
             scores = np.dot(X, W) + b
             predicted_class = np.argmax(scores, axis=1)
             print 'training accuracy: %.2f%%' % (np.mean(predicted_class == y)*100)
+
+            # evaluate training set accuracy
+            hidden_layer = np.maximum(0, np.dot(X, W) + b)
+            scores = np.dot(hidden_layer, W2) + b2
+            predicted_class = np.argmax(scores, axis=1)
+            print 'training accuracy: %.2f' % (np.mean(predicted_class == y))
         */
         // evaluate training set accuracy
-        Scores = X.multiply(W);
+        HiddenLayer = X.multiply(W);
+        for (int row = 0; row < HiddenLayer.getRowDimension(); row++) {
+            for (int col = 0; col < HiddenLayer.getColumnDimension(); col++) {
+                HiddenLayer.setEntry(row, col, (Scores.getEntry(row, col) + b.getEntry(col)));
+                if(HiddenLayer.getEntry(row, col)<0) { //  note, ReLU activation
+                    HiddenLayer.setEntry(row, col, 0.0d);
+                }
+            }
+        }
+        Scores = HiddenLayer.multiply(W2);
         for (int row = 0; row < Scores.getRowDimension(); row++) {
             for (int col = 0; col < Scores.getColumnDimension(); col++) {
-                Scores.setEntry(row, col, (Scores.getEntry(row, col) + b.getEntry(col)));
+                Scores.setEntry(row, col, (Scores.getEntry(row, col) + b2.getEntry(col)));
             }
         }
         double prediction;
