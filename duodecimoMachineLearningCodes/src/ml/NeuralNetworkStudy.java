@@ -145,9 +145,8 @@ public class NeuralNetworkStudy {
         System.out.println(DuodecimoVectorUtils.showRealVector("Y:", Y, 20));
         /* now we can plot the dataset in order to see taht it is not liearly separable.
         */
-        //showChart();
-        //System.exit(0);
-        //trainingSoftmaxLinearClassifier();
+        showChart();
+        trainingSoftmaxLinearClassifier();
         trainingNeuralNetwork();
     }
 
@@ -461,7 +460,7 @@ public class NeuralNetworkStudy {
             HiddenLayer = X.multiply(W);
             for (int row = 0; row < HiddenLayer.getRowDimension(); row++) {
                 for (int col = 0; col < HiddenLayer.getColumnDimension(); col++) {
-                    HiddenLayer.setEntry(row, col, (Scores.getEntry(row, col) + b.getEntry(col)));
+                    HiddenLayer.setEntry(row, col, (HiddenLayer.getEntry(row, col) + b.getEntry(col)));
                     if(HiddenLayer.getEntry(row, col)<0) { //  note, ReLU activation
                         HiddenLayer.setEntry(row, col, 0.0d);
                     }
@@ -621,7 +620,7 @@ public class NeuralNetworkStudy {
         HiddenLayer = X.multiply(W);
         for (int row = 0; row < HiddenLayer.getRowDimension(); row++) {
             for (int col = 0; col < HiddenLayer.getColumnDimension(); col++) {
-                HiddenLayer.setEntry(row, col, (Scores.getEntry(row, col) + b.getEntry(col)));
+                HiddenLayer.setEntry(row, col, (HiddenLayer.getEntry(row, col) + b.getEntry(col)));
                 if(HiddenLayer.getEntry(row, col)<0) { //  note, ReLU activation
                     HiddenLayer.setEntry(row, col, 0.0d);
                 }
