@@ -52,6 +52,7 @@ import util.matrix.DuodecimoVectorUtils;
  * @author duo
  */
 public class NeuralNetworkStudy {
+    private final boolean DEBUGCOMPAREPYTHON = false;
     int pointsPerClass = 100;
     int dimensionality = 2;
     int numberOfClasses = 3;
@@ -129,15 +130,17 @@ public class NeuralNetworkStudy {
             System.out.println("");
             */
 
-            /*
-            for (int ix = pointsPerClass * j, k=0; ix < pointsPerClass * (j + 1); ix++, k++) {
-                X.setEntry(ix, 0, r[k]*Math.sin(t[k]));
-                X.setEntry(ix, 1, r[k]*Math.cos(t[k]));
-                Y.setEntry(ix, j);
+            if (!DEBUGCOMPAREPYTHON) {
+                for (int ix = pointsPerClass * j, k = 0; ix < pointsPerClass * (j + 1); ix++, k++) {
+                    X.setEntry(ix, 0, r[k] * Math.sin(t[k]));
+                    X.setEntry(ix, 1, r[k] * Math.cos(t[k]));
+                    Y.setEntry(ix, j);
+                }
             }
-            */
         }
-        readMatrixFromTxt(X, Y);
+        if (DEBUGCOMPAREPYTHON) {
+            readMatrixFromTxt(X, Y);
+        }
         System.out.println(DuodecimoMatrixUtils.showRealMatrix("X:", X, 20, X.getColumnDimension()));
         System.out.println(DuodecimoVectorUtils.showRealVector("Y:", Y, 20));
         /* now we can plot the dataset in order to see taht it is not liearly separable.
@@ -207,22 +210,9 @@ public class NeuralNetworkStudy {
             }
             if(i<1) {
                 System.out.println(DuodecimoMatrixUtils.showRealMatrix("Scores:", Scores, 10, -1));
-                // scores debug: using read python data from file, it is equivalent!
+                // scores debug: using read python data from file, it is equivalent! (05/31/2017)
             }
             // compute the class probabilities
-            /* python:
-            # compute the class probabilities
-            exp_scores = np.exp(scores)
-            probs = exp_scores / np.sum(exp_scores, axis=1, keepdims=True) # [N x K]
-            type(scores): 
-            <type 'numpy.ndarray'> (300, 3)
-            type(exp_scores): 
-            <type 'numpy.ndarray'> (300, 3)
-            type(a): (a=np.sum(exp_scores, axis=1, keepdims=True))
-            <type 'numpy.ndarray'> (300, 1)
-            type(probs): 
-            <type 'numpy.ndarray'> (300, 3)
-            */
             divisor = new ArrayRealVector(Scores.getRowDimension()); // zeros vector of size pointsPerClass
             ExpScores = Scores.copy(); // [pointsPerClass x numberOfClasses]
             for(int row = 0; row < ExpScores.getRowDimension(); row++) {
@@ -233,25 +223,24 @@ public class NeuralNetworkStudy {
                 }
                 divisor.setEntry(row, rowSum);
             }
+            if(i<1) {
+                System.out.println(DuodecimoMatrixUtils.showRealMatrix("ExpScores:", ExpScores, 10, -1));
+                // exp_scores debug: using read python data from file, it is equivalent! (06/01/2017)
+            }
             Probabilities = ExpScores.copy();
             for(int row=0; row<Probabilities.getRowDimension(); row++) {
                 Probabilities.setRowVector(row, Probabilities.getRowVector(row).
                         mapDivide(divisor.getEntry(row)));
             }
+            if(i<1) {
+                System.out.println(DuodecimoMatrixUtils.showRealMatrix("Probabilities:", Probabilities, 10, -1));
+                // probs debug: using read python data from file, it is equivalent! (06/01/2017)
+            }
             /*
-            # compute the loss: average cross-entropy loss and regularization
-
                     att: probs[range(num_examples),y]
                          will select from each probs row (range(num_examples))
                          the value of the column of the correct class (y)
                          returning a vector of num_examples elements
-            
-              corect_logprobs = -np.log(probs[range(num_examples),y])
-              data_loss = np.sum(corect_logprobs)/num_examples
-              reg_loss = 0.5*reg*np.sum(W*W)
-              loss = data_loss + reg_loss
-              if i % 10 == 0:
-                print "iteration %d: loss %f" % (i, loss)
             */
             logProbs = new ArrayRealVector(X.getRowDimension()); // zeros vector
             sumLogProbs=0;
@@ -260,6 +249,10 @@ public class NeuralNetworkStudy {
                 sumLogProbs+=logProbs.getEntry(row);
             }
             dataLoss = sumLogProbs/X.getRowDimension();
+            if(i<1) {
+                System.out.println(String.format("\nData Loss = %f\n\n", dataLoss));
+                // data_loss debug: using read python data from file, it is equivalent! (06/01/2017)
+            }
             wSum = 0.0d;
             for(int row=0; row<W.getRowDimension(); row++) {
                 for(int col=0; col<W.getColumnDimension(); col++) {
@@ -267,40 +260,33 @@ public class NeuralNetworkStudy {
                 }
             }
             regularizedLoss = 0.5d * regularization * wSum;
+            if(i<1) {
+                System.out.println(String.format("\nRegularized loss = %f\n\n", regularizedLoss));
+                // check! (python 2e-07)
+            }
             loss = dataLoss + regularizedLoss;
+            if(i<1) {
+                System.out.println(String.format("\nLoss = %f\n\n", loss));
+                // loss debug: using read python data from file, it is equivalent! (06/01/2017)
+            }
             if(i%10==0) {
                 System.out.println(String.format("iteration %d: loss %f", i, loss));
-                /*
-                if (DW != null) {
-                    System.out.println(DuodecimoMatrixUtils.showRealMatrix("DW.scalarMultiply(-stepSize):", DW.scalarMultiply(-stepSize)));
-                }
-                */
+                // loss debug: using read python data from file,
+                // all iterations are equivalent! (06/01/2017)
             }
-            /*
-              # compute the gradient on scores
-              dscores = probs
-              dscores[range(num_examples),y] -= 1
-              dscores /= num_examples
-
-              # backpropate the gradient to the parameters (W,b)
-              dW = np.dot(X.T, dscores)
-              db = np.sum(dscores, axis=0, keepdims=True)
-
-              dW += reg*W # regularization gradient
-
-              # perform a parameter update
-              W += -step_size * dW
-              b += -step_size * db
-            */
             // compute the gradient on scores
             DScores = Probabilities.copy();
             for(int row=0; row<DScores.getRowDimension(); row++) {
                 DScores.setEntry(row, (int) Y.getEntry(row), 
-                        DScores.getEntry(row, (int) Y.getEntry(row)));
+                        DScores.getEntry(row, (int) Y.getEntry(row))-1.0d);
                 for(int col=0; col<DScores.getColumnDimension(); col++) {
-                DScores.setEntry(row, col, 
-                        DScores.getEntry(row, col)/X.getRowDimension());
+                    DScores.setEntry(row, col,
+                            DScores.getEntry(row, col) / X.getRowDimension());
                 }
+            }
+            if(i<1) {
+                System.out.println(DuodecimoMatrixUtils.showRealMatrix("DScores:", DScores, 10, -1));
+                // dscores debug: using read python data from file, it is equivalent! (06/01/2017)
             }
             // backpropate the gradient to the parameters (W,b)
             DW = X.transpose().multiply(DScores);
