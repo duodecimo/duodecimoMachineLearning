@@ -147,25 +147,224 @@ public class NeuralNetworkStudy {
         */
         showChart();
         //System.exit(0);
+        trainingSoftmaxLinearClassifier();
+    }
+
+    private void trainingSoftmaxLinearClassifier() {
         
         // lets crete a weight matrix W and a bias vector b
         RealMatrix W = MatrixUtils.createRealMatrix(dimensionality, numberOfClasses); // 2X3
-        RealVector b = new ArrayRealVector(numberOfClasses); // 1X3
-        // lets generate random values to initialize W
-        /*
-        JDKRandomGenerator generator = new JDKRandomGenerator((int) System.currentTimeMillis());
-        DoubleStream doubleStream;
-        double[] doubles;
-        for(int i=0; i<W.getRowDimension(); i++) {
-            doubleStream = generator.doubles(numberOfClasses, -1.0d, 1.0d);
-            doubles = doubleStream.toArray();
-            for(int j=0; j< numberOfClasses; j++) {
-                W.setEntry(i, j, doubles[j]*0.01d);
+        RealVector b = new ArrayRealVector(numberOfClasses); // 1X3 zeroes vector
+        if (DEBUGCOMPAREPYTHON) {
+            // create W with fixed values
+            W = MatrixUtils.createRealMatrix(new double[][]{{0.01d, 0.0d, -0.01d},{0.0d, -0.01d, 0.01d}});
+        }
+        else {
+            // lets generate random values to initialize W
+            JDKRandomGenerator generator = new JDKRandomGenerator((int) System.currentTimeMillis());
+            DoubleStream doubleStream;
+            double[] doubles;
+            for(int i=0; i<W.getRowDimension(); i++) {
+                doubleStream = generator.doubles(numberOfClasses, -1.0d, 1.0d);
+                doubles = doubleStream.toArray();
+                for(int j=0; j< numberOfClasses; j++) {
+                    W.setEntry(i, j, doubles[j]*0.01d);
+                }
             }
         }
+        System.out.println(DuodecimoMatrixUtils.showRealMatrix("W:", W));
+        RealMatrix Scores;
+        Scores = X.multiply(W);
+        System.out.println(DuodecimoMatrixUtils.showRealMatrix("Scores:", Scores, 10, -1));
+        for(int i=0; i<Scores.getRowDimension(); i++) {
+            for(int j=0; j< Scores.getColumnDimension(); j++) {
+                Scores.setEntry(i, j, (Scores.getEntry(i, j)+b.getEntry(j)));
+            }
+        }
+        System.out.println(DuodecimoMatrixUtils.showRealMatrix("Scores:", Scores, 10, -1));
+        // scores debug: using read python data from file, it is equivalent!
+
+        // some hyperparameters
+        double stepSize = 1e-0;
+        double regularization = 1e-3; // regularization strength
+        /*
+            int pointsPerClass = 100;
+            int dimensionality = 2;
+            int numberOfClasses = 3;
         */
-        // debug: create W with fixed values
-        W = MatrixUtils.createRealMatrix(new double[][]{{0.01d, 0.0d, -0.01d},{0.0d, -0.01d, 0.01d}});
+        // gradient descent loop
+        RealVector divisor;
+        RealMatrix ExpScores;
+        double rowSum;
+        RealMatrix Probabilities;
+        RealVector logProbs;
+        double sumLogProbs;
+        double dataLoss;
+        double regularizedLoss;
+        double wSum;
+        double loss;
+        RealMatrix DW = null;
+        RealVector db;
+        RealMatrix DScores;
+        for(int i=0; i<200; i++) {
+            // evaluate class scores, [pointsPerClass x numberOfClasses]
+            Scores = X.multiply(W);
+            for (int row = 0; row < Scores.getRowDimension(); row++) {
+                for (int col = 0; col < Scores.getColumnDimension(); col++) {
+                    Scores.setEntry(row, col, (Scores.getEntry(row, col) + b.getEntry(col)));
+                }
+            }
+            if(i<1) {
+                System.out.println(DuodecimoMatrixUtils.showRealMatrix("Scores:", Scores, 10, -1));
+                // scores debug: using read python data from file, it is equivalent! (05/31/2017)
+            }
+            // compute the class probabilities
+            divisor = new ArrayRealVector(Scores.getRowDimension()); // zeros vector of size pointsPerClass
+            ExpScores = Scores.copy(); // [pointsPerClass x numberOfClasses]
+            for(int row = 0; row < ExpScores.getRowDimension(); row++) {
+                rowSum = 0;
+                for(int col = 0; col < ExpScores.getColumnDimension(); col++) {
+                    ExpScores.setEntry(row, col, Math.exp(ExpScores.getEntry(row, col)));
+                    rowSum+=ExpScores.getEntry(row, col);
+                }
+                divisor.setEntry(row, rowSum);
+            }
+            if(i<1) {
+                System.out.println(DuodecimoMatrixUtils.showRealMatrix("ExpScores:", ExpScores, 10, -1));
+                // exp_scores debug: using read python data from file, it is equivalent! (06/01/2017)
+            }
+            Probabilities = ExpScores.copy();
+            for(int row=0; row<Probabilities.getRowDimension(); row++) {
+                Probabilities.setRowVector(row, Probabilities.getRowVector(row).
+                        mapDivide(divisor.getEntry(row)));
+            }
+            if(i<1) {
+                System.out.println(DuodecimoMatrixUtils.showRealMatrix("Probabilities:", Probabilities, 10, -1));
+                // probs debug: using read python data from file, it is equivalent! (06/01/2017)
+            }
+            /*
+                    att: probs[range(num_examples),y]
+                         will select from each probs row (range(num_examples))
+                         the value of the column of the correct class (y)
+                         returning a vector of num_examples elements
+            */
+            logProbs = new ArrayRealVector(X.getRowDimension()); // zeros vector
+            sumLogProbs=0;
+            for(int row=0; row<Probabilities.getRowDimension(); row++) {
+                logProbs.setEntry(row, -Math.log(Probabilities.getEntry(row, (int) Y.getEntry(row))));
+                sumLogProbs+=logProbs.getEntry(row);
+            }
+            dataLoss = sumLogProbs/X.getRowDimension();
+            if(i<1) {
+                System.out.println(String.format("\nData Loss = %f\n\n", dataLoss));
+                // data_loss debug: using read python data from file, it is equivalent! (06/01/2017)
+            }
+            wSum = 0.0d;
+            for(int row=0; row<W.getRowDimension(); row++) {
+                for(int col=0; col<W.getColumnDimension(); col++) {
+                    wSum+=(W.getEntry(row, col)*W.getEntry(row, col));
+                }
+            }
+            regularizedLoss = 0.5d * regularization * wSum;
+            if(i<1) {
+                System.out.println(String.format("\nRegularized loss = %f\n\n", regularizedLoss));
+                // check! (python 2e-07)
+            }
+            loss = dataLoss + regularizedLoss;
+            if(i<1) {
+                System.out.println(String.format("\nLoss = %f\n\n", loss));
+                // loss debug: using read python data from file, it is equivalent! (06/01/2017)
+            }
+            if(i%10==0) {
+                System.out.println(String.format("iteration %d: loss %f", i, loss));
+                // loss debug: using read python data from file,
+                // all iterations are equivalent! (06/01/2017)
+            }
+            // compute the gradient on scores
+            DScores = Probabilities.copy();
+            for(int row=0; row<DScores.getRowDimension(); row++) {
+                DScores.setEntry(row, (int) Y.getEntry(row), 
+                        DScores.getEntry(row, (int) Y.getEntry(row))-1.0d);
+                for(int col=0; col<DScores.getColumnDimension(); col++) {
+                    DScores.setEntry(row, col,
+                            DScores.getEntry(row, col) / X.getRowDimension());
+                }
+            }
+            if(i<1) {
+                System.out.println(DuodecimoMatrixUtils.showRealMatrix("DScores:", DScores, 10, -1));
+                // dscores debug: using read python data from file, it is equivalent! (06/01/2017)
+            }
+            // backpropate the gradient to the parameters (W,b)
+            DW = X.transpose().multiply(DScores);
+            db = new ArrayRealVector(b.getDimension()); // zeros vector
+            for(int row=0; row<DScores.getRowDimension(); row++) {
+                for(int col=0; col<DScores.getColumnDimension(); col++) {
+                    db.setEntry(col, (db.getEntry(col)+DScores.getEntry(row, col)));
+                }
+            }
+            DW = DW.add(W.scalarMultiply(regularization));
+            // perform a parameter update
+            W = W.add(DW.scalarMultiply(-stepSize));
+            b = b.add(db.mapMultiply(-stepSize));
+        }
+        /*
+            # evaluate training set accuracy
+            scores = np.dot(X, W) + b
+            predicted_class = np.argmax(scores, axis=1)
+            print 'training accuracy: %.2f%%' % (np.mean(predicted_class == y)*100)
+        */
+        // evaluate training set accuracy
+        Scores = X.multiply(W);
+        for (int row = 0; row < Scores.getRowDimension(); row++) {
+            for (int col = 0; col < Scores.getColumnDimension(); col++) {
+                Scores.setEntry(row, col, (Scores.getEntry(row, col) + b.getEntry(col)));
+            }
+        }
+        double prediction;
+        double predictionColumn;
+        double accuracy = 0.0d;
+        for (int row = 0; row < Scores.getRowDimension(); row++) {
+            prediction = Double.MIN_VALUE;
+            predictionColumn = -1;
+            for(int col=0; col<Scores.getColumnDimension(); col++) {
+                if(Scores.getEntry(row, col)>prediction) {
+                    prediction = Scores.getEntry(row, col);
+                    predictionColumn = col;
+                }
+            }
+            if(predictionColumn == Y.getEntry(row)) {
+                accuracy++;
+            }
+        }
+        System.out.println(String.format("\n\nAccuracy: %6.2f%%\n", (accuracy*100/X.getRowDimension())));
+    }
+
+    private void trainingNeuralNetwork() {
+        // size of the hidden layer
+        int hiddenLayerSize = 100;
+        // lets crete a weight matrix W and a bias vector b
+        RealMatrix W = MatrixUtils.createRealMatrix(dimensionality, numberOfClasses); // 2X3
+        RealVector b = new ArrayRealVector(hiddenLayerSize); // 1X100
+        // lets crete a weight matrix W2 and a bias vector b2 for hidden layer
+        RealMatrix W2 = MatrixUtils.createRealMatrix(hiddenLayerSize, numberOfClasses); // 100X3
+        RealVector b2 = new ArrayRealVector(numberOfClasses); // 1X3
+        if (DEBUGCOMPAREPYTHON) {
+            // create W with fixed values
+            W = MatrixUtils.createRealMatrix(new double[][]{{0.01d, 0.0d, -0.01d},{0.0d, -0.01d, 0.01d}});
+        }
+        else {
+            // lets generate random values to initialize W
+            JDKRandomGenerator generator = new JDKRandomGenerator((int) System.currentTimeMillis());
+            DoubleStream doubleStream;
+            double[] doubles;
+            for(int i=0; i<W.getRowDimension(); i++) {
+                doubleStream = generator.doubles(numberOfClasses, -1.0d, 1.0d);
+                doubles = doubleStream.toArray();
+                for(int j=0; j< numberOfClasses; j++) {
+                    W.setEntry(i, j, doubles[j]*0.01d);
+                }
+            }
+        }
         System.out.println(DuodecimoMatrixUtils.showRealMatrix("W:", W));
         RealMatrix Scores;
         Scores = X.multiply(W);
