@@ -163,3 +163,9 @@ for i in xrange(200):
   W += -step_size * dW
   b += -step_size * db
 
+# evaluate training set accuracy
+scores = np.dot(X, W) + b
+predicted_class = np.argmax(scores, axis=1)
+print 'training accuracy: %.2f%%' % (np.mean(predicted_class == y)*100)
+
+

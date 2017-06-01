@@ -301,6 +301,36 @@ public class NeuralNetworkStudy {
             W = W.add(DW.scalarMultiply(-stepSize));
             b = b.add(db.mapMultiply(-stepSize));
         }
+        /*
+            # evaluate training set accuracy
+            scores = np.dot(X, W) + b
+            predicted_class = np.argmax(scores, axis=1)
+            print 'training accuracy: %.2f%%' % (np.mean(predicted_class == y)*100)
+        */
+        // evaluate training set accuracy
+        Scores = X.multiply(W);
+        for (int row = 0; row < Scores.getRowDimension(); row++) {
+            for (int col = 0; col < Scores.getColumnDimension(); col++) {
+                Scores.setEntry(row, col, (Scores.getEntry(row, col) + b.getEntry(col)));
+            }
+        }
+        double prediction;
+        double predictionColumn;
+        double accuracy = 0.0d;
+        for (int row = 0; row < Scores.getRowDimension(); row++) {
+            prediction = Double.MIN_VALUE;
+            predictionColumn = -1;
+            for(int col=0; col<Scores.getColumnDimension(); col++) {
+                if(Scores.getEntry(row, col)>prediction) {
+                    prediction = Scores.getEntry(row, col);
+                    predictionColumn = col;
+                }
+            }
+            if(predictionColumn == Y.getEntry(row)) {
+                accuracy++;
+            }
+        }
+        System.out.println(String.format("\n\nAccuracy: %6.2f%%\n", (accuracy*100/X.getRowDimension())));
     }
 
     private XYDataset createJFreeChartDataset(RealMatrix X) {
