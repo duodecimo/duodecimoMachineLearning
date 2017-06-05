@@ -22,14 +22,19 @@ Tabela de Conteúdos:
 ### O que faremos em seguida
 
 
-O algoritmo do k-vizinho mais próximo apresenta uma série de desvantagens, além do fraco desempenho. Para cada classificação (uma imagem de teste)
-ele precisa comparar a imagem com todas as imagens do treino. Podemos dizer que não existe ganho de generalização em cada treino que ele faz.  
+Na aula anterior foi introduzido o problema de classificar images. Estudamos também dois algorítimos, o **vizinho mais próximo** e o
+**k-vizinho mais próximo**, capazes de lidar com a tarefa. Estes algorítimos, porém, apresentam uma série de desvantagens, além do fraco desempenho.
+Para cada classificação (uma imagem de teste), precisam comparar a imagem com todas as imagens do treino. Podemos dizer que não existe ganho de 
+generalização em cada treino que eles fazem.  
 
-Vamos em seguida desenvolver uma abordagem mais poderosa, e que eventual e naturalmente poderá ser estendida para algoritmos que utilizam redes
-neurais e redes convolucionais. A base desta nova abordagem vão ser duas funções. A primeira, **uma função de resultado**, encarregada de mapear
-uma imagem para o rótulo que a classifica. A segunda, uma **função de custo**, que mede a eficiência dos pesos (parâmetros) utilizados pela
-primeira função em sua tarefa. Então, passamos a tratar do problema de otimização, utilizando os resultados da segunda função para ajustar os
-pesos da primeira.
+Vamos em seguida desenvolver uma abordagem mais poderosa, e que eventual e naturalmente poderá ser estendida para algorítimos que utilizam redes
+neurais e redes convolucionais. A base desta nova abordagem vão ser duas funções. A primeira, **uma função de resultados**, parametrizada,
+encarregada de mapear uma imagem para o rótulo que a classifica. A segunda, uma **função de perdas**, também chamada **função de custo**, 
+que verifica as predições de resultados contra os resultados reais de cada imagem. Podemos considerar portanto que usamos a **função de perda**
+para medir a eficiência dos pesos (parâmetros) utilizados pela **função de resultados** em sua tarefa.
+Passaremos então a tratar estes valores obtidos como um problema de minimação, ou seja, vamos tentar minimizar a **função de perdas** com relação
+aos parâmetros da **função de resultados**.
+
 
 
 <a name='codigoJava'></a>
