@@ -39,7 +39,9 @@ aos parâmetros da **função de resultados**.
 
 Devemos começar esta abordagem definindo a **função de resultados**, que mapeia os valores dos pixeis de uma imagem para percentuais de confiança
 de resultados de classificação possíveis de cada classe. Vamos desenvolver a abordagem com um exemplo concreto. Vamos considerar um conjunto de
-imagens de treino $$x_i \in \R^D$$, cada uma associada com uma etiqueta $$y_i$$.
+imagens de treino $$x_i \in \R^D$$, cada uma associada com uma etiqueta $$y_i$$, onde $$i = 1 \dots N$$, e $$y_i \in 1 \dots K$$. 
+
+
 
 
 
