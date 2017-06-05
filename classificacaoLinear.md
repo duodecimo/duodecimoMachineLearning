@@ -33,7 +33,13 @@ encarregada de mapear uma imagem para o rótulo que a classifica. A segunda, uma
 que verifica as predições de resultados contra os resultados reais de cada imagem. Podemos considerar portanto que usamos a **função de perda**
 para medir a eficiência dos pesos (parâmetros) utilizados pela **função de resultados** em sua tarefa.
 Passaremos então a tratar estes valores obtidos como um problema de minimação, ou seja, vamos tentar minimizar a **função de perdas** com relação
-aos parâmetros da **função de resultados**.
+aos parâmetros da **função de resultados**.  
+
+### Definindo uma função de resultados
+
+Devemos começar esta abordagem definindo a **função de resultados**, que mapeia os valores dos pixeis de uma imagem para percentuais de confiança
+de resultados de classificação possíveis de cada classe. Vamos desenvolver a abordagem com um exemplo concreto. Vamos considerar um conjunto de
+imagens de treino $$x_i \in \R^D$$, cada uma associada com uma etiqueta $$y_i$$.
 
 
 
