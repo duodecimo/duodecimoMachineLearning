@@ -12,6 +12,7 @@ Tabela de Conteúdos:
 
 
 - [O que faremos em seguida](#emSeguida)
+- [Definindo uma função de resultados](#funcaoResultados)
 - [Hora de estudar código Java e testar](#codigoJava)
 
 > Dica: Após visitar um link da tabela de conteúdos, utilize a tecla de retorno do seu navegador para voltar para a tabela.
@@ -34,6 +35,9 @@ que verifica as predições de resultados contra os resultados reais de cada ima
 para medir a eficiência dos pesos (parâmetros) utilizados pela **função de resultados** em sua tarefa.
 Passaremos então a tratar estes valores obtidos como um problema de minimação, ou seja, vamos tentar minimizar a **função de perdas** com relação
 aos parâmetros da **função de resultados**.  
+
+
+<a name='funcaoResultados'></a>
 
 ### Definindo uma função de resultados
 
