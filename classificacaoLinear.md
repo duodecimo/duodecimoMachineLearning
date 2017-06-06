@@ -5,6 +5,12 @@ permalink: classificacaoLinear/
 ---
 
 
+<div class="fig figcenter fighighlight">
+  <img src="https://duodecimo.github.io/duodecimoMachineLearning/assets/images/linearClassification.png" width = "300" height="300">
+  <div class="figcaption">Figura 1: Classificação Linear (Produzida com o Autodraw).</div>
+</div>  
+
+
 ## Classificação Linear
 
 
