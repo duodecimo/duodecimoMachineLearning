@@ -88,7 +88,7 @@ de treino.
 
 <a name='InterpretandoCL'></a>
 
-###Interpretando um classificador linear
+### Interpretando um classificador linear
 
 Um classificador linear calcula o resultado de uma classe através de uma soma, na qual se coloca pesos, dos valores dos
 píxeis de uma imagem ao longo de cada um dos seus tres canais de côres. Dependendo dos valores que atribuímos a estes
