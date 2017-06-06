@@ -43,7 +43,19 @@ aos parâmetros da **função de resultados**.
 
 Devemos começar esta abordagem definindo a **função de resultados**, que mapeia os valores dos pixeis de uma imagem para percentuais de confiança
 de resultados de classificação possíveis de cada classe. Vamos desenvolver a abordagem com um exemplo concreto. Vamos considerar um conjunto de
-imagens de treino $$x_i \in R^D$$, cada uma associada com uma etiqueta $$y_i$$, onde $$i = 1 \dots N$$, e $$y_i \in 1 \dots K$$. 
+imagens de treino $$x_i \in R^d$$, cada uma associada com uma etiqueta $$y_i$$, onde $$i = 1 \dots n$$, e $$y_i \in 1 \dots k$$.  
+Isto significa que temos **n** exemplos (cada um com dimensionalidade **d**) e **k** categorias distintas. No caso do CIFAR-10,
+por exemplo, temos um conjunto de treinamento com **n** = 50000 imagens, cada uma com **d** = 32X32X3 = 2072 píxeis, e **k** = 10,
+já que existem 10 classes distintas (cachorro, gato, carro, etc).Vamos definir em seguida a função de resultados,
+$$f:R^d \mapsto R^k$$ que mapeia os píxeis da imagem para resultados das classes.  
+
+Nesta lição vamos começar com o que pode ser considerada a função mais simples, um classificador linear:  
+
+$$f(x_i, W, b) = Wx_i + b$$  
+
+Na quação cima, estamos assumindo que a imagem $$x_i$$ tem todos os píxeis achatados em uma única coluna de um vetor de
+dimensionalidade $$[D x 1]$$. A matriz **W** (de tamanho $$[K x D]$$) e o vetor **b** (de tamanho $$[K x 1]$$) são
+os parâmetros da função.
 
 
 
