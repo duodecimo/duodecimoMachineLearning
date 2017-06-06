@@ -19,6 +19,7 @@ Tabela de Conteúdos:
 
 - [O que faremos em seguida](#emSeguida)
 - [Definindo uma função de resultados](#funcaoResultados)
+- [Interpretando um classificador linear](#InterpretandoCL)
 - [Hora de estudar código Java e testar](#codigoJava)
 
 > Dica: Após visitar um link da tabela de conteúdos, utilize a tecla de retorno do seu navegador para voltar para a tabela.
@@ -84,6 +85,8 @@ imagem de teste pode apenas ser inserida na função e sua classificação basea
 significativamente mais rápido do que comparar cada píxel da imagem com cada píxel de todas as imagens do conjunto
 de treino.  
 
+
+<a name='InterpretandoCL'></a>
 
 ###Interpretando um classificador linear
 
