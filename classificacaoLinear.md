@@ -54,9 +54,9 @@ Nesta lição vamos começar com o que pode ser considerada a função mais simp
 $$f(x_i, W, b) = Wx_i + b$$  
 
 Na equação acima, estamos assumindo que a imagem $$x_i$$ tem todos os píxeis achatados em uma única coluna de um vetor de
-dimensionalidade $$[D x 1]$$. A matriz **W** (de tamanho $$[K x D]$$) e o vetor **b** (de tamanho $$[K x 1]$$) são
-os parâmetros da função. No CIFAR-10, $$x_i$$ possui todos os bytes da iésima imagem achatados em uma única $$[3072 x 1]$$
-coluna, **W** é $$[10 x 3072]$$ e **b** é $$[10 x 1]$$, portanto, 3072 números entram na função (os píxeis da imagem), e
+dimensionalidade [D x 1]. A matriz **W** (de tamanho [K x D]) e o vetor **b** (de tamanho [K x 1]) são
+os parâmetros da função. No CIFAR-10, $$x_i$$ possui todos os bytes da iésima imagem achatados em uma única [3072 x 1]
+coluna, **W** é [10 x 3072] e **b** é [10 x 1], portanto, 3072 números entram na função (os píxeis da imagem), e
 10 saem (os resultados de cada classe, podemos entender aquí como a chance de cada imagem pertencer a cada classe).
 Os parâmetros em **W** são normalmente chamados de **pesos**, e **b** é normalmente chamado de **vetor de bias**, por que
 ele influencia os resultados obtidos, sem interagir porém diretamente com os dados em $$x_i$$. Mesmo assim é comum usar
@@ -67,7 +67,18 @@ Observações importantes:
 - Note que a multiplicação de matriz única $$Wx_i$$ está efetivamente calculando 10 classificadores distintos em paralelo,
 (um para cada classe), onde cada classificador é uma linha de **W**.
 - Note também que consideramos os dados de entrada $$(x_i, y_i)$$ como dados e fixo, porém, temos contrôle sobre a
-atribuição dos valores dos parâmetros **W,b**.
+atribuição dos valores dos parâmetros **W,b**. Nosso objetivo é atribuir estes valôres de tal forma que os resultados
+da função coincidam com os valores reais da classificação das imagens em todo o conjunto de entrada. Teremos que aprofundar
+bastante aquí, mas podemos inicialmente construir a idéia de que desejamos que a classe correta tenha maior valor nos
+resultados do que as demais classes (as erradas).
+- Uma vantagem desta abordagem é que os dados de treinamento são utilizados para aprender os parâmetros **W,b**, mas,
+uma vez que a aprendizagem estiver completa, podemos descartar os dados de treino e guardar apenas os parâmetros.Uma
+imagem de teste pode apenas ser inserida na função e sua classificação baseada nos resultados obtidos.
+- Por último, observemos que para classificar uma imagem de teste basta uma multiplicação e adição de matriz, o que é
+significativamente mais rápido do que comparar cada píxel da imagem com cada píxel de todas as imagens do conjunto
+de treino.
+
+
 
 
 <a name='codigoJava'></a>
