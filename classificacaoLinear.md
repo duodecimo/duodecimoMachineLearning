@@ -82,7 +82,19 @@ uma vez que a aprendizagem estiver completa, podemos descartar os dados de trein
 imagem de teste pode apenas ser inserida na função e sua classificação baseada nos resultados obtidos.
 - Por último, observemos que para classificar uma imagem de teste basta uma multiplicação e adição de matriz, o que é
 significativamente mais rápido do que comparar cada píxel da imagem com cada píxel de todas as imagens do conjunto
-de treino.
+de treino.  
+
+
+###Interpretando um classificador linear
+
+Um classificador linear calcula o resultado de uma classe através de uma soma, na qual se coloca pesos, dos valores dos
+píxeis de uma imagem ao longo de cada um dos seus tres canais de côres. Dependendo dos valores que atribuímos a estes
+pesos, a função tem a capacidade de concordar ou discordar (dependendo do sinal do peso) de certas cores em determinadas
+posições da imagem. Por exemplo, podemos imaginar que um navio tende a ter quantidades de azul em ambos os lados
+de sua imagem, correspondentes a água. Portanto, um classificador de navio deve ter mais pesos positivos no canal azul
+nas posições ao laterais (presença de azul aumenta o resultado navio), e menos pesos negativos nos canais vermelho e
+verde nas mesmas posições (presença de verde e vermelho diminuem o resultado navio).
+
 
 
 
