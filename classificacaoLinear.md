@@ -45,7 +45,7 @@ Devemos começar esta abordagem definindo a **função de resultados**, que mape
 de resultados de classificação possíveis de cada classe. Vamos desenvolver a abordagem com um exemplo concreto. Vamos considerar um conjunto de
 imagens de treino $$x_i \in R^d$$, cada uma associada com uma etiqueta $$y_i$$, onde $$i = 1 \dots n$$, e $$y_i \in 1 \dots k$$.  
 Isto significa que temos **n** exemplos (cada um com dimensionalidade **d**) e **k** categorias distintas. No caso do CIFAR-10,
-por exemplo, temos um conjunto de treinamento com **n** = 50000 imagens, cada uma com **d** = 32X32X3 = 2072 píxeis, e **k** = 10,
+por exemplo, temos um conjunto de treinamento com **n** = 50000 imagens, cada uma com **d** = 32X32X3 = 3072 píxeis, e **k** = 10,
 já que existem 10 classes distintas (cachorro, gato, carro, etc).Vamos definir em seguida a função de resultados,
 $$f:R^d \mapsto R^k$$ que mapeia os píxeis da imagem para resultados das classes.  
 
@@ -53,12 +53,21 @@ Nesta lição vamos começar com o que pode ser considerada a função mais simp
 
 $$f(x_i, W, b) = Wx_i + b$$  
 
-Na quação cima, estamos assumindo que a imagem $$x_i$$ tem todos os píxeis achatados em uma única coluna de um vetor de
+Na equação acima, estamos assumindo que a imagem $$x_i$$ tem todos os píxeis achatados em uma única coluna de um vetor de
 dimensionalidade $$[D x 1]$$. A matriz **W** (de tamanho $$[K x D]$$) e o vetor **b** (de tamanho $$[K x 1]$$) são
-os parâmetros da função.
+os parâmetros da função. No CIFAR-10, $$x_i$$ possui todos os bytes da iésima imagem achatados em uma única $$[3072 x 1]$$
+coluna, **W** é $$[10 x 3072]$$ e **b** é $$[10 x 1]$$, portanto, 3072 números entram na função (os píxeis da imagem), e
+10 saem (os resultados de cada classe, podemos entender aquí como a chance de cada imagem pertencer a cada classe).
+Os parâmetros em **W** são normalmente chamados de **pesos**, e **b** é normalmente chamado de **vetor de bias**, por que
+ele influencia os resultados obtidos, sem interagir porém diretamente com os dados em $$x_i$$. Mesmo assim é comum usar
+indistintamente os termos parâmetros e pesos.  
 
+Observações importantes:
 
-
+- Note que a multiplicação de matriz única $$Wx_i$$ está efetivamente calculando 10 classificadores distintos em paralelo,
+(um para cada classe), onde cada classificador é uma linha de **W**.
+- Note também que consideramos os dados de entrada $$(x_i, y_i)$$ como dados e fixo, porém, temos contrôle sobre a
+atribuição dos valores dos parâmetros **W,b**.
 
 
 <a name='codigoJava'></a>
