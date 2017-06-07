@@ -115,16 +115,21 @@ Especialmente as das classes
 ![link](https://github.global.ssl.fastly.net/images/icons/emoji/link.png?v5)  
 
 
-
 <a name='matvetmult'></a>
 
 ## Multiplicar uma matriz com dimensões 2 x 3 por um vetor com dimensão 3
 
-Comandos para criar o vetor $$v1$$ e multiplicar $$M1 \times v1$$ :  
+Comandos para criar a matriz $$M1$$, o vetor $$v1$$ e multiplicar $$M1 \times v1$$ :  
 
 ```java
+
+RealMatrix M1 = 
+MatrixUtils.createRealMatrix(new double[][] { {1, 2, 3}, {4, 5, 6} });
+
 RealVector v1 = new ArrayRealVector(new double[]{1, 2, 3});
+
 RealVector v2 = M1.operate(v1);
+
 ```
 
 $$

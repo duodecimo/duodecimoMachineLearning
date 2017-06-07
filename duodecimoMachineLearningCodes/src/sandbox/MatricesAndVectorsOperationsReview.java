@@ -61,7 +61,8 @@ public class MatricesAndVectorsOperationsReview {
     private static final Logger LOGGER = Logger.getGlobal();
 
     public MatricesAndVectorsOperationsReview() {
-        operationsSample();
+        forTheBook();
+        //operationsSample();
         //showTest();
         // operationsForLinearClassification();
         //testTripleUnivariate();
@@ -556,6 +557,22 @@ public class MatricesAndVectorsOperationsReview {
         displayRealVector(java.util.ResourceBundle.getBundle("sandbox/Bundle").getString("FINALLY LET'S DO  W * X + B"),
                 java.util.ResourceBundle.getBundle("sandbox/Bundle").getString("R = R.ADD(B)"),
                 java.util.ResourceBundle.getBundle("sandbox/Bundle").getString("VECTOR R:"), r);
+    }
+
+    void forTheBook() {
+        RealMatrix M1 = MatrixUtils.createRealMatrix(new double[][]{ {1, 2, 3}, {4, 5, 6} } );
+        RealVector XV = MatrixUtils.createRealVector(new double[] { 1, 2, 4 } );
+        System.out.println(DuodecimoMatrixUtils.showRealMatrix("M1:", M1));
+        System.out.println(DuodecimoVectorUtils.showRealVector("X:", XV));
+        System.out.println(DuodecimoVectorUtils.showRealVector("M1.operate(X):", M1.operate(XV)));
+        
+        RealMatrix X = MatrixUtils.createRealMatrix(new double[][]{ {1, 2, 3}, {4, 5, 6} } );
+        RealMatrix W = MatrixUtils.createRealMatrix(new double[][]{ {1, 2}, {3, 4}, {5, 6} } );
+        RealVector b = MatrixUtils.createRealVector(new double[] {1, 2} );
+        System.out.println(DuodecimoMatrixUtils.showRealMatrix("X:", X));
+        System.out.println(DuodecimoMatrixUtils.showRealMatrix("W:", W));
+        RealMatrix Z = X.multiply(W);
+        System.out.println(DuodecimoMatrixUtils.showRealMatrix("X.multiply(W):", Z));
     }
 
     void VectorNormalization() throws Exception {
