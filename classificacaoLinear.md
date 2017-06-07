@@ -96,7 +96,13 @@ pesos, a função tem a capacidade de concordar ou discordar (dependendo do sina
 posições da imagem. Por exemplo, podemos imaginar que um navio tende a ter quantidades de azul em ambos os lados
 de sua imagem, correspondentes a água. Portanto, um classificador de navio deve ter mais pesos positivos no canal azul
 nas posições ao laterais (presença de azul aumenta o resultado navio), e menos pesos negativos nos canais vermelho e
-verde nas mesmas posições (presença de verde e vermelho diminuem o resultado navio).
+verde nas mesmas posições (presença de verde e vermelho diminuem o resultado navio).  
+
+<div class="fig figcenter fighighlight">
+  <img src="https://duodecimo.github.io/duodecimoMachineLearning/assets/images/interpretingImages.png" width = "800" height="600">
+  <div class="figcaption">Figura 2: Uma imagem é representada digitalmente por pixeis. Os valores de cada byte de cada pixel pode
+ ser armazenado em um vetor.</div>
+</div>
 
 
 
