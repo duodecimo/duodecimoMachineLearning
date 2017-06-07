@@ -176,6 +176,42 @@ Especialmente as das classes
 [RealMatrix](http://commons.apache.org/proper/commons-math/javadocs/api-3.6.1/org/apache/commons/math3/linear/RealMatrix.html) e
 [RealVector](http://commons.apache.org/proper/commons-math/javadocs/api-3.6.1/org/apache/commons/math3/linear/RealVector.html).
 ![link](https://github.global.ssl.fastly.net/images/icons/emoji/link.png?v5)  
+<a name='matvetmult'></a>  
+
+
+## Somar dois vetores de mesma dimensão
+
+Comandos para criar os vetores $$V1$$ e $$V2$$ e atribuir a soma dos dois a $$V3$$
+
+```java
+
+RealVector V1 = MatrixUtils.createRealVector(new double[] {1, 2, 3} );
+
+RealVector V2 = MatrixUtils.createRealVector(new double[] {4, 5, 6} );
+
+RealVector V3 = V1.add(V2);
+
+```
+
+$$
+  V3 = V1 + V2 = 
+  \left[ {\begin{array}{c}
+   1\\
+   2\\
+   3\\
+  \end{array} } \right] + 
+  \left[ {\begin{array}{c}
+   4\\
+   5\\
+   6\\
+  \end{array} } \right] = 
+  \left[ {\begin{array}{c}
+   5\\
+   7\\
+   9\\
+  \end{array} } \right]
+$$
+
 
 
 

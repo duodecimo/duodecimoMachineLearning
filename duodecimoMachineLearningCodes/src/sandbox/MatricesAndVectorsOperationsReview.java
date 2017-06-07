@@ -573,6 +573,13 @@ public class MatricesAndVectorsOperationsReview {
         System.out.println(DuodecimoMatrixUtils.showRealMatrix("W:", W));
         RealMatrix Z = X.multiply(W);
         System.out.println(DuodecimoMatrixUtils.showRealMatrix("X.multiply(W):", Z));
+        
+        RealVector V1 = MatrixUtils.createRealVector(new double[] {1, 2, 3} );
+        RealVector V2 = MatrixUtils.createRealVector(new double[] {4, 5, 6} );
+        RealVector V3 = V1.add(V2);
+        System.out.println(DuodecimoVectorUtils.showRealVector("V1:", V1));
+        System.out.println(DuodecimoVectorUtils.showRealVector("V2:", V2));
+        System.out.println(DuodecimoVectorUtils.showRealVector("V3:", V3));
     }
 
     void VectorNormalization() throws Exception {
