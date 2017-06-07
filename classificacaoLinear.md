@@ -112,7 +112,7 @@ A operação de classificação que desejamos executar consistem em multiplicar 
 Podemos executar a operação de três maneiras, e ainda, podemos simplificar a operação, de maneira que ao invés
 de fazermos um produto e uma soma, façamos apenas um produto. Vamos chamar esta simplificação de **truque do bias**.
 O **truque do bias**, bem como quaisquer operações de matrizes estão detalhadamente explicados na aula
- [Operações com Matrizes](operacoesMatrizes).
+ [Operações com Matrizes](https://duodecimo.github.io/duodecimoMachineLearning/operacoesMatrizes/).
 
 
 
