@@ -121,10 +121,10 @@ Basicamente consiste em acrescentar uma coluna com todos os valores = 1 em **X*,
 com os valores de bias (ao fazer isso, o vetor **b** não é mais necessário, passa a ser incorporado a **W**).
 Lembremos, finalmente, que o **truque do bias** se baseia na característica de multiplicação de matrizes, que
 exige que o número de elementos nas colunas da primeira seja igual ao número de elementos nas linhas da segunda.
-E também, o produto é da forma $$ c_1l_1 + c_2l_2 + ... + c_nl_n$$. Ora, se os valores de
-colunas forem iguais a um e os de linha os valores de bias, os produtos de cada bias por um vão ser os próprios valores
-de bias (um é a identidade do produto, ou seja, $$n\times 1 = n$$). E portanto os valores de bias serão somados em
-cada linha de produto. Em outras palavras, a soma de bias foi embutida em uma única operação de produto de matrizes.
+E também, o produto é da forma $$ c_1l_1 + c_2l_2 + ... + c_nl_n$$. Ora, se os valor da última coluna
+for igual a um e o da correspondente última linha o valor de bias, o produto linha por coluna vai somar a bias
+ao final (graças a propriedade de identidade: um é a identidade do produto, ou seja, $$n\times 1 = n$$).
+Em outras palavras, a soma de bias foi embutida em uma única operação de produto de matrizes.
 
 Como mencionamos acima, podemos realizar a operação de três formas:  
 - A primeira consiste em utilizar duas repetições aninhadas, uma para linhas e outra para colunas, e fazer a
