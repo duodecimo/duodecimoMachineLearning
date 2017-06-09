@@ -20,6 +20,8 @@ Tabela de Conteúdos:
 - [O que faremos em seguida](#emSeguida)
 - [Definindo uma função de resultados](#funcaoResultados)
 - [Interpretando um classificador linear](#InterpretandoCL)
+- [Definindo uma função de perdas](#funcaoPerdas)
+- [Perdas de máquinas de vetores suporte para várias classes](#perdasDeSVM)
 - [Hora de estudar código Java e testar](#codigoJava)
 
 > Dica: Após visitar um link da tabela de conteúdos, utilize a tecla de retorno do seu navegador para voltar para a tabela.
@@ -137,6 +139,48 @@ produto de matrizes seja satisfeita. Em seguida, transpomos o produto obtido par
 forma conveniente. As duas últimas formas são mais vantajosas se forem utilizadas APIs de operações com matrizes que
 ofereçam otimização real para as operações. Mesmo quando isto não ocorre em nossos exemplos, o foco é aprender como
 a operação otimizada funciona, para poder futuramente obter vantagem de bibliotecas especializadas com otimizações.  
+
+#### Pré processamento dos dados de uma imagem
+
+Nos exemplos que mencionamos até agora temos utilizado o valor original dos bytes dos pixeis das imagens, que varia
+na faixa [0...255]. Uma prática comum porém é normalizar os valores dos atributos (cada pixel pode ser considerado um
+atributo). Uma prática importante é centralizar os dados, subtraindo a média dos atributos de cada atributo. No caso
+de imagens resultará em dados aproximadamente na faixa [-127...127]. É comum também escalar os atributos para a
+faixa [-1...1]. Centralizar os atributos em **0** é bastante importante para o método do gradiente descendente que
+veremos mais adiante.  
+
+
+<a name='funcaoPerdas'></a>
+
+### Definindo uma função de perdas  
+
+
+Na seção anterior definimos uma função que mapeia pixeis de imagens para resultados de classes, parametrizada por
+um conjunto de pesos **W**. Vimos também que apesar de não termos controle sobre os pixeis (que são fixos, característicos
+de cada imagem), temos controle sobre os pesos **W**, que desejamos ir ajustando para que nossas predições coincidam
+com os resultados das classes a que cada imagem pertence.  
+
+Podemos imaginar aqui que, como os valores iniciais dos pesos são atribuídos de forma aleatória, não devem inicialmente
+funcionar de forma muito boa. Podemos esperar que, ao classificar uma imagem de um cachorro, esta obtenha uma pontuação
+baixa no classificador de cachorro, e pontuações altas nos classificadores de caminhão e carro. Ora, assim nossos
+classificadores estariam achando que o cachorro é um caminhão ou um carro.  
+
+Nós vamos medir o grau de erro de classificações como esta utilizando uma função de perdas (também chamada de função
+de custos ou objetivo). Intuitivamente, a perda deve aumentar quanto mais errada for a classificação, e deve ser
+pequena para classificações melhores. Esta graduação traduz o fato de que é menos errado confundir um cachorro com
+um gato do que confundir um sapo com um navio.  
+
+
+<a name='perdasDeSVM'></a>
+
+### Perdas de máquinas de vetores suporte para várias classes
+
+
+Dentre as várias formas de calcular perdas, abordaremos inicialmente a perda de máquinas de vetores suporte. O cálculo
+busca fazer com que a classe correta de uma classificação pontue melhor que uma classe errada por uma determinada
+marge de valor $$\Delta$$.
+
+
 
 <a name='codigoJava'></a>
 
