@@ -177,8 +177,8 @@ um gato do que confundir um sapo com um navio.
 
 
 Dentre as várias formas de calcular perdas, abordaremos inicialmente a perda de máquinas de vetores suporte. O cálculo
-busca fazer com que a classe correta de uma classificação pontue melhor que uma classe errada por uma determinada
-marge de valor $$\Delta$$.
+busca fazer com que a classe correta de uma classificação pontue melhor que uma classe errada por no mínimo uma
+determinada margem de valor $$\Delta$$.
 
 
 
