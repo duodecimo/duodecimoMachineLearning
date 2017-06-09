@@ -109,17 +109,52 @@ No caso do CIFAR-10, armazenamos 50000 imagens de treino, cada uma com 3072 byte
 o bias em um vetor **b** de dimensão **[10 x 1]**.  
 
 A operação de classificação que desejamos executar consistem em multiplicar **W** por **X** e somar **b**.  
-Podemos executar a operação de três maneiras, e ainda, podemos simplificar a operação, de maneira que ao invés
+Como vimos anteriormente, armazenamos em **W** 10 linhas de pesos, cada linha com 3072 colunas, ou seja, uma coluna
+para cada byte da imagem, uma linha para cada classe existente. Os valores dos pesos em **W** serão gradualmente
+ajustados para que, gradativamente os pesos de uma linha fiquem adequados para classificar corretamente determinado
+tipo de imagem.  
+Podemos executar a operação $$WX_i + b$$ de três maneiras, e ainda, podemos simplificar a operação, de maneira que ao invés
 de fazermos um produto e uma soma, façamos apenas um produto. Vamos chamar esta simplificação de **truque do bias**.
 O **truque do bias**, bem como quaisquer operações de matrizes estão detalhadamente explicados na aula
  [Operações com Matrizes](https://duodecimo.github.io/duodecimoMachineLearning/operacoesMatrizes/).
+Basicamente consiste em acrescentar uma coluna com todos os valores = 1 em **X*, e acrescentar uma coluna em **W**
+com os valores de bias (ao fazer isso, o vetor **b** não é mais necessário, passa a ser incorporado a **W**).
+Lembremos, finalmente, que o **truque do bias** se baseia na característica de multiplicação de matrizes, que
+exige que o número de elementos nas colunas da primeira seja igual ao número de elementos nas linhas da segunda.
+E também, o produto é da forma $$ c_1 /times l_1 + c_2 /times l_2 + /dots + c_n /times l_n$$. Ora, se os valores de
+colunas forem iguais a um e os de linha os valores de bias, os produtos de cada bias por um vão ser os próprios valores
+de bias (um é a identidade do produto, ou seja, $$n /times 1 = n$$). E portanto os valores de bias serão somados em
+cada linha de produto. Em outras palavras, a soma de bias foi embutida em uma única operação de produto de matrizes.
 
-
-
+Como mencionamos acima, podemos realizar a operação de três formas:  
+- A primeira consiste em utilizar duas repetições aninhadas, uma para linhas e outra para colunas, e fazer a
+multiplicação elemento por elemento.
+- A segunda consiste em utilizar uma repetição para visitar cada linha de **X**, atribuindo cada linha a um
+vetor $$X_i$$, e calculando o produto $$WX_i$$ que será um vetor de resultados.
+- Por último, com o máximo de paralelismo, O **truque do bias** simplifica nossa operação para $$WX^T$$.
+Observe que $$X^T$$ é a matriz **X** transposta, ou seja, com linhas e colunas invertidas, para que a regra de
+produto de matrizes seja satisfeita. Em seguida, transpomos o produto obtido para avaliar a matriz **Resultados** de
+forma conveniente. As duas últimas formas são mais vantajosas se forem utilizadas APIs de operações com matrizes que
+ofereçam otimização real para as operações. Mesmo quando isto não ocorre em nossos exemplos, o foco é aprender como
+a operação otimizada funciona, para poder futuramente obter vantagem de bibliotecas especializadas com otimizações.  
 
 <a name='codigoJava'></a>
 
 ### Hora de estudar código Java e testar
 
-Visite a área de código do projeto, estude a classe LinearPrediction.java.
+Visite a área de código do projeto, estude a classe LinearPrediction.java.  
+Observe que existem três métodos para calcular a perda:
+
+```
+public double lossFunctionUnvectorized(RealMatrix X, RealVector Y, RealMatrix W);
+
+public double lossFunctionSemivectorized(RealMatrix X, RealVector Y, RealMatrix W);
+
+public double lossFunctionFullvectorized(RealMatrix X, RealVector Y, RealMatrix W)
+```  
+
+Cada um deles implementa uma das formas de operação mencionadas acima, ou seja, a versão não vetorizada executa duas repetições
+aninhadas para visitar cad elemento das matrizes, a versão semivetorizada utiliza uma repetição para extrair um vetor de
+cada linha da matriz **X** (cada vetor portanto possui os bytes de uma imagem), e a versão plenamente vetorizada realiza
+a operação linear através de um único produto de matrizes.  
 
