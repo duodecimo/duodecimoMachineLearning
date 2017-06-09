@@ -54,7 +54,7 @@ imagens de treino $$x_i \in R^d$$, cada uma associada com uma etiqueta $$y_i$$, 
 Isto significa que temos **n** exemplos (cada um com dimensionalidade **d**) e **k** categorias distintas. No caso do CIFAR-10,
 por exemplo, temos um conjunto de treinamento com **n** = 50000 imagens, cada uma com **d** = 32X32X3 = 3072 pixeis, e **k** = 10,
 já que existem 10 classes distintas (cachorro, gato, carro, etc).Vamos definir em seguida a função de resultados,
-$$f:R^d \masto R^k$$ que mapeia os pixeis da imagem para resultados das classes.  
+$$f:R^d \mapto R^k$$ que mapeia os pixeis da imagem para resultados das classes.  
 
 Nesta lição vamos começar com o que pode ser considerada a função mais simples, um classificador linear:  
 
