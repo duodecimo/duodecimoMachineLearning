@@ -1,9 +1,9 @@
 # Site settings
-title: Duodecimo Introdução à Aprendizagem de Máquina
+title: "Duodecimo - Introdução à Aprendizagem de Máquina"
 description: "Materiais e notas do curso livre de introdução à aprendizagem automática na Universidade Severino Sombra, Vassouras, RJ."
 baseurl: ""
 url: "duodecimo.github.io/duodecimoMachineLearning"
-github_username:  duodecimo
+github_username: duodecimo
 
 # Build settings
 markdown: kramdown
