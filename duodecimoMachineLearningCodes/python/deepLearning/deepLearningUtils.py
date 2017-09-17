@@ -1,3 +1,5 @@
+import numpy as np
+
 
 def sigmoid(x):
   """
@@ -21,11 +23,11 @@ def relu(x):
   s -- relu(x)
   """
   ### START CODE HERE ### (≈ 1 line of code)
-  s = max(0, x)
+  s = np.maximum(x, 0)
   ### END CODE HERE ###
   return s
 
-def initialize_parameters_deep(layer_dims):
+def initialize_parameters(layer_dims):
   """
   Arguments:
   layer_dims -- python array (list) containing the dimensions of each layer in
