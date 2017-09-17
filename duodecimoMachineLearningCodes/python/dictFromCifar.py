@@ -1,4 +1,5 @@
 import numpy as np
+from download import *
 
 ######## python3 #########
 def unpickle(file):
@@ -14,53 +15,55 @@ def unpickle(file):
 #        dict = cPickle.load(fo)
 #    return dict
 
-dict = unpickle("data/CIFAR-10/cifar-10-batches-py/data_batch_1");
 
-print("\ndict keys: ", dict.keys())
+def loadData(url, data_dir):
+    """
+    Download and extract the data if it doesn't already exist.
+    Assumes the url is a tar-ball file.
+    :param url:
+        Internet URL for the tar-file to download.
+        Example: "https://www.cs.toronto.edu/~kriz/cifar-10-python.tar.gz"
+    :param data_dir:
+        Directory where the downloaded file is saved.
+        Example: "data/CIFAR-10/"
+    :return:
+        dict
+    """
 
-X = dict[b'data']
+    # use function maybe_download_and_extract from download.py to download CIFAR-10 data
+    maybe_download_and_extract(url, data_dir)
 
-Y = dict[b'labels']
+    # each data file unpickled from CIFAR-10 has dict keys:  dict_keys([b'batch_label', b'labels', b'data', b'filenames'])
+    for i in range(4):
+        # Load the images and class-numbers from the data-file.
+        dict = unpickle(data_dir + "cifar-10-batches-py/data_batch_" + str(i + 1))
+				# print("\ndict keys: ", dict.keys())
+        if(i == 0):
+            X = dict[b'data']
+            Y = dict[b'labels']
+        else:
+            X = np.concatenate((X, dict[b'data'])) 
+            Y = np.concatenate((Y, dict[b'labels']))
 
-dict = unpickle("data/CIFAR-10/cifar-10-batches-py/data_batch_2");
+    X_train = np.concatenate((X, dict[b'data'])).T 
+    Y_train = np.concatenate((Y, dict[b'labels']))
 
-X = np.concatenate((X, dict[b'data'])) 
+    dict = unpickle(data_dir + "cifar-10-batches-py/test_batch");
+    X_test = dict[b'data'].T
+    Y_test = np.array(dict[b'labels'])
+    Y_train = np.reshape(Y_train, (1, len(Y_train)))
+    Y_test = np.reshape(Y_test, (1, len(Y_test)))
 
-Y = np.concatenate((Y, dict[b'labels']))
+    raw = unpickle(data_dir + "cifar-10-batches-py/batches.meta")[b'label_names']
+    # Convert from binary strings.
+    names = [x.decode('utf-8') for x in raw]
 
-dict = unpickle("data/CIFAR-10/cifar-10-batches-py/data_batch_3");
+    return X_train, Y_train, X_test, Y_test, names
 
-X = np.concatenate((X, dict[b'data'])) 
-
-Y = np.concatenate((Y, dict[b'labels']))
-
-dict = unpickle("data/CIFAR-10/cifar-10-batches-py/data_batch_4");
-
-X = np.concatenate((X, dict[b'data'])) 
-
-Y = np.concatenate((Y, dict[b'labels']))
-
-dict = unpickle("data/CIFAR-10/cifar-10-batches-py/data_batch_5");
-
-X_train = np.concatenate((X, dict[b'data'])).T 
-
-Y_train = np.concatenate((Y, dict[b'labels']))
-
-dict = unpickle("data/CIFAR-10/cifar-10-batches-py/test_batch");
-
-X_test = dict[b'data'].T
-
-Y_test = np.array(dict[b'labels'])
-
-Y_train = np.reshape(Y_train, (1, len(Y_train)))
-
-Y_test = np.reshape(Y_test, (1, len(Y_test)))
-
-print("\nX_train.shape: ", X_train.shape);
-
-print("\nY_train.shape: ", Y_train.shape);
-
-print("\nX_test.shape : ", X_test.shape);
-
-print("\nY_test.shape : ", Y_test.shape);
+X_tr, Y_tr, X_te, Y_te, names = loadData("https://www.cs.toronto.edu/~kriz/cifar-10-python.tar.gz", "data/CIFAR-10/")
+print("\nX_train shape: ", X_tr.shape);
+print("\nY_train shape: ", Y_tr.shape);
+print("\nX_test shape : ", X_te.shape);
+print("\nY_test	shape : ", Y_te.shape);
+print("\nNames : ", names);
 
