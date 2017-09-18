@@ -16,6 +16,9 @@ train_y = train_y[0:,0:400]
 test_x = test_x[0:,0:50]
 test_y = test_y[0:,0:50]
 
+#normalize data
+train_x = np.array(train_x, dtype=float) / 255.0
+test_x = np.array(test_x, dtype=float) / 255.0
 
 # Explore your dataset
 m_train = train_x.shape[1]
@@ -102,12 +105,11 @@ def two_layer_model(X, Y, layers_dims, learning_rate = 0.0075, num_iterations = 
     W2 = parameters["W2"]
     b2 = parameters["b2"]
     # Print the cost every 100 training example
-    #if print_cost and i % 100 == 0:
-    print("Cost after iteration {}: {}".format(i, np.squeeze(cost)))
+    if print_cost and i % 100 == 0:
+      print("Cost after iteration {}: {}".format(i, np.squeeze(cost)))
     if print_cost and i % 100 == 0:
       costs.append(cost)
   return parameters
 
-parameters = two_layer_model(train_x, train_y, layers_dims = (n_x, n_h, n_y), num_iterations = 2, print_cost=True)
-#parameters = two_layer_model(train_x, train_y, layers_dims = (n_x, n_h, n_y), num_iterations = 2500, print_cost=True)
+parameters = two_layer_model(train_x, train_y, layers_dims = (n_x, n_h, n_y), num_iterations = 2500, print_cost=True)
 
