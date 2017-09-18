@@ -1,31 +1,80 @@
 import numpy as np
 
 
-def sigmoid(x):
-  """
-  Compute the sigmoid of x
-  Arguments:
-  x -- A scalar or numpy array of any size
-  Return:
-  s -- sigmoid(x)
-  """
-  ### START CODE HERE ### (≈ 1 line of code)
-  s = 1/(1+np.exp(-x))
-  ### END CODE HERE ###
-  return s
+def sigmoid_forward(x):
+    """
+    :param x: numpy array of shape (N,D) representing input layer
+    :return:
+    out = numpy array of shape (N,D) representing output of sigmoid layer
+    cache = storing x for backpropagation
+    """
+    out = 1/(1 + np.exp(-x))
+    #cache = out.copy()
+    cache = x
+    return out, cache
 
-def relu(x):
-  """
-  Compute the relu of x
-  Arguments:
-  x -- A scalar or numpy array of any size
-  Return:
-  s -- relu(x)
-  """
-  ### START CODE HERE ### (≈ 1 line of code)
-  s = np.maximum(x, 0)
-  ### END CODE HERE ###
-  return s
+
+def sigmoid_backward(dout, cache):
+    """
+    :param dout: numpy array of shape (N,D) representing gradients of output layer
+    :param cache: numpy array of shape (N,D) used for backpropagation
+    :return:
+    dx = numpy array of shape (N,D) representing gradients of input layer
+    """
+    out = cache
+    dx = dout*(out*(1-out))
+    return dx
+
+
+def tanh_forward(x):
+    """
+    :param x: numpy array of shape (N,D) representing input layer
+    :return:
+    out = numpy array of shape (N,D) representing output of tanh layer
+    cache = storing x for backpropagation
+    """
+    cache = x
+    out = np.tanh(x)
+    return out, cache
+
+
+def tanh_backward(dout, cache):
+    """
+    :param dout: numpy array of shape (N,D) representing gradients of output layer
+    :param cache: numpy array of shape (N,D) representing input layer for backpropagation
+    :return:
+    dx = numpy array of shape (N,D) representing gradients of input layer
+    """
+    x = cache
+    out = np.tanh(x)
+    dx = dout*(1-out**2)
+    return dx
+
+
+def relu_forward(x):
+    """
+    :param x: numpy array of shape (N,D) representing input layer
+    :return:
+    out = numpy array of shape (N,D) representing output of relu layer
+    cache = storing x for backpropagation
+    """
+    out = x*(x > 0)
+    cache = x
+    return out, cache
+
+
+def relu_backward(dout, cache):
+    """
+    :param dout: numpy array of shape (N,D) representing gradients of output layer
+    :param cache: numpy array of shape (N,D) representing input layer for backpropagation
+    :return:
+    dx = numpy array of shape (N,D) representing gradients of input layer
+    """
+    x = cache
+    dx = dout*(x > 0)
+    return dx
+
+
 
 def initialize_parameters(layer_dims):
   """
@@ -87,13 +136,15 @@ def linear_activation_forward(A_prev, W, b, activation):
     # Inputs: "A_prev, W, b". Outputs: "A, activation_cache".
     ### START CODE HERE ### (≈ 2 lines of code)
     Z, linear_cache = linear_forward(A_prev, W, b)
-    A, activation_cache = sigmoid(Z)
+    A, activation_cache = sigmoid_forward(Z)
     ### END CODE HERE ###
   elif activation == "relu":
     # Inputs: "A_prev, W, b". Outputs: "A, activation_cache".
     ### START CODE HERE ### (≈ 2 lines of code)
     Z, linear_cache = linear_forward(A_prev, W, b)
-    A, activation_cache = relu(Z)
+    print("Z = ", Z)
+    A, activation_cache = relu_forward(Z)
+    print("A = ", A)
     ### END CODE HERE ###
   assert (A.shape == (W.shape[0], A_prev.shape[1]))
   cache = (linear_cache, activation_cache)
@@ -128,6 +179,7 @@ def L_model_forward(X, parameters):
   W = parameters['W' + str(L)]
   b = parameters['b' + str(L)]
   AL, cache = linear_activation_forward(A, W, b, activation = "sigmoid")
+
   caches.append(cache)
   ### END CODE HERE ###
   assert(AL.shape == (1,X.shape[1]))

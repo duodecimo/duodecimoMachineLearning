@@ -60,10 +60,5 @@ def loadData(url, data_dir):
 
     return X_train, Y_train, X_test, Y_test, names
 
-X_tr, Y_tr, X_te, Y_te, names = loadData("https://www.cs.toronto.edu/~kriz/cifar-10-python.tar.gz", "data/CIFAR-10/")
-print("\nX_train shape: ", X_tr.shape);
-print("\nY_train shape: ", Y_tr.shape);
-print("\nX_test shape : ", X_te.shape);
-print("\nY_test	shape : ", Y_te.shape);
-print("\nNames : ", names);
+
 

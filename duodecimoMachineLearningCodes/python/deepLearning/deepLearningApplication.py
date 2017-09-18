@@ -28,6 +28,7 @@ print("train_x shape: " + str(train_x.shape))
 print("train_y shape: " + str(train_y.shape))
 print("test_x shape: " + str(test_x.shape))
 print("test_y shape: " + str(test_y.shape))
+print("classes: ", classes)
 
 # build and test a 2 layer neural network
 ### CONSTANTS DEFINING THE MODEL ####
@@ -72,6 +73,8 @@ def two_layer_model(X, Y, layers_dims, learning_rate = 0.0075, num_iterations = 
     ### START CODE HERE ### (≈ 2 lines of code)
     A1, cache1 = linear_activation_forward(X, W1, b1, "relu")
     A2, cache2 = linear_activation_forward(A1, W2, b2, "sigmoid")
+    if i==1:
+      print("X = ", X)
     ### END CODE HERE ###
     # Compute cost
     ### START CODE HERE ### (≈ 1 line of code)
@@ -99,11 +102,12 @@ def two_layer_model(X, Y, layers_dims, learning_rate = 0.0075, num_iterations = 
     W2 = parameters["W2"]
     b2 = parameters["b2"]
     # Print the cost every 100 training example
-    if print_cost and i % 100 == 0:
-      print("Cost after iteration {}: {}".format(i, np.squeeze(cost)))
+    #if print_cost and i % 100 == 0:
+    print("Cost after iteration {}: {}".format(i, np.squeeze(cost)))
     if print_cost and i % 100 == 0:
       costs.append(cost)
   return parameters
 
-parameters = two_layer_model(train_x, train_y, layers_dims = (n_x, n_h, n_y), num_iterations = 2500, print_cost=True)
+parameters = two_layer_model(train_x, train_y, layers_dims = (n_x, n_h, n_y), num_iterations = 2, print_cost=True)
+#parameters = two_layer_model(train_x, train_y, layers_dims = (n_x, n_h, n_y), num_iterations = 2500, print_cost=True)
 
