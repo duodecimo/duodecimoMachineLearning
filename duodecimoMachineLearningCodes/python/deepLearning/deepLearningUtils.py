@@ -1,5 +1,5 @@
 import numpy as np
-
+from scipy.special import expit
 
 def sigmoid_forward(x):
     """
@@ -8,7 +8,8 @@ def sigmoid_forward(x):
     out = numpy array of shape (N,D) representing output of sigmoid layer
     cache = storing x for backpropagation
     """
-    out = 1/(1 + np.exp(-x))
+    #out = 1/(1 + np.exp(-x))
+    out = 1/(1 + expit(-x))
     #cache = out.copy()
     cache = x
     return out, cache

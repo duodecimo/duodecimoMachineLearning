@@ -8,17 +8,17 @@ from dictFromCifar import *
 
 np.random.seed(1)
 
-train_x, train_y, test_x, test_y, classes = loadData("https://www.cs.toronto.edu/~kriz/cifar-10-python.tar.gz", "/media/duo/extra/python/tests/data/CIFAR-10/")
+origtrain_x, train_y, origtest_x, test_y, classes = loadData("https://www.cs.toronto.edu/~kriz/cifar-10-python.tar.gz", "/media/duo/extra/python/tests/data/CIFAR-10/")
 
 #reduce examples and tests
-train_x = train_x[0:,0:400]
+origtrain_x = origtrain_x[0:,0:400]
 train_y = train_y[0:,0:400]
-test_x = test_x[0:,0:50]
+origtest_x = origtest_x[0:,0:50]
 test_y = test_y[0:,0:50]
 
-#normalize data
-train_x = np.array(train_x, dtype=float) / 255.0
-test_x = np.array(test_x, dtype=float) / 255.0
+# Standardize data to have feature values between 0 and 1
+train_x = origtrain_x/255
+test_x = origtest_x/255
 
 # Explore your dataset
 m_train = train_x.shape[1]
@@ -76,8 +76,6 @@ def two_layer_model(X, Y, layers_dims, learning_rate = 0.0075, num_iterations = 
     ### START CODE HERE ### (≈ 2 lines of code)
     A1, cache1 = linear_activation_forward(X, W1, b1, "relu")
     A2, cache2 = linear_activation_forward(A1, W2, b2, "sigmoid")
-    if i==1:
-      print("X = ", X)
     ### END CODE HERE ###
     # Compute cost
     ### START CODE HERE ### (≈ 1 line of code)
