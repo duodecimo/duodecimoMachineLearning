@@ -51,12 +51,15 @@ def loadData(url, data_dir):
     dict = unpickle(data_dir + "cifar-10-batches-py/test_batch");
     X_test = dict[b'data'].T
     Y_test = np.array(dict[b'labels'])
+    
     Y_train = np.reshape(Y_train, (1, len(Y_train)))
     Y_test = np.reshape(Y_test, (1, len(Y_test)))
 
     raw = unpickle(data_dir + "cifar-10-batches-py/batches.meta")[b'label_names']
     # Convert from binary strings.
     names = [x.decode('utf-8') for x in raw]
+    print('All data (50,000 train images and label indexes, 10,000 test images and label indexes and 10 labels)')
+    print('has been stored in appropriate arrays.')
 
     return X_train, Y_train, X_test, Y_test, names
 
