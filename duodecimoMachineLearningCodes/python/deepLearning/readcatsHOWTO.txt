@@ -1,0 +1,5 @@
+from readcatspkg import readcats
+
+
+(train_x, train_y, test_x, test_y) = readcats()
+

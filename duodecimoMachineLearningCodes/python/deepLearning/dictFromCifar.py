@@ -16,7 +16,7 @@ def unpickle(file):
 #    return dict
 
 
-def loadData(url, data_dir):
+def loadData(url="https://www.cs.toronto.edu/~kriz/cifar-10-python.tar.gz", data_dir="data/CIFAR-10/"):
     """
     Download and extract the data if it doesn't already exist.
     Assumes the url is a tar-ball file.
@@ -31,7 +31,7 @@ def loadData(url, data_dir):
     """
 
     # use function maybe_download_and_extract from download.py to download CIFAR-10 data
-    maybe_download_and_extract(url, data_dir)
+    #maybe_download_and_extract(url, data_dir)
 
     # each data file unpickled from CIFAR-10 has dict keys:  dict_keys([b'batch_label', b'labels', b'data', b'filenames'])
     for i in range(4):
