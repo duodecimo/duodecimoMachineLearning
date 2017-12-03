@@ -1,15 +1,9 @@
----
-layout: page
-mathjax: true
-permalink: cifar10Como/
----
-
 # O conjunto de dados Cifar-10
 
 
 O CIFAR-10 e o CIFAR-100 são conjuntos rotulados (com nomes) de 80 milhões de pequenas imagens.
 Forma coletados por Alex Krizhevsky, Vinod Nair, and Geoffrey Hinton.
-visite: https://www.cs.toronto.edu/~kriz/cifar.html
+visite [cifar](https://www.cs.toronto.edu/~kriz/cifar.html).
 
 O CIFAR-10 consiste de um conjunto de dados de 60000 imagens coloridas de 32x32 pixeis, contidas
 em 10 classes, com 6000 imagens por classe. Existem 50000 conjuntos de imagens para treino e
@@ -21,7 +15,7 @@ mas alguns grupos de treino podem conter mais imagens de uma classe do que de ou
 do grupo de treino, os grupos contém exatamente 50000 imagens de cada classe.
 
 A classe Cifar10Utils (código disponível neste git) foi construída para lidar com a versão binária
-(existem outras) do CIFAR-10, baixada de https://www.cs.toronto.edu/~kriz/cifar.html.
+(existem outras) do CIFAR-10, baixada de [cifar download](https://www.cs.toronto.edu/~kriz/cifar.html).
 
 A versão binária contém os arquivos data_batch_1.bin, data_batch_2.bin, ..., data_batch_5.bin, bem
 como o test_batch.bin. Cda um destes arquivos é formatado da seguinte maneira:
@@ -49,7 +43,7 @@ grupos. No caso mínimo de dois, pode-se denominar o primeiro o grupo de treino,
 grupo de teste. É importante que o conteúdo dos dois grupos seja disjunto.
 
 O objetivo da divisão é evitar avaliar o desempenho do programa desenvolvido em dados já utilizados
-no treinamento. Com isto queremos evitar o sobreajuste (do inglês, overfitting), que é quando um
+no treinamento. Com isto queremos evitar o sobreajuste (do inglês, _overfitting_), que é quando um
 programa tem bom desempenho em dados que já conhece, mas não tão bom em dados inéditos.
 
 ## Porque utilizar
@@ -58,8 +52,7 @@ A internet é uma fonte de aquisição de muitos dados. Mas a maioria destes dad
 fora de escala, não rotulados de uma mesma forma, etc. Preparar um bom conjunto de dados uniforme,
 com adequada distribuição, variedade, e resultados mapeados demanda tempo e trabalho.
 
-O fato de haver uma base de dados já preparada possúi valor inestimável para pesquisa.
-
-Além disto, os resultados obtidos podem ser comparados com resultados obtidos e publicados por outros
-pesquisadores.
+O fato de haver uma base de dados já preparada possúi valor inestimável para pesquisa. Isto porque 
+os resultados obtidos em uma pesquisa podem ser comparados com os resultados obtidos e publicados 
+por outros pesquisadores.
 
