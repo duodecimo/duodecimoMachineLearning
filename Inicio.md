@@ -1,9 +1,3 @@
----
-layout: page
-mathjax: true
-permalink: Inicio/
----
-
 <div class="fig figcenter fighighlight">
   <img src="https://duodecimo.github.io/duodecimoMachineLearning/assets/images/aiLearning.png" width = "300" height="300">
   <div class="figcaption">Figura 1: Produzida com o Autodraw, que usa aprendizado de máquina.</div>
